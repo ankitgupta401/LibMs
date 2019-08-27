@@ -3,17 +3,19 @@
   <div class="searchbox">
 
         <br>
+        <form (ngSubmit)="onSubmit(form)" #form="ngForm">
         <div class="form-row ">
 
             &nbsp;&nbsp;
-                   <input type="text" class="form-control" placeholder="Name"> &nbsp; or &nbsp;
+                   <input type="text" class="form-control" placeholder="Email" name="email" ngModel email > &nbsp; or &nbsp;
 
-                   <input type="text" class="form-control" placeholder="Card No">&nbsp; or &nbsp;
+                   <input type="text" class="form-control" placeholder="Card No" name="card_no" ngModel >&nbsp; or &nbsp;
 
-                      <input type="text" class="form-control" placeholder="Phone No">
-
+                      <input type="text" class="form-control" placeholder="Phone No" name="phone_no" ngModel >
+                      &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>
               </div>
-  </div><br>
+            </form>
+            </div><br>
 
 <div class="tables" style="height:479px; overflow: scroll;">
 <table class="table">

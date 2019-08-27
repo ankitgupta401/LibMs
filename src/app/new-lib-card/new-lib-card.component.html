@@ -118,7 +118,7 @@
 
 <div class="input11">
  <label for="exampleInputPassword1">Zip:</label>
- <input type="text" class="form-control"  placeholder="Zip">
+ <input type="text" class="form-control"  placeholder="Zip" name="zip" ngModel required>
 </div>
 
 
@@ -135,7 +135,7 @@
      </div>
 
      <div class="save">
-         <button type="submit" class="btn btn-success">SAVE</button>&nbsp;
+         <button type="submit" class="btn btn-success" [disabled]="!form.valid">SAVE</button>&nbsp;
          <button type="button" class="btn btn-warning">RESET</button>
      </div>
 

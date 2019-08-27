@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-lib-card-reg',
@@ -8,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class LibCardRegComponent implements OnInit {
 
   constructor() { }
-
+onSubmit(form: NgForm ) {
+console.log(form);
+}
   ngOnInit() {
   }
 
