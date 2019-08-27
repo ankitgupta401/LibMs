@@ -1,0 +1,147 @@
+<form (ngSubmit)="onSubmit(form)" #form="ngForm">
+<div class="form">
+
+
+  <div class="input1">
+        <label for="exampleInputPassword1">FirstName:</label>
+        <input type="text" class="form-control"  placeholder="Name" ngModel name="fname" required>
+     </div>
+     <div class="input2">
+        <label for="exampleInputPassword1">LastName:</label>
+        <input type="text" class="form-control"  placeholder="Dept" ngModel name="lname" required>
+     </div>
+     <div class="input3">
+        <label for="exampleInputPassword1">Email:</label>
+        <input type="text" class="form-control"  placeholder="Email" ngModel name="email" email required >
+     </div>
+     <div class="input12" >
+      <label for="exampleFormControlSelect1" >Role:</label>
+      <select class="form-control" id="exampleFormControlSelect1" #f (change)="disableYear(f)" [ngModel]="'student'" name="category" required>
+       <option value="student">Student</option>
+       <option value="teacher">Teacher</option>
+       </select>
+       </div>
+     <div class="input4">
+       <label for="exampleFormControlSelect1">Course:</label>
+       <select class="form-control" id="exampleFormControlSelect1" [ngModel]="'cst'" name="dept" required>
+         <option value="cst">CST</option>
+         <option value="civil">CIVIL</option>
+         <option value="eie">EIE</option>
+         <option value="etce">ETCE</option>
+         <option value="ee">EE</option>
+         <option value="arch">ARCHITECTURE</option>
+         <option value="pharm">PHARMACY</option>
+       </select>
+     </div>
+
+
+
+<div class="input5">
+<label for="exampleFormControlSelect1">Year:</label>
+<select class="form-control" [disabled]="teacher" [ngModel]="'1st'" name="year" required>
+ <option value="1st">1st year</option>
+ <option value="2nd">2nd year</option>
+ <option value="3rd">3rd year</option>
+</select>
+</div>
+
+
+<div class="input7">
+ <label for="exampleInputPassword1">Phone:</label>
+ <input type="number" class="form-control"  placeholder="Phone" ngModel name="phone-no" required>
+ </div>
+
+
+
+
+
+
+<div class="input6">
+<label for="exampleFormControlSelect1">Semester:</label>
+<select class="form-control" id="exampleFormControlSelect1"  [disabled]="teacher" [ngModel]="'1st'" name="sem" >
+ <option value="1st">1st sem</option>
+ <option value="2nd">2nd sem</option>
+ <option value="3rd">3rd sem</option>
+ <option value="4th">4th sem</option>
+ <option value="5th">5th sem</option>
+ <option value="6th">6th sem</option>
+</select>
+</div>
+
+
+<div class="input8">
+<label for="exampleFormControlTextarea1">Address:</label>
+<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" ngModel name="address" required></textarea>
+</div>
+
+
+<div class="input9">
+<label for="exampleInputPassword1">City:</label>
+<input type="text" class="form-control"  placeholder="City" ngModel name="city" required>
+</div>
+
+<div class="input10">
+ <label for="exampleFormControlSelect1">State:</label>
+ <select class="form-control" id="exampleFormControlSelect1" [ngModel]="'wb'" name="state" required>
+
+   <option value="ap">Andhra Pradesh</option>
+   <option value="ar">Arunachal Pradesh</option>
+   <option value="as">Assam</option>
+   <option value="br"> Bihar</option>
+   <option value="ch">Chhattisgarh</option>
+   <option value="ga">Goa</option>
+   <option value="gj">Gujarat</option>
+   <option value="hr">Haryana</option>
+   <option value="hp">Himachal Pradesh</option>
+   <option value="j&k">Jammu and Kashmir</option>
+   <option value="jk"> Jharkhand</option>
+   <option value="kr">Karnataka</option>
+   <option value="ke">Kerala</option>
+   <option value="mp">Madya Pradesh</option>
+   <option value="mh">Maharashtra</option>
+   <option value="ma">Manipur</option>
+   <option value="mg">Meghalaya</option>
+   <option value="mz">Mizoram</option>
+   <option value="nl">Nagaland</option>
+   <option value="or">Orissa</option>
+   <option value="pj">Punjab</option>
+   <option value="rj">Rajasthan</option>
+   <option value="sk">Sikkim</option>
+   <option value="tn">Tamil Nadu</option>
+   <option value="tl">Telagana</option>
+   <option value="tr">Tripura</option>
+   <option value="ul">Uttaranchal</option>
+   <option value="up">Uttar Pradesh</option>
+   <option value="wb">West Bengal</option>
+   </select>
+</div>
+
+<div class="input11">
+ <label for="exampleInputPassword1">Zip:</label>
+ <input type="text" class="form-control"  placeholder="Zip">
+</div>
+
+
+
+
+
+ <div class="upload">
+     <img id="blah" [src]="image" alt="your image"  >
+     </div>
+
+   <div class="uploadinput">
+         <input type='file' (change)="readURL($event ,s);" style="display: none;" #s/>
+         <button type="button" class="btn btn-primary" (click)="s.click()">Upload Image</button>
+     </div>
+
+     <div class="save">
+         <button type="submit" class="btn btn-success">SAVE</button>&nbsp;
+         <button type="button" class="btn btn-warning">RESET</button>
+     </div>
+
+
+ </div>
+
+</form>
+
+

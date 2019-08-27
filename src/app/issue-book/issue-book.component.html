@@ -1,0 +1,120 @@
+
+<div class="form">
+    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+
+    <!--div class="heading"><span>NEW BOOK ENTRY</span></div-->
+
+    <div  class="dropdown">
+<select class="form-control" id="exampleFormControlSelect1" [ngModel]="'student'" name="category" required>
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+
+      </select>
+
+  </div>
+
+  <div class="input">
+        <input type="text" class="form-control"   placeholder="Card no" ngModel name="cardNo" required>
+      </div>
+
+      <div class="buttons">
+            <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button> &nbsp;
+            <button type="reset" class="btn btn-danger">Clear</button>
+      </div>
+
+
+
+
+      <div class="input1">
+         <label >Name:</label>
+
+      </div>
+      <div class="input2">
+         <label >Dept:</label>
+
+      </div>
+      <div class="input3">
+         <label >Card no:</label>
+
+      </div>
+      <div class="input4">
+         <label >Year:</label>
+
+     </div>
+    </form>
+     <form (ngSubmit)="onSubmit(form2)" #form2="ngForm">
+     <div class="input01"  >
+       &nbsp;
+
+            <input type="number" class="form-control" placeholder="Accession no" ngModel name="accession_no" required>
+          </div>
+          <div class="butadj">
+          <button type="button" class="btn btn-primary" [disabled]="!form2.valid">Add</button>&nbsp;
+          <button type="submit" class="btn btn-success" [disabled]="!form2.valid">Issue</button>&nbsp;
+          <button type="reset" class="btn btn-danger">Clear</button>
+     </div>
+
+
+
+
+    </form>
+     <div class="adjust">
+     <div class="tables" style="height:275px; overflow: scroll;">
+      <table class="table " >
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col"># </th>
+                <th scope="col"> Accession No</th>
+                <th scope="col">Isbn </th>
+                <th scope="col">Title </th>
+                <th scope="col">Author </th>
+                <th scope="col"> Sub-Title </th>
+                <th scope="col">Edition </th>
+                <th scope="col">Edition Year </th>
+                <th scope="col">Publisher </th>
+                <th scope="col">Availiability </th>
+              </tr>
+            </thead>
+
+            <tbody >
+              <tr  >
+                <th scope="row">1</th>
+                <td>1254</td>
+                <td>letus c</td>
+                <td>1234</td>
+                <td>Animesh</td>
+                <td>10/05/2019</td>
+                <td>16/05/2019</td>
+
+
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>1254</td>
+                <td>letus c</td>
+                <td>1234</td>
+                <td>Animesh</td>
+                <td>10/05/2019</td>
+                <td>16/05/2019</td>
+
+
+
+
+
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>1254</td>
+                <td>letus c</td>
+                <td>1234</td>
+                <td>Animesh</td>
+                <td>10/05/2019</td>
+                <td>16/05/2019</td>
+
+
+           </tbody>
+
+          </table>
+    </div>
+  </div>
+    </div>

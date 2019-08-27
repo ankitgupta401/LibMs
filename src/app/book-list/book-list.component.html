@@ -1,0 +1,95 @@
+
+<div class="form">
+
+
+    <div class="searchbox">
+        <br><form (ngSubmit)="onSubmit(form)" #form="ngForm">
+          <div class="form-row ">
+
+              &nbsp; &nbsp;
+                     <input type="number" class="form-control" placeholder="Type Acession no" ngModel name="accession_no" > &nbsp; or &nbsp;
+
+                     <input type="text" class="form-control" placeholder="Title" ngModel name="title">&nbsp; or &nbsp;
+
+                        <input type="number" class="form-control" placeholder="Isbn" ngModel name="isbn">
+                        &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>
+                </div>
+              </form>
+    </div><br>
+<div class="tables" style="height:480px; overflow: scroll;">
+    <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Accession no</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Pages</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Year</th>
+              <th scope="col">Borrowed</th>
+              <th scope="col">Cost</th>
+              <th scope="col">Action</th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+
+
+
+              <tr>
+                <th scope="row">1</th>
+                <td>1254</td>
+                <td>letus c</td>
+                <td>Ankit</td>
+                <td>458</td>
+                <td>C Programming</td>
+                <td>2nd</td>
+                <td>12/06/2019</td>
+                <td>Rs 600</td>
+                <td>
+                    <button onclick="document.getElementById('id01').style.display='block'" class="btn btn2" ><img src="assets/icons/delete.png"></button>
+
+                    <div id="id01" class="modal">
+
+                      <form class="modal-content animate" action="/action_page.php">
+                        <div class="imgcontainer">
+                          <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+                        </div>
+
+                        <div class="container">
+                    <h3>Book Management</h3>
+                    <div class="modal-body" style="padding-top: 4%; padding-left: 20%;">
+                                          <div class="row">
+                                            <div class="holder_sub_book_lst">
+                                           <h4>   <b>Once Deleted The Changes Cannot Be Undone!</b></h4>
+                                          <p>Are You Sure?</p>
+                                                      <button class="btn btn-danger fix_radius">Yes &nbsp;
+                                                      </button>&nbsp;
+                                                      <button class="btn btn-warning fix_radius" >No
+                                              </button>
+                                                    </div>
+
+                                            </div>
+                                          </div>
+                                        </div>
+
+
+
+                      </form>
+                    </div><br>
+
+                </td>
+                </tr>
+
+
+         </tbody>
+        </table>
+  </div>
+
+</div>
+
+
+

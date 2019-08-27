@@ -1,0 +1,131 @@
+input.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+input{
+  height:30%;
+  width: 80%;
+}
+.form-group1{
+  width: 40%;
+
+  padding-left: 5%;
+}
+
+.form-group2{
+  width:40%;
+
+  position: absolute;
+  left: 44%;
+  top: 0%;
+
+}
+
+.form-group3{
+  width: 40%;
+  padding-left: 5%;
+}
+.form-group4{
+  width: 40%;
+  position: absolute;
+  top: 12.5%;
+  left: 44%;
+
+
+}
+
+.form-group5{
+ width: 40%;
+ padding-left: 5%;
+
+}
+
+
+.form-group6{
+  width: 40%;
+  position: absolute;
+  top: 24.5%;
+  left: 44%;
+}
+
+.form-group7{
+  width: 40%;
+  padding-left: 5%;
+
+}
+
+.form-group8{
+  width: 40%;
+  position: absolute;
+  top: 36.5%;
+  left: 44%;
+
+}
+
+.form-group9{
+  width: 40%;
+  padding-left: 5%;
+}
+
+.form-group10{
+  width: 40%;
+  position: absolute;
+  top: 49%;
+  left: 44%;
+
+}
+
+.form-group11{
+  width: 40%;
+  padding-left: 5%;
+}
+
+.form-group12{
+  width: 40%;
+  position: absolute;
+  top: 61%;
+  left: 44%;
+
+}
+
+.form-group13{
+  width: 40%;
+  padding-left: 5%;
+}
+
+.form-group14{
+  width: 40%;
+  position: absolute;
+  top: 73.5%;
+  left: 44%;
+}
+
+.form-group15{
+  width: 40%;
+  padding-left: 5%;
+}
+.form-group16{
+
+padding-top:2%;
+  padding-left: 40%;
+
+
+}
+.cen{
+  width:100px;
+  margin-left: 3%;
+}
+.cen2{
+    width:100px;
+}
+
+.table2{
+  margin-bottom:0rem;
+}
+
+th{
+  font-size: 93.5%;
+
+}
+td{
+  font-size: 15px;
+}

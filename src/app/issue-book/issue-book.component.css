@@ -1,0 +1,67 @@
+input.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+.dropdown{
+    position: absolute;
+    left: 15%;
+    top: 8%;
+}
+
+.input{
+    position: absolute;
+    width: 30%;
+    top: 8%;
+    left: 25%;
+}
+.buttons{
+    position: absolute;
+    top: 8%;
+    left: 57%;
+
+}
+
+
+.input1{
+    position: absolute;
+    top: 18%;
+    width: 30%;
+    left: 7%;
+}
+
+.input2{
+    position: absolute;
+    top: 18%;
+    left: 47%;
+    width: 30%;
+}
+.input3{
+    position: absolute;
+    top: 28%;
+    left: 7%;
+    width: 30%;
+}
+.input4{
+    position: absolute;
+    top: 28%;
+    left: 47%;
+    width: 30%;
+}
+.input01 {
+    position: absolute;
+    top: 37%;
+    left: 25%;
+width:30%;
+
+}
+.butadj{
+  position: absolute;
+  top: 41.5%;
+  left: 57%;
+}
+
+.adjust{
+  position: absolute;
+  width: 100%;
+  top:50%;
+}
+

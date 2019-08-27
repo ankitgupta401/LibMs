@@ -1,0 +1,96 @@
+
+
+<div class="form">
+    <div class="searchbox">
+        <br>
+        <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+      <div class="form-row">
+          &nbsp;
+
+          <div  class="dropdown">
+
+              <select class="form-control" id="exampleFormControlSelect1" [ngModel]="'student'" name="category ">
+                      <option value="student">Student</option>
+                      <option value="teacher">Teacher</option>
+
+                    </select>
+
+                </div>
+                &nbsp;
+              <input type="text" class="form-control" placeholder=" Acession no" ngModel name="accession_no"> <a>&nbsp; or &nbsp;</a>
+
+
+              <input type="text" class="form-control" placeholder="Card No" ngModel name="card_no"><a>&nbsp; or &nbsp;</a>
+
+                    <input type="text" class="form-control" placeholder="Isbn" ngModel name="isbn">
+
+                    &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>
+                  </div>
+                </form>
+      </div>
+      <br>
+
+
+<div class="tables" style="height:467px; overflow: scroll;">
+    <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Accession no</th>
+              <th scope="col">Book Name</th>
+              <th scope="col">User Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Issued date</th>
+              <th scope="col">Due date</th>
+              <th scope="col">Received date</th>
+              <th scope="col">Fine</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>1254</td>
+              <td>letus c</td>
+              <td>1234</td>
+              <td>Animesh</td>
+              <td>10/05/2019</td>
+              <td>16/05/2019</td>
+              <td>16/05/2019</td>
+              <td>350.00</td>
+
+
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>1254</td>
+              <td>letus c</td>
+              <td>1234</td>
+              <td>Animesh</td>
+              <td>10/05/2019</td>
+              <td>16/05/2019</td>
+              <td>16/05/2019</td>
+              <td>350.00</td>
+
+
+
+
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>1254</td>
+              <td>letus c</td>
+              <td>1234</td>
+              <td>Animesh</td>
+              <td>10/05/2019</td>
+              <td>16/05/2019</td>
+              <td>16/05/2019</td>
+              <td>350.00</td>
+
+         </tbody>
+        </table>
+  </div>
+
+</div>
+
+

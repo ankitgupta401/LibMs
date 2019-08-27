@@ -1,0 +1,57 @@
+
+.menu-adjust{
+  position: relative;
+  left: 0%;
+  top: 0%;
+  z-index: -999;
+}
+.header{
+  z-index: 999;
+}
+
+
+.but{
+position: absolute;
+top:2%;
+left: 1%;
+padding: 0;
+border: none;
+background: none;
+}
+
+
+
+
+.form1{
+  position: absolute;
+  top:15%;
+  left: 19%;
+  border: 1px solid gray;
+    width: 80%;
+    height: 85%;
+    max-height: 90%;
+    font-size: 17px;
+    word-spacing: 5px;
+    overflow: none;
+    background-color:whitesmoke;
+    margin: 0%;
+    padding: 0%;
+
+}
+.form2{
+  position: absolute;
+  top:15%;
+  left: 1%;
+  border: 1px solid gray;
+    width: 98%;
+    height: 85%;
+    max-height: 90%;
+    font-size: 17px;
+    word-spacing: 5px;
+    overflow: none;
+    background-color:whitesmoke;
+    margin: 0%;
+    padding: 0%;
+
+}
+
