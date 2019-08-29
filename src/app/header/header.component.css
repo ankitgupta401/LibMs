@@ -1,3 +1,10 @@
+@media(max-width: 1920px)
+{
+  .side-m{
+   padding-left: 20%;
+  }
+}
+
 @media(max-width: 1366px)
 {
   .side-m{
@@ -8,7 +15,7 @@
 {
   .side-m{
    padding-left: 22%;
-   font-size: 20px;
+  /* font-size: 20px;*/
   }
 }
 @media(max-width: 850px)
