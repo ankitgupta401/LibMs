@@ -1,120 +1,151 @@
-
 <div class="form">
-    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
 
     <!--div class="heading"><span>NEW BOOK ENTRY</span></div-->
-
-    <div  class="dropdown">
-<select class="form-control" id="exampleFormControlSelect1" [ngModel]="'student'" name="category" required>
-        <option value="student">Student</option>
-        <option value="teacher">Teacher</option>
-
-      </select>
-
-  </div>
-
-  <div class="input">
-        <input type="text" class="form-control"   placeholder="Card no" ngModel name="cardNo" required>
+    <!-- First input area -->
+    <div class="row">
+      <div class="col-1 col-md-3">
+        <div class="dropdown">
+          <select class="form-control" id="exampleFormControlSelect1" [ngModel]="'student'" name="category" required>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+          </select>
+        </div>
       </div>
+   
+      <div class="col-6 col-md-3">
+      <div class="input">
+        <input type="text" class="form-control" placeholder="Card no" ngModel name="cardNo" required>
+      </div>
+      </div>
+      <div class="col-3">
 
       <div class="buttons">
-            <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button> &nbsp;
-            <button type="reset" class="btn btn-danger">Clear</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button> &nbsp;
+        <button type="reset" class="btn btn-danger">Clear</button>
       </div>
+    </div>
+    </div>
+    <br>
 
-
-
-
-      <div class="input1">
-         <label >Name:</label>
-
-      </div>
-      <div class="input2">
-         <label >Dept:</label>
-
-      </div>
-      <div class="input3">
-         <label >Card no:</label>
-
-      </div>
-      <div class="input4">
-         <label >Year:</label>
-
-     </div>
-    </form>
-     <form (ngSubmit)="onSubmit(form2)" #form2="ngForm">
-     <div class="input01"  >
-       &nbsp;
-
-            <input type="number" class="form-control" placeholder="Accession no" ngModel name="accession_no" required>
+      <!-- info area -->
+      <div class="row">
+        <div class="col">
+          <div class="input1">
+            <label class="text2">Name:</label>
           </div>
-          <div class="butadj">
-          <button type="button" class="btn btn-primary" [disabled]="!form2.valid">Add</button>&nbsp;
-          <button type="submit" class="btn btn-success" [disabled]="!form2.valid">Issue</button>&nbsp;
-          <button type="reset" class="btn btn-danger">Clear</button>
-     </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="input2">
+            <label class="text2">Dept:</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="input3">
+            <label class="text2">Card no:</label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col">
+          <div class="input4">
+            <label class="text2">Year:</label>
+          </div>
+        </div>
+      </div>
+  </form>
+
+  <!-- Second Form Area -->
+  <form (ngSubmit)="onSubmit(form2)" #form2="ngForm">
+
+    <div class="row">
+
+      <div class="col-8 col-md-7">
+        &nbsp;
+        <input type="number" class="form-control textField" placeholder="Accession no" ngModel name="accession_no"
+          required>
+
+      </div>
+
+      <div class="col-4 col-md-5">
+        <button type="button" class="btn btn-primary" [disabled]="!form2.valid">Add</button>&nbsp;
+        <button type="submit" class="btn btn-success" [disabled]="!form2.valid">Issue</button>&nbsp;
+        <button type="reset" class="btn btn-danger">Clear</button>
+      </div>
+    </div>
+
+
+
+  </form>
+
+
+
+  <!-- Table Area -->
+  <div class="adjust">
+    <div class="tables" style="height:275px; overflow: scroll;">
+      <table class="table ">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col"># </th>
+            <th scope="col"> Accession No</th>
+            <th scope="col">Isbn </th>
+            <th scope="col">Title </th>
+            <th scope="col">Author </th>
+            <th scope="col"> Sub-Title </th>
+            <th scope="col">Edition </th>
+            <th scope="col">Edition Year </th>
+            <th scope="col">Publisher </th>
+            <th scope="col">Availiability </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>1254</td>
+            <td>letus c</td>
+            <td>1234</td>
+            <td>Animesh</td>
+            <td>10/05/2019</td>
+            <td>16/05/2019</td>
+
+
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>1254</td>
+            <td>letus c</td>
+            <td>1234</td>
+            <td>Animesh</td>
+            <td>10/05/2019</td>
+            <td>16/05/2019</td>
 
 
 
 
-    </form>
-     <div class="adjust">
-     <div class="tables" style="height:275px; overflow: scroll;">
-      <table class="table " >
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col"># </th>
-                <th scope="col"> Accession No</th>
-                <th scope="col">Isbn </th>
-                <th scope="col">Title </th>
-                <th scope="col">Author </th>
-                <th scope="col"> Sub-Title </th>
-                <th scope="col">Edition </th>
-                <th scope="col">Edition Year </th>
-                <th scope="col">Publisher </th>
-                <th scope="col">Availiability </th>
-              </tr>
-            </thead>
 
-            <tbody >
-              <tr  >
-                <th scope="row">1</th>
-                <td>1254</td>
-                <td>letus c</td>
-                <td>1234</td>
-                <td>Animesh</td>
-                <td>10/05/2019</td>
-                <td>16/05/2019</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>1254</td>
+            <td>letus c</td>
+            <td>1234</td>
+            <td>Animesh</td>
+            <td>10/05/2019</td>
+            <td>16/05/2019</td>
 
 
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>1254</td>
-                <td>letus c</td>
-                <td>1234</td>
-                <td>Animesh</td>
-                <td>10/05/2019</td>
-                <td>16/05/2019</td>
+        </tbody>
 
-
-
-
-
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>1254</td>
-                <td>letus c</td>
-                <td>1234</td>
-                <td>Animesh</td>
-                <td>10/05/2019</td>
-                <td>16/05/2019</td>
-
-
-           </tbody>
-
-          </table>
+      </table>
     </div>
   </div>
-    </div>
+</div>

@@ -6,7 +6,10 @@ input.ng-invalid.ng-touched{
     left: 15%;
     top: 8%;
 }
-
+.textField{
+    top: -5px;
+}
+/* 
 .input{
     position: absolute;
     width: 30%;
@@ -46,14 +49,14 @@ input.ng-invalid.ng-touched{
     left: 47%;
     width: 30%;
 }
-.input01 {
+/* .input01 {
     position: absolute;
     top: 37%;
     left: 25%;
 width:30%;
 
-}
-.butadj{
+} */
+/* .butadj{
   position: absolute;
   top: 41.5%;
   left: 57%;
@@ -63,5 +66,8 @@ width:30%;
   position: absolute;
   width: 100%;
   top:50%;
-}
+} 
 
+.form{
+    z-index: 999;
+} */
