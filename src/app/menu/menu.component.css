@@ -39,7 +39,6 @@ a:focus{
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #5d6d73;
     color: #fff;
     transition: all 0.3s;
 }
@@ -48,7 +47,7 @@ a:focus{
 }
 
 #sidebar .sidebar-header{
-	padding: 20px;
+	padding: 25px;
 	background: #6d7fcc;
 }
 #sidebar ul.components{
@@ -87,7 +86,6 @@ a[data-toggle="collapse"] {
     right: 20px;
     transform: translateY(-50%);
 }
-
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
@@ -122,15 +120,6 @@ a.article:hover {
     transition: all 0.3s;
 }
 
-@media(maz-width:768px){
-	#sidebar{margin-left: -250px;}
-	#sidebar.active{
-		margin-left: 0px;
-	}
-	#sidebarCollapse span{
-		display: none;
-	}
-}
 ul{
   margin-bottom: 0rem;
 }

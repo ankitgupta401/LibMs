@@ -1,44 +1,10 @@
-@media(max-width: 1920px)
-{
-  .side-m{
-   padding-left: 20%;
-  }
-}
-
-@media(max-width: 1366px)
-{
-  .side-m{
-   padding-left: 19%;
-  }
-}
-@media(max-width: 1200px)
-{
-  .side-m{
-   padding-left: 22%;
-  /* font-size: 20px;*/
-  }
-}
-@media(max-width: 850px)
-{
-  .side-m{
-   padding-left: 36%;
-   font-size: 15px;
-  }
-}
-@media(max-width: 720px)
-{
-  .side-m{
-   padding-left: 34%;
-   font-size: 15px;
-  }
-}
-
 .adjust{
   background-color: #5d6d73!important;
 padding:none;
 }
 h3{
   color:white;
+  padding: 10px;
 
 }
 hr{
@@ -59,6 +25,10 @@ a{
 }
 nav{
   padding: 0%;
+  background-color: lightgray;
+}
+.navbar{
+  background-color: lightgrey;
 }
 .adjust-m{
   display: block;
@@ -68,4 +38,8 @@ nav{
 
 img{
   width:28px;
+  background: transparent !important;
+}
+#navbarDropdownMenuLink{
+  background: lightgray;
 }
