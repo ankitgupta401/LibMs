@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-.headAdj{
-    font-size: 30px;
-    align-content: center;
-    position: relative;
-    text-align: center;
+.b-header{
+  
+        padding: 20px;
+        font-size: 30px;
 }

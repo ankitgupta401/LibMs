@@ -10,8 +10,11 @@ export class AppComponent {
   onOpen = 1;
   open = 0;
   toggle(): void {
-    if (this.onOpen === 1) {this.onOpen = 2;
-    } else {
+    if (this.onOpen === 1)
+    {
+       this.onOpen = 2;
+    } else 
+    {
       this.onOpen = 1;
     }
 }

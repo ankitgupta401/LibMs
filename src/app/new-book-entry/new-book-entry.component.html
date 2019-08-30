@@ -1,79 +1,73 @@
-
 <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-<div class="form">
+  <div class="form">
+    <div class="form-group1">
+      <label for="text" class="title">*Title:</label>
+      <input type="text" class="form-control" ngModel name="title" required>
+    </div>
+    <div class="form-group2 ">
+      <label for="pwd">*Author:</label>
+      <input type="text" class="form-control" ngModel name="author" required>
+    </div>
 
-    <!--div class="heading"><span>NEW BOOK ENTRY</span></div-->
+    <div class="form-group3">
+      <label for="text">*Pages:</label>
+      <input type="number" class="form-control" ngModel name="pages" required>
+    </div>
+    <div class="form-group4 ">
+      <label for="pwd">Subject:</label>
+      <input type="text" class="form-control" ngModel name="subject">
+    </div>
 
-   <div class="form-group1">
-       <label for="text"class="title">*Title:</label>
-       <input type="text" class="form-control"  ngModel name="title" required>
-     </div>
-     <div class="form-group2 ">
-       <label for="pwd">*Author:</label>
-       <input type="text" class="form-control"  ngModel name="author" required>
-     </div>
+    <div class="form-group5">
+      <label for="text">Topics:</label>
+      <input type="text" class="form-control" ngModel name="topics">
+    </div>
+    <div class="form-group6 ">
+      <label for="pwd">*Accession No:</label>
+      <input type="number" class="form-control" ngModel name="accession_no" required>
+    </div>
+    <div class="form-group7">
+      <label for="text">*Cost:</label>
+      <input type="number" class="form-control" ngModel name="cost" required>
+    </div>
+    <div class="form-group8 ">
+      <label for="pwd">*Publisher:</label>
+      <input type="text" class="form-control" ngModel name="publisher" required>
+    </div>
 
-   <div class="form-group3">
-           <label for="text">*Pages:</label>
-           <input type="number" class="form-control" ngModel name="pages" required>
-         </div>
-         <div class="form-group4 ">
-           <label for="pwd">Subject:</label>
-           <input type="text" class="form-control"   ngModel name="subject" >
-         </div>
+    <div class="form-group9">
+      <label for="text">Edition:</label>
+      <input type="text" class="form-control" ngModel name="edition">
+    </div>
+    <div class="form-group10 ">
+      <label for="pwd">Vol:</label>
+      <input type="text" class="form-control" ngModel name="volume">
+    </div>
 
-         <div class="form-group5">
-               <label for="text">Topics:</label>
-               <input type="text" class="form-control"  ngModel name="topics">
-             </div>
-             <div class="form-group6 ">
-               <label for="pwd">*Accession No:</label>
-               <input type="number" class="form-control"  ngModel name="accession_no" required>
-             </div>
-             <div class="form-group7">
-                   <label for="text">*Cost:</label>
-                   <input type="number" class="form-control"  ngModel name="cost" required>
-                 </div>
-                 <div class="form-group8 ">
-                   <label for="pwd">*Publisher:</label>
-                   <input type="text" class="form-control" ngModel name="publisher" required>
-                 </div>
+    <div class="form-group11">
+      <label for="text">Source:</label>
+      <input type="text" class="form-control" ngModel name="source">
+    </div>
+    <div class="form-group12 ">
+      <label for="pwd">Remark:</label>
+      <input type="text" class="form-control" ngModel name="remark">
+    </div>
 
-                 <div class="form-group9">
-                       <label for="text">Edition:</label>
-                       <input type="text" class="form-control" ngModel name="edition">
-                     </div>
-                     <div class="form-group10 ">
-                       <label for="pwd">Vol:</label>
-                       <input type="text" class="form-control"  ngModel name="volume">
-                     </div>
-
-                     <div class="form-group11">
-                           <label for="text">Source:</label>
-                           <input type="text" class="form-control"  ngModel name="source">
-                         </div>
-                         <div class="form-group12 ">
-                           <label for="pwd">Remark:</label>
-                           <input type="text" class="form-control"  ngModel name="remark">
-                         </div>
-
-                         <div class="form-group13">
-                               <label for="text">Year:</label>
-                               <input type="number" class="form-control"  ngModel name="year">
-                             </div>
-                             <div class="form-group14">
-                               <label for="pwd">*Isbn:</label>
-                               <input type="number" class="form-control"  ngModel name="isbn" required>
-                             </div>
+    <div class="form-group13">
+      <label for="text">Year:</label>
+      <input type="number" class="form-control" ngModel name="year">
+    </div>
+    <div class="form-group14">
+      <label for="pwd">*Isbn:</label>
+      <input type="number" class="form-control" ngModel name="isbn" required>
+    </div>
 
 
 
-                             <div class="button form-group16">
-                                   <button type="submit" class=" btn btn-success cen2 " [disabled]="!form.valid">SAVE</button>
+    <div class="button form-group16">
+      <button type="submit" class=" btn btn-success cen2 " [disabled]="!form.valid">SAVE</button>
 
-                                   <button type="reset" class="btn btn-warning cen">CLEAR</button>
-                                  </div>
-                             </div>
-                            </form>
-
-
+      <button type="reset" class="btn btn-warning cen">CLEAR</button>
+    </div>
+  </div>
+</form>

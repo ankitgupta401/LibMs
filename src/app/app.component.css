@@ -50,7 +50,14 @@ background: none;
 } */
 .col-md-12{
   background: lightgray;
+  text-shadow: 1px 3px 17px black;
+    box-shadow: -5px -7px 19px 0px black;
+    z-index: 1;
 }
 .col-lg-2, .col-md-4, .col-sm-3, .col-xs-3{
   background: grey;
 }
+img{
+  z-index: 1;
+}
+

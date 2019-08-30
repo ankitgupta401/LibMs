@@ -37,8 +37,9 @@ a:focus{
     align-items: stretch;
 }
 #sidebar {
-    min-width: 250px;
+    min-width: 150px;
     max-width: 250px;
+    overflow: hidden;
     color: #fff;
     transition: all 0.3s;
 }
@@ -56,7 +57,7 @@ a:focus{
 }
 
 #sidebar ul p{
-	padding: 10px;
+	padding: 15px;
 	font-size: 1.1em;
 	display: block;
 }
