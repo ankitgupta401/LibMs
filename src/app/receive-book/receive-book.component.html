@@ -1,199 +1,193 @@
-
-<div class="form">
-
-<div class="receivebook">
-
-
-
-              <div class="searchbox" >
-                <br><form (ngSubmit)="onSubmit(form)" #form="ngForm">
-                    <div class="form-row" >
-                      &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;
-                      <div  class="dropdown">
-                      <select class="form-control" id="exampleFormControlSelect1" [ngModel]="'student'" name="category" required>
-                                <option value="student">Student</option>
-                                <option value="teacher">Teacher</option>
-
-                              </select>
-
-                          </div>
-                          &nbsp;
-
-                            <div >
-
-                              <input type="text" class="form-control top" placeholder="Type Acession no" ngModel name="accession_no">
-                            </div> &nbsp; or &nbsp;
-
-                            <div >
-                                    <input type="text" class="form-control top" placeholder="Card No" ngModel name="card_no">
-
-                                  </div>
-                                  &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>
-                                  <br>
-
-                                </div>
-
-                              </form>
-
-
-
-</div>
-<div class="table1 " style="height:470px; overflow: scroll;">
-  <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Accession No</th>
-              <th scope="col">Book Name</th>
-              <th scope="col">Card No</th>
-              <th scope="col">Name</th>
-              <th scope="col"> Issued Date</th>
-              <th scope="col">Received Date</th>
-              <th scope="col">Status</th>
-              <th scope="col">Fine</th>
-              <th scope="col">Action</th>
-
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Markdgfsdgsdf</td>
-              <td>sfdfsdgsdgsd</td>
-              <td>@mdgsdjkhgfjshfdo</td>
-              <td>Madsfdsfrk</td>
-              <td>Otsdfdsfsto</td>
-              <td>@mdfsdfsdo</td>
-              <td>Madfsdfrk</td>
-              <td>Otdsfsdfto</td>
-              <td>
-
-                <button onclick="document.getElementById('id01').style.display='block'" class="btn " ><img src="assets/icons/tick.png"></button>
-
-<div id="id01" class="modal">
-
-  <form class="modal-content animate" action="/action_page.php">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-
-    </div>
-
-    <div class="container">
-<h3>Return Book Management</h3>
-<div class="modal-body" style="padding-top: 4%; padding-left: 20%;">
-                      <div class="row">
-                        <div class="holder_sub_book_lst">
-                          <table class="table table-bordered tbl_book_lst">
-                            <tbody>
-                            <tr>
-                              <td>
-                                <input type="text" placeholder="Select return date"
-                                       id="date_of_return" ng-model="date_of_return"
-                                       class="form-control fix_radius">
-                              </td>
-                              <td style="padding: 13px;font-size: large;">
-                                  Rs.                              </td>
-                              <td>
-                                <input type="text" id="fine" placeholder="Fine if Any.."
-                                       ng-model="fine" class="form-control fix_radius">
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="3">
-                                                                <textarea rows="2" id="note_on_return"
-                                                                          ng-model="note_on_return"
-                                                                          class="form-control fix_radius"
-                                                                          placeholder="Note if any"></textarea>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="3">
-                                <div style="float:right;">
-                                  <button class="btn btn-primary fix_radius"
-                                          ng-click="btn_returnBook()">Return Book
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                            </tbody>
-                          </table>
-                        </div>
+    <div class="form">
+        <div class="searchbox">
+            <br>
+            <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+          <div class="form-row">
+              
+              <div  class="dropdown">
+    
+                  <select class="form-control" id="exampleFormControlSelect1" [ngModel]="'student'" name="category" required>
+                          <option value="student">Student</option>
+                          <option value="teacher">Teacher</option>
+    
+                        </select>
+    
+                    </div>
+                   
+              <input type="text" class="form-control" placeholder="Type Acession no" ngModel name="accession_no"> <a>&nbsp; or &nbsp;</a>
+                 
+    
+                  <input type="text" class="form-control" placeholder="Card No" ngModel name="card_no">
+    
+            
+                         <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>
+    
                       </div>
-                    </div>
-
-</div>
-
-  </form>
-</div>
-
-                <button onclick="document.getElementById('id02').style.display='block'" class="btn  " ><img src="assets/icons/mail.png"></button>
-
-                <div id="id02" class="modal">
-
-                  <form class="modal-content animate" action="/action_page.php">
-                    <div class="imgcontainer">
-                      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-
-                    </div>
-
-                    <div class="container">
-                <h3>Notify The User</h3>
-                <div class="modal-body" style="padding-top: 4%; padding-left: 20%;">
-                                      <div class="row">
-                                        <div class="holder_sub_book_lst">
-                                          <table class="table table-bordered tbl_book_lst" style="width:200%;">
-                                            <tbody>
-                                            <tr>
-                                              <td >
-                                                <input type="text" placeholder="Email Address"
-                                                       id="date_of_return" ng-model="date_of_return"
-                                                       class="form-control fix_radius" >
-                                              </td>
+                    </form>
+          </div>
+    <div class="row">
+      <div class="col">
 
 
-                                            </tr>
-                                            <tr>
-                                              <td colspan="3">
-                                                                                <textarea rows="2" id="note_on_return"
-                                                                                          ng-model="note_on_return"
-                                                                                          class="form-control fix_radius"
-                                                                                          placeholder="Notice"></textarea>
-                                              </td>
-                                            </tr>
-                                            <tr>
-                                              <td colspan="3">
-                                                <div style="float:right;">
-                                                  <button class="btn btn-primary fix_radius"
-                                                          ng-click="btn_returnBook()">Send Email
-                                                  </button>
-                                                </div>
-                                              </td>
-                                            </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
+        <!-- Working Area Of Table -->
+        <div class="table1 " style="height:470px; overflow: scroll;">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Accession No</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Card No</th>
+                <th scope="col">Name</th>
+                <th scope="col"> Issued Date</th>
+                <th scope="col">Received Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Fine</th>
+                <th scope="col">Action</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Markdgfsdgsdf</td>
+                <td>sfdfsdgsdgsd</td>
+                <td>@mdgsdjkhgfjshfdo</td>
+                <td>Madsfdsfrk</td>
+                <td>Otsdfdsfsto</td>
+                <td>@mdfsdfsdo</td>
+                <td>Madfsdfrk</td>
+                <td>Otdsfsdfto</td>
+                <td>
+
+                  <button onclick="document.getElementById('id01').style.display='block'" class="btn "><img
+                      src="assets/icons/tick.png"></button>
+
+                  <div id="id01" class="modal">
+
+                    <form class="modal-content animate" action="/action_page.php">
+                      <div class="imgcontainer">
+                        <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                          title="Close Modal">&times;</span>
+
+                      </div>
+
+                      <div class="container">
+                        <h3>Return Book Management</h3>
+                        <div class="modal-body" style="padding-top: 4%; padding-left: 20%;">
+                          <div class="row">
+                            <div class="holder_sub_book_lst">
+                              <table class="table table-bordered tbl_book_lst">
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <input type="text" placeholder="Select return date" id="date_of_return"
+                                        ng-model="date_of_return" class="form-control fix_radius">
+                                    </td>
+                                    <td style="padding: 13px;font-size: large;">
+                                      Rs. </td>
+                                    <td>
+                                      <input type="text" id="fine" placeholder="Fine if Any.." ng-model="fine"
+                                        class="form-control fix_radius">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="3">
+                                      <textarea rows="2" id="note_on_return" ng-model="note_on_return"
+                                        class="form-control fix_radius" placeholder="Note if any"></textarea>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="3">
+                                      <div style="float:right;">
+                                        <button class="btn btn-primary fix_radius" ng-click="btn_returnBook()">Return
+                                          Book
+                                        </button>
                                       </div>
-                                    </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
 
-                </div>
+                      </div>
 
-                  </form>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
-</div>
-</div>
+                    </form>
+                  </div>
+
+                  <button onclick="document.getElementById('id02').style.display='block'" class="btn  "><img
+                      src="assets/icons/mail.png"></button>
+
+                  <div id="id02" class="modal">
+
+                    <form class="modal-content animate" action="/action_page.php">
+                      <div class="imgcontainer">
+                        <span onclick="document.getElementById('id02').style.display='none'" class="close"
+                          title="Close Modal">&times;</span>
+
+                      </div>
+
+                      <div class="container">
+                        <h3>Notify The User</h3>
+                        <div class="modal-body" style="padding-top: 4%; padding-left: 20%;">
+                          <div class="row">
+                            <div class="holder_sub_book_lst">
+                              <table class="table table-bordered tbl_book_lst" style="width:200%;">
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <input type="text" placeholder="Email Address" id="date_of_return"
+                                        ng-model="date_of_return" class="form-control fix_radius">
+                                    </td>
+
+
+                                  </tr>
+                                  <tr>
+                                    <td colspan="3">
+                                      <textarea rows="2" id="note_on_return" ng-model="note_on_return"
+                                        class="form-control fix_radius" placeholder="Notice"></textarea>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="3">
+                                      <div style="float:right;">
+                                        <button class="btn btn-primary fix_radius" ng-click="btn_returnBook()">Send
+                                          Email
+                                        </button>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+
