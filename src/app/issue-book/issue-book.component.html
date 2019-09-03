@@ -12,7 +12,7 @@
           </select>
         </div>
       </div>
-   
+
       <div class="col-6 col-md-3">
       <div class="input">
         <input type="text" class="form-control" placeholder="Card no" ngModel name="cardNo" required>
@@ -68,17 +68,19 @@
 
     <div class="row">
 
-      <div class="col-8 col-md-7">
+      <div class="col-6 col-md-3 ">
         &nbsp;
-        <input type="number" class="form-control textField" placeholder="Accession no" ngModel name="accession_no"
+        <input type="number" class="form-control" placeholder="Accession no" ngModel name="accession_no"
           required>
 
       </div>
 
       <div class="col-4 col-md-5">
+        <br>
         <button type="button" class="btn btn-primary" [disabled]="!form2.valid">Add</button>&nbsp;
         <button type="submit" class="btn btn-success" [disabled]="!form2.valid">Issue</button>&nbsp;
         <button type="reset" class="btn btn-danger">Clear</button>
+
       </div>
     </div>
 
@@ -87,7 +89,7 @@
   </form>
 
 
-
+  <br>
   <!-- Table Area -->
   <div class="adjust">
     <div class="tables" style="height:275px; overflow: scroll;">
