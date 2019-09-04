@@ -7,15 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Libms';
-  onOpen = 1;
-  open = 0;
+  onOpen = 0;
+  open = true;
   toggle(): void {
-    if (this.onOpen === 1)
-    {
-       this.onOpen = 2;
-    } else 
-    {
-      this.onOpen = 1;
+    if (this.onOpen === 0) {
+       this.onOpen = 1;
+       this.open = false;
+    } else {
+      this.onOpen = 0;
+      this.open = true;
     }
 }
 }
