@@ -1,4 +1,4 @@
-
+/*
 
   .input1{
     position: absolute;
@@ -100,4 +100,7 @@ img{
   position: absolute;
   top: 90%;
   left: 80%
+} */
+.btn{
+  margin-top: 50px;
 }
