@@ -14,3 +14,5 @@ function changeClass(){
   document.getElementsById("workDiv").classList.toggle("col-lg-12");
 
 }
+
+

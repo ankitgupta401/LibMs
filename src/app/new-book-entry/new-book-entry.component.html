@@ -1,5 +1,5 @@
 <form (ngSubmit)="onSubmit(form)" #form="ngForm">
- 
+
   <div class="form">
 
 
@@ -93,7 +93,7 @@
     <div class="row">
       <div class="button col-6 offset-4">
 
-        <button type="submit" class=" btn btn-success cen2 " [disabled]="!form.valid">SAVE</button>
+        <button type="submit" class=" btn btn-success cen2 " [disabled]="!form.valid" (click)="barcode()">SAVE</button>
 
         <button type="reset" class="btn btn-warning cen">CLEAR</button>
       </div>
