@@ -7,12 +7,16 @@
         <div class="form-row ">
 
             &nbsp;&nbsp;
-                   <input type="text" class="form-control" placeholder="Email" name="email" ngModel email > &nbsp; or &nbsp;
-
-                   <input type="text" class="form-control" placeholder="Card No" name="card_no" ngModel >&nbsp; or &nbsp;
-
-                      <input type="text" class="form-control" placeholder="Phone No" name="phone_no" ngModel >
-                      &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>
+            <div class="row">
+              <div class="col">
+                   <input type="text" class="form-control" placeholder="Email" name="email" ngModel email > &nbsp; &nbsp;</div>or
+              <div class="col">
+                   <input type="text" class="form-control" placeholder="Card No" name="card_no" ngModel >&nbsp; &nbsp;</div>or
+                <div class="col">
+                      <input type="text" class="form-control" placeholder="Phone No" name="phone_no" ngModel ></div>or
+                      <div class="col">
+                      &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button></div>
+                      </div>
               </div>
             </form>
             </div><br>
@@ -62,25 +66,31 @@
                     <h3>Edit Details</h3>
                     <div class="modal-body" style="padding-top: 4%; padding-left: 20%;">
                                           <div class="row">
-                                            <div class="holder_sub_book_lst">
+                                            <div>
 <!-- Add the content here   -->
 <div class="form">
 
 
-    <div class="input1">
-          <label for="exampleInputPassword1">FirstName:</label>
-          <input type="text" class="form-control"  placeholder="Name">
-       </div>
-       <div class="input2">
+<div class="row">
+       <div class="col">
+        <label for="exampleInputPassword1">FirstName</label>
+        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+
+       <div class="col">
           <label for="exampleInputPassword1">LastName:</label>
           <input type="text" class="form-control"  placeholder="Dept">
        </div>
-       <div class="input3">
+       </div>
+<div class="row">
+      <div class="col">
           <label for="exampleInputPassword1">Email:</label>
           <input type="text" class="form-control"  placeholder="Email">
        </div>
+      </div>
 
-       <div class="input4">
+       <div class="row">
+         <div class="col">
          <label for="exampleFormControlSelect1">CourseName:</label>
          <select class="form-control" id="exampleFormControlSelect1">
            <option>CST</option>
@@ -95,7 +105,7 @@
 
 
 
-  <div class="input5">
+<div class="col">
   <label for="exampleFormControlSelect1">Year:</label>
   <select class="form-control" id="exampleFormControlSelect1">
    <option>1st year</option>
@@ -103,9 +113,11 @@
    <option>3rd year</option>
   </select>
   </div>
+  </div>
 
 
-  <div class="input7">
+  <div class="row">
+    <div class="col">
    <label for="exampleInputPassword1">Phone:</label>
    <input type="text" class="form-control"  placeholder="Phone">
    </div>
@@ -115,7 +127,7 @@
 
 
 
-  <div class="input6">
+  <div class="col">
   <label for="exampleFormControlSelect1">Semester:</label>
   <select class="form-control" id="exampleFormControlSelect1">
    <option>1st sem</option>
@@ -126,20 +138,22 @@
    <option>6th sem</option>
   </select>
   </div>
+  </div>
 
-
-  <div class="input8">
+<div class="row">
+  <div class="col">
   <label for="exampleFormControlTextarea1">Address:</label>
   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
   </div>
+</div>
 
-
-  <div class="input9">
+<div class="row">
+  <div class="col">
   <label for="exampleInputPassword1">City:</label>
   <input type="text" class="form-control"  placeholder="City">
   </div>
 
-  <div class="input10">
+  <div class="col">
    <label for="exampleFormControlSelect1">State:</label>
    <select class="form-control" id="exampleFormControlSelect1">
      <option></option>
@@ -174,33 +188,36 @@
      <option>West Bengal</option>
      </select>
   </div>
+</div>
 
-  <div class="input11">
+<div class="row">
+  <div class="col">
    <label for="exampleInputPassword1">Zip:</label>
    <input type="text" class="form-control"  placeholder="Zip">
   </div>
 
-
-  <div class="input12">
+<div class="col">
   <label for="exampleFormControlSelect1">Role:</label>
   <select class="form-control" id="exampleFormControlSelect1">
    <option>Student</option>
    <option>Teacher</option>
    </select>
    </div>
+</div>
 
 
-   <div class="upload">
+   <!----<div class="upload">
        <img id="blah" [src]="'http://placehold.it/180'" alt="your image" >
-       </div>
+       </div>-->
 
       <!-- <div class="uploadinput">
            <input type='file' (change)="readURL($event);" />
        </div>-->
-
-       <div class="save">
+<div class="row">
+     <div class="col-md-0 offset-md-3">
            <button type="button" class="btn btn-success">SAVE</button>&nbsp;
            <button type="button" class="btn btn-warning">RESET</button>
+       </div>
        </div>
 
 
