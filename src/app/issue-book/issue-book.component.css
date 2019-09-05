@@ -9,7 +9,7 @@ input.ng-invalid.ng-touched{
 .textField{
     top: -5px;
 }
-/* 
+/*
 .input{
     position: absolute;
     width: 30%;
@@ -66,7 +66,7 @@ width:30%;
   position: absolute;
   width: 100%;
   top:50%;
-} 
+}
 
 .form{
     z-index: 999;

@@ -13,7 +13,7 @@
     <div class="col-lg-2 col-md-4 col-sm-3 col-xs-3" [hidden]="onOpen">
       <app-menu ></app-menu>
     </div>
-      <div class="col-lg-10 col-md-8 col-sm-9 col-xs-9" [ngClass]="{'offset-1': onOpen}">
+      <div   [ngClass]="open ? 'col-lg-10 col-md-8 col-sm-9 col-xs-9': 'col-lg-12 col-md-10 col-sm-8 col-xs-7' ">
         <div>
           <router-outlet></router-outlet>
         </div>
