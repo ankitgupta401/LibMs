@@ -1,3 +1,10 @@
 img{
     width:20px;
 }
+
+.modal{
+    top: 286px;
+    left: 180px;
+    width: 74%;
+    height: 88%;
+}
