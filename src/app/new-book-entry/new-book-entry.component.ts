@@ -12,7 +12,7 @@ export class NewBookEntryComponent implements OnInit {
 onSubmit(form: NgForm) {
 console.log(form);
 }
-  ngOnInit() {
-  }
 
+ngOnInit() {
+  }
 }
