@@ -1,3 +1,4 @@
+import { NgModule } from '@angular/core';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayComponent } from './new-book-entry/lay/lay.component';
 import { IssueLayComponent } from './issue-book/issue-lay/issue-lay.component';
@@ -8,8 +9,9 @@ import { Routes , RouterModule } from '@angular/router';
 import { RecRegLayComponent } from './receive-register/rec-reg-lay/rec-reg-lay.component';
 import { LibRegLayComponent } from './lib-card-reg/lib-reg-lay/lib-reg-lay.component';
 import { NewCardLayComponent } from './new-lib-card/new-card-lay/new-card-lay.component';
-import { NgModule } from '@angular/core';
+import { BarcodeComponent } from './barcode/barcode.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
 
 
 const appRoutes: Routes = [
@@ -23,6 +25,7 @@ const appRoutes: Routes = [
   { path: 'book-list', component: LayBooklistComponent  },
   { path: 'lib-card-list', component: LibRegLayComponent   },
   { path: 'new-lib-card', component: NewCardLayComponent  },
+  { path: 'barcodes', component: BarcodeComponent  },
  { path: 'page-not-found', component: PageNotFoundComponent  },
  { path: '**', redirectTo: '/page-not-found' },
 ];

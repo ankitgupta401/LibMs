@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { NgxBarcodeModule } from 'ngx-barcode';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { HeaderComponent } from './header/header.component';
@@ -24,6 +25,9 @@ import { LibRegLayComponent } from './lib-card-reg/lib-reg-lay/lib-reg-lay.compo
 import { NewLibCardComponent } from './new-lib-card/new-lib-card.component';
 import { NewCardLayComponent } from './new-lib-card/new-card-lay/new-card-lay.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { BarcodeComponent } from './barcode/barcode.component';
+
+
 
 
 @NgModule({
@@ -49,6 +53,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     NewLibCardComponent,
     NewCardLayComponent,
     PageNotFoundComponent,
+    BarcodeComponent,
+
 
   ],
   imports: [
@@ -56,7 +62,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxBarcodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

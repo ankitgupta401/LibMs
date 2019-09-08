@@ -1,11 +1,12 @@
 input.ng-invalid.ng-touched{
   border: 1px solid red;
 }
-.dropdown{
+/* .dropdown{
     position: absolute;
     left: 15%;
     top: 8%;
-}
+
+} */
 .textField{
     top: -5px;
 }
@@ -75,3 +76,4 @@ width:30%;
 .text2{
     padding: 7px;
 }
+
