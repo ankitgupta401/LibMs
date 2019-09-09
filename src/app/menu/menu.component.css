@@ -42,8 +42,8 @@ a:focus{
     overflow: hidden;
     color: #fff;
     transition: all 0.3s;
-    padding-top: 19px;
-    padding-bottom: 19px;
+    padding-top: 10%;
+    padding-bottom: 4%;
 }
 #sidebar.active{
 	margin-left: -250px;
@@ -54,7 +54,7 @@ a:focus{
 	background: #6d7fcc;
 }
 #sidebar ul.components{
-	
+
 	border-bottom: 1px solid #47748b;
 }
 
@@ -65,7 +65,7 @@ a:focus{
 }
 
 #sidebar ul li a{
-	padding: 15px;
+	padding: 5%;
 	font-size: 1.1em;
 	display: block;
 }
