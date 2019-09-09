@@ -1,3 +1,10 @@
 img{
     width:20px;
 }
+
+.modal{
+    top: 322px;
+    width: 100%;
+    padding-right: 500px;
+    padding-left: 200px;
+}
