@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Barcode } from './barcode.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+providers: [Barcode]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Libms';
   onOpen = 0;
   open = true;
@@ -17,5 +19,11 @@ export class AppComponent {
       this.onOpen = 0;
       this.open = true;
     }
+
 }
+constructor(private bar: Barcode) {}
+ngOnInit(): void {
+
+}
+
 }

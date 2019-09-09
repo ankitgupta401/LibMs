@@ -93,8 +93,9 @@
     <div class="row">
       <div class="button col-6 offset-4">
 
-        <button type="submit" class=" btn btn-success cen2 " [disabled]="!form.valid" (click)="barcode()">SAVE</button>
-
+        <button type="submit" class=" btn btn-success cen2 " [disabled]="!form.valid" (click)="barcode(form)">SAVE</button>
+        &nbsp;
+        <button type="button" class="btn btn-primary" routerLink="/barcodes" > Print</button>
         <button type="reset" class="btn btn-warning cen">CLEAR</button>
       </div>
     </div>

@@ -1,0 +1,7 @@
+<br>
+<div >
+<td  *ngFor="let policy of accList; let i = index">
+    <ngx-barcode [bc-value]="accList[i]" [bc-display-value]="true" ></ngx-barcode> &nbsp;
+  </td>
+  <button class="btn btn-primary" (click)="print()">Print</button>
+</div>

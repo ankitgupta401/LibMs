@@ -54,7 +54,7 @@ a:focus{
 	background: #6d7fcc;
 }
 #sidebar ul.components{
-	padding: 7.3% 0px;
+	
 	border-bottom: 1px solid #47748b;
 }
 
@@ -65,7 +65,7 @@ a:focus{
 }
 
 #sidebar ul li a{
-	padding: 17px;
+	padding: 15px;
 	font-size: 1.1em;
 	display: block;
 }
@@ -96,7 +96,8 @@ ul ul a {
 }
 
 ul.CTAs {
-    padding: 22px;
+    padding-left: 22px;
+    padding-top: 24px;
 }
 
 ul.CTAs a {

@@ -102,5 +102,10 @@ img{
   left: 80%
 } */
 .btn{
-  margin-top: 50px;
+  margin-top: 25px;
+  margin-bottom: 0px;
+}
+
+#blah{
+  height: 100px;
 }

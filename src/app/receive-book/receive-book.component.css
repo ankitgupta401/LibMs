@@ -3,8 +3,15 @@ img{
 }
 
 .modal{
+<<<<<<< HEAD
     top: 322px;
     width: 100%;
     padding-right: 500px;
     padding-left: 200px;
+=======
+    top: 286px;
+    left: 180px;
+    width: 74%;
+    height: 88%;
+>>>>>>> d1e1321ae7f09ab9c371adc9b7f69c328a8d56c2
 }
