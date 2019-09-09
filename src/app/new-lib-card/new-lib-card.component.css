@@ -113,3 +113,6 @@ img{
   padding: 0px 20px;
   height: 35px;
 }
+input.ng-invalid.ng-touched{
+  border: 1px solid red;
+}

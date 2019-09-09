@@ -42,8 +42,8 @@ a:focus{
     overflow: hidden;
     color: #fff;
     transition: all 0.3s;
-    padding-top: 10%;
-    padding-bottom: 4%;
+    padding-top: 18%;
+    padding-bottom: 10%;
 }
 #sidebar.active{
 	margin-left: -250px;
