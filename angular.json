@@ -92,9 +92,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": ["../node_modules/chart.js/dist/Chart.min.js"]
+            "scripts": ["../node_modules/chart.js/dist/Chart.min.js",
+              "https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"]
           }
         },
         "lint": {
