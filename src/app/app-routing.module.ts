@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { LayDashboardComponent } from './dashboard/lay-dashboard/lay-dashboard.component';
 import { LayComponent } from './new-book-entry/lay/lay.component';
 import { IssueLayComponent } from './issue-book/issue-lay/issue-lay.component';
 import { ReceiveLayComponent } from './receive-book/receive-lay/receive-lay.component';
@@ -14,9 +14,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 
 
+
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
-  { path: 'dashboard', component: DashboardComponent  },
+  { path: 'dashboard', component: LayDashboardComponent  },
   { path: 'new-book-entry', component: LayComponent },
   { path: 'issue-book', component: IssueLayComponent },
   { path: 'receive-book', component: ReceiveLayComponent },
