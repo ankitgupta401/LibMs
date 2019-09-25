@@ -42,4 +42,5 @@ img{
 }
 #navbarDropdownMenuLink{
   background: lightgray;
+  cursor: pointer;
 }

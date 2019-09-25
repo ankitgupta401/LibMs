@@ -9,6 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NewBookEntryComponent } from './new-book-entry/new-book-entry.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { LayDashboardComponent } from './dashboard/lay-dashboard/lay-dashboard.component';
 import { LayComponent } from './new-book-entry/lay/lay.component';
 import { IssueBookComponent  } from './issue-book/issue-book.component';
 import { IssueLayComponent } from './issue-book/issue-lay/issue-lay.component';
@@ -37,6 +38,7 @@ import { BarcodeComponent } from './barcode/barcode.component';
     HeaderComponent,
     NewBookEntryComponent,
     DashboardComponent,
+    LayDashboardComponent,
     LayComponent,
     IssueBookComponent,
     IssueLayComponent,
@@ -55,15 +57,20 @@ import { BarcodeComponent } from './barcode/barcode.component';
     PageNotFoundComponent,
     BarcodeComponent,
 
-
+    
+  
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
     AppRoutingModule,
-    NgxBarcodeModule
+    NgxBarcodeModule,
+    
+    
+   
   ],
   providers: [],
   bootstrap: [AppComponent]
