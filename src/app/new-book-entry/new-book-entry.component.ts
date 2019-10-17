@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Barcode } from '../barcode.service';
+import { All } from '../app.service';
 
 @Component({
   selector: 'app-new-book-entry',
@@ -9,9 +10,9 @@ import { Barcode } from '../barcode.service';
 })
 export class NewBookEntryComponent implements OnInit {
 
-  constructor(private bar: Barcode) { }
+  constructor(private bar: Barcode, private app: All) { }
 onSubmit(form: NgForm) {
-console.log(form);
+this.app.addBooks(form.value);
 }
 barcode( form: NgForm) {
   this.bar.barcodeGenerate(form.value.accession_no);

@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy, } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { All } from '../app.service';
+import { Libcard } from '../Libcard.model';
 
 @Component({
   selector: 'app-new-lib-card',
@@ -8,22 +10,9 @@ import { NgForm } from '@angular/forms';
 })
 export class NewLibCardComponent implements OnInit , OnDestroy {
   // details: any[] = [];
+  constructor( private app: All) {}
   fileToUpload: File = null;
-details: {
-  address: '',
-category: '',
-city: '',
-dept: '',
-email: '',
-fname: '',
-lname: '',
-phone_no: 0,
-Roll: 0,
-sem: '',
-state: '',
-year: '',
-zip: 0,
-}[] = [];
+details: Libcard = null;
 cardNo = 1000;
   teacher = false;
   SelectedFile = null;
@@ -47,7 +36,9 @@ handleFileInput(file: FileList) {
 onSubmit(form: NgForm) {
   console.log(form);
   this.details = form.value;
-  this.cardNo = this.cardNo + 1;
+  this.details.cardNo = this.cardNo;
+  this.app.addLibCard(this.details);
+  this.cardNo++;
 }
   print_Data(form: NgForm) {
 

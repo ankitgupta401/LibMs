@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Barcode } from './barcode.service';
+import { All } from './app.service';
 
 
 
@@ -10,7 +11,7 @@ import { Barcode } from './barcode.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-providers: [Barcode]
+providers: [Barcode, All]
 
 
 

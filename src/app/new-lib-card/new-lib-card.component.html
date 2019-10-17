@@ -26,7 +26,7 @@
        </div>
        <div class="col-3">
         <label for="exampleInputPassword1">roll:</label>
-        <input type="text" class="form-control"  placeholder="roll No"  [disabled]="teacher" ngModel name="Roll" number required >
+        <input type="number" class="form-control"  placeholder="roll No"  [disabled]="teacher" ngModel name="Roll" number required >
      </div>
      </div>
      <div class="row">
@@ -179,7 +179,7 @@
                     <tr>
                       <td id="p_img_td" rowspan="8" style="width: 186px;border-right: 1px solid lightgrey;">
                         <img ng-src="https://www.library-management.com/wp-content/uploads/2018/04/IMG_1524749478.jpeg" class="img-rounded" alt="User Pic" style="width: 169px;height: 156px;" [src]="image">
-                        <ngx-barcode [bc-value]="cardNo" [bc-display-value]="true" ></ngx-barcode> &nbsp;
+                        <ngx-barcode [bc-value]="details?.cardNo" [bc-display-value]="true" ></ngx-barcode> &nbsp;
                       </td>
                       <td style="background-color: beige;padding-bottom: 0px;height: 42px;">
                         <h3 style="text-align:center;font-weight: bold;margin: 2px;margin-bottom: -4px;">
@@ -194,21 +194,21 @@
                       <td>Siliguri Govt Polytechnic</td>
                     </tr>
                     <tr>
-                      <td>CardNo : <span style="font-weight: 700;" class="ng-binding">{{ cardNo  }}</span>
+                      <td>CardNo : <span style="font-weight: 700;" class="ng-binding">{{ details?.cardNo }}</span>
                       </td>
                     </tr>
                     <tr>
-                      <td class="ng-binding">Name : {{ details?.fname | uppercase}} &nbsp;&nbsp; {{ details.lname | uppercase }}</td>
+                      <td class="ng-binding">Name : {{ details?.fname | uppercase }} &nbsp;&nbsp; {{ details?.lname | uppercase }}</td>
                     </tr>
                     <tr>
-                      <td class="ng-binding">Phone : {{ details.phone_no }}</td>
+                      <td class="ng-binding">Phone : {{ details?.phone_no }}</td>
                     </tr>
                     <tr ng-show="printScope.role=='Student'" class="">
-                      <td class="ng-binding">Course : {{ details.dept | uppercase}}
+                      <td class="ng-binding">Course : {{ details?.dept | uppercase}}
                       </td>
                     </tr>
                     <tr ng-show="printScope.role=='Teacher'" class="ng-hide">
-                      <td class="ng-binding">Designation : {{ details.category | uppercase }}
+                      <td class="ng-binding">Designation : {{ details?.category | uppercase }}
                       </td>
                     </tr>
                     <tr>
@@ -220,10 +220,10 @@
                   <table id="p_tbl2" class="table table-striped" style="width: 50%;float:right;margin-right: 6px;table-layout: fixed;border: 1px solid black;height: 330px;     border-collapse: initial;">
                     <tbody>
                     <tr>
-                      <td class="ng-binding">Email : {{ details.email }}</td>
+                      <td class="ng-binding">Email : {{ details?.email }}</td>
                     </tr>
                     <tr>
-                      <td class="ng-binding">Address :  {{ details.address | uppercase }}</td>
+                      <td class="ng-binding">Address :  {{ details?.address | uppercase }}</td>
                     </tr>
                     <tr>
                       <td>
