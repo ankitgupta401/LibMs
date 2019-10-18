@@ -20,9 +20,12 @@ console.log(form);
   ngOnInit() {
     this.app.getBooks();
     this.booksub = this.app.getBooksUpdateListener()
-    .subscribe((book: Books[]) => {
-this.books = book;
+    .subscribe(( books: Books[]) => {
+this.books = books;
     });
+  }
+  onDelete(id: string) {
+    this.app.onDeleteBook(id);
   }
 
 }

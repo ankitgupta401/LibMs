@@ -64,9 +64,9 @@
                                             <div class="holder_sub_book_lst">
                                            <h4>   <b>Once Deleted The Changes Cannot Be Undone!</b></h4>
                                           <p>Are You Sure?</p>
-                                                      <button class="btn btn-danger fix_radius">Yes &nbsp;
+                                                      <button class="btn btn-danger fix_radius" (click)="onDelete(book._id)">Yes &nbsp;
                                                       </button>&nbsp;
-                                                      <button class="btn btn-warning fix_radius" >No
+                                                      <button class="btn btn-warning fix_radius" onclick="document.getElementById('id01').style.display='none'">No
                                               </button>
                                                     </div>
 

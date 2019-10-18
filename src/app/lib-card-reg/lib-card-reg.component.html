@@ -41,7 +41,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let card of LibCard;let i=index">
+
+        <tr *ngFor="let card of LibCards;let i=index">
           <th scope="row">{{ i + 1 }}</th>
           <td>{{ card.cardNo }}</td>
           <td>{{ card.fname | uppercase }} &nbsp; {{ card.lname | uppercase }}</td>
@@ -372,7 +373,7 @@
                                           <p>Are You Sure?</p>
                                                       <button class="btn btn-danger fix_radius" (click)="onDelete(card._id)">Yes &nbsp;
                                                       </button>&nbsp;
-                                                      <button class="btn btn-warning fix_radius" >No
+                                                      <button class="btn btn-warning fix_radius" onclick="document.getElementById('id03').style.display='none'">No
                                               </button>
                                                     </div>
 

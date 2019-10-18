@@ -1,5 +1,5 @@
 export interface Books {
-_id: number;
+_id: string;
 accession_no: number;
 author: string;
 cost: number;

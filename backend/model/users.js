@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
 fname: { type:String, required: true},
 lname: { type:String, required: true},
-cardNo: { type:Number, required: true},
+cardNo: { type:Number},
 address: { type:String, required: true},
 Roll: { type:Number, required: true},
 category: { type:String, required: true},

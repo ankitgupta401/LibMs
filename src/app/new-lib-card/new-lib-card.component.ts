@@ -10,10 +10,12 @@ import { Libcard } from '../Libcard.model';
 })
 export class NewLibCardComponent implements OnInit , OnDestroy {
   // details: any[] = [];
-  constructor( private app: All) {}
+  constructor( private app: All) {
+
+  }
   fileToUpload: File = null;
 details: Libcard = null;
-cardNo = 1000;
+cardNo: number;
   teacher = false;
   SelectedFile = null;
   image = 'http://placehold.it/180';
@@ -36,9 +38,8 @@ handleFileInput(file: FileList) {
 onSubmit(form: NgForm) {
   console.log(form);
   this.details = form.value;
-  this.details.cardNo = this.cardNo;
   this.app.addLibCard(this.details);
-  this.cardNo++;
+
 }
   print_Data(form: NgForm) {
 
@@ -47,8 +48,10 @@ onSubmit(form: NgForm) {
   printPreview() {
     window.print();
   }
+
   // tslint:disable-next-line: adjacent-overload-signatures
   ngOnInit() {
+
   }
 
   ngOnDestroy() {

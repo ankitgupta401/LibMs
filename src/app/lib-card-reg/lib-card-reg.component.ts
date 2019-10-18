@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { All } from '../app.service';
 import { Libcard } from '../Libcard.model';
@@ -9,8 +9,8 @@ import { Subscription } from 'rxjs';
   templateUrl: './lib-card-reg.component.html',
   styleUrls: ['./lib-card-reg.component.css']
 })
-export class LibCardRegComponent implements OnInit {
-LibCard: Libcard[] = [];
+export class LibCardRegComponent implements OnInit, OnDestroy {
+LibCards: Libcard[] = [];
 year = 2019;
 private userSub: Subscription;
   constructor(private app: All) {
@@ -22,10 +22,13 @@ console.log(form);
     this.app.getUsers();
     this.userSub = this.app.getUsersUpdateListener()
       .subscribe((users: Libcard[]) => {
-        this.LibCard = users;
+        this.LibCards = users;
       });
   }
 onDelete(id: string) {
 this.app.DeleteUser(id);
+}
+ ngOnDestroy() {
+this.userSub.unsubscribe();
 }
 }
