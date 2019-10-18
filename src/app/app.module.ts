@@ -27,7 +27,7 @@ import { NewLibCardComponent } from './new-lib-card/new-lib-card.component';
 import { NewCardLayComponent } from './new-lib-card/new-card-lay/new-card-lay.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BarcodeComponent } from './barcode/barcode.component';
-
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -56,9 +56,6 @@ import { BarcodeComponent } from './barcode/barcode.component';
     NewCardLayComponent,
     PageNotFoundComponent,
     BarcodeComponent,
-
-    
-  
   ],
 
   imports: [
@@ -68,9 +65,7 @@ import { BarcodeComponent } from './barcode/barcode.component';
     FormsModule,
     AppRoutingModule,
     NgxBarcodeModule,
-    
-    
-   
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

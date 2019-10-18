@@ -28,7 +28,7 @@
               <th scope="col">Subject</th>
               <th scope="col">Year</th>
               <th scope="col">Borrowed</th>
-              <th scope="col">Cost</th>
+              <th scope="col">Borrower</th>
               <th scope="col">Action</th>
 
 
@@ -36,18 +36,16 @@
           </thead>
           <tbody>
 
-
-
-              <tr>
-                <th scope="row">1</th>
-                <td>1254</td>
-                <td>letus c</td>
-                <td>Ankit</td>
-                <td>458</td>
-                <td>C Programming</td>
-                <td>2nd</td>
-                <td>12/06/2019</td>
-                <td>Rs 600</td>
+              <tr *ngFor="let book of books; let i=index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ book.accession_no }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.pages }}</td>
+                <td>{{ book.subject }}</td>
+                <td>{{ book.year }}</td>
+                <td>{{ book.borrowed }}</td>
+                <td>{{ book.borrower }}</td>
                 <td>
                     <button onclick="document.getElementById('id01').style.display='block'" class="btn btn2" ><img src="assets/icons/delete.png"></button>
 

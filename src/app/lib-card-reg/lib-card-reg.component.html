@@ -33,7 +33,7 @@
           <th scope="col">Address</th>
           <th scope="col">Course</th>
           <th scope="col">Year</th>
-          <th scope="col">D.A</th>
+
           <th scope="col">Action</th>
 
 
@@ -41,16 +41,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>1254</td>
-          <td>Animesh</td>
-          <td>animesh@gmail.com</td>
-          <td>9458678954</td>
-          <td>new town ,kolkata</td>
-          <td>CST</td>
-          <td>2nd Year</td>
-          <td>10/06/2017</td>
+        <tr *ngFor="let card of LibCard;let i=index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ card.cardNo }}</td>
+          <td>{{ card.fname | uppercase }} &nbsp; {{ card.lname | uppercase }}</td>
+          <td>{{ card.email | uppercase }}</td>
+          <td>{{ card.phone_no }}</td>
+          <td>{{ card.address | uppercase }}</td>
+          <td>{{ card.dept  }}</td>
+          <td>{{ card.year}}</td>
+
           <td>
               <button onclick="document.getElementById('id01').style.display='block'" class="btn btn2" ><img src="assets/icons/pen.png"></button>
 
@@ -277,26 +277,26 @@
                                       <td>Siliguri Govt Polytechnic</td>
                                     </tr>
                                     <tr>
-                                      <td>ID : <span style="font-weight: 700;" class="ng-binding">1001</span>
+                                      <td>Card No :{{ card.cardNo }} <span style="font-weight: 700;" class="ng-binding"></span>
                                       </td>
                                     </tr>
                                     <tr>
-                                      <td class="ng-binding">Name : Animesh&nbsp;&nbsp; Jaiswal</td>
+                                      <td class="ng-binding">Name : {{ card.fname | uppercase }}&nbsp;&nbsp; {{ card.lname | uppercase }}</td>
                                     </tr>
                                     <tr>
-                                      <td class="ng-binding">Phone : 704-673-6700</td>
+                                      <td class="ng-binding">Phone : {{ card.phone_no }}</td>
                                     </tr>
                                     <tr ng-show="printScope.role=='Student'" class="">
-                                      <td class="ng-binding">Course : C.S.T | Year :
-                                        2nd Year
+                                      <td class="ng-binding">Course : {{ card.dept }} | Year :
+                                        {{ card.year }}
                                       </td>
                                     </tr>
                                     <tr ng-show="printScope.role=='Teacher'" class="ng-hide">
-                                      <td class="ng-binding">Designation : Student
+                                      <td class="ng-binding">Designation : {{ card.category }}
                                       </td>
                                     </tr>
                                     <tr>
-                                      <td>YEAR : 2019</td>
+                                      <td>YEAR : {{ year }}</td>
                                     </tr>
                                     </tbody>
                                   </table>
@@ -304,10 +304,10 @@
                                   <table id="p_tbl2" class="table table-striped" style="width: 50%;float:right;margin-right: 6px;table-layout: fixed;border: 1px solid black;height: 330px;     border-collapse: initial;">
                                     <tbody>
                                     <tr>
-                                      <td class="ng-binding">Email : Animesh@gmail.com</td>
+                                      <td class="ng-binding">Email : {{ card.email}}</td>
                                     </tr>
                                     <tr>
-                                      <td class="ng-binding">Address : </td>
+                                      <td class="ng-binding">Address : {{ card.address }}</td>
                                     </tr>
                                     <tr>
                                       <td>
@@ -370,7 +370,7 @@
                                             <div class="holder_sub_book_lst">
                                            <h4>   <b>Once Deleted The Changes Cannot Be Undone!</b></h4>
                                           <p>Are You Sure?</p>
-                                                      <button class="btn btn-danger fix_radius">Yes &nbsp;
+                                                      <button class="btn btn-danger fix_radius" (click)="onDelete(card._id)">Yes &nbsp;
                                                       </button>&nbsp;
                                                       <button class="btn btn-warning fix_radius" >No
                                               </button>
