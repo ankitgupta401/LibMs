@@ -40,9 +40,9 @@
 
         </tr>
       </thead>
-      <tbody>
+      <tbody  *ngFor="let card of LibCards;let i=index">
 
-        <tr *ngFor="let card of LibCards;let i=index">
+        <tr>
           <th scope="row">{{ i + 1 }}</th>
           <td>{{ card.cardNo }}</td>
           <td>{{ card.fname | uppercase }} &nbsp; {{ card.lname | uppercase }}</td>
@@ -240,7 +240,7 @@
                     </div>
 
 
-              <button onclick="document.getElementById('id02').style.display='block'" class="btn btn2 " ><img src="assets/icons/print.png"></button>
+              <button onclick="document.getElementById('id02').style.display='block'" class="btn btn2 " (click)="onPrint(card._id)" ><img src="assets/icons/print.png"></button>
 
                     <div id="id02" class="modal">
 
@@ -278,22 +278,22 @@
                                       <td>Siliguri Govt Polytechnic</td>
                                     </tr>
                                     <tr>
-                                      <td>Card No :{{ card.cardNo }} <span style="font-weight: 700;" class="ng-binding"></span>
+                                      <td>Card No :{{ gotcard?.cardNo }} <span style="font-weight: 700;" class="ng-binding"></span>
                                       </td>
                                     </tr>
                                     <tr>
-                                      <td class="ng-binding">Name : {{ card.fname | uppercase }}&nbsp;&nbsp; {{ card.lname | uppercase }}</td>
+                                      <td class="ng-binding">Name : {{ gotcard?.fname | uppercase }}&nbsp;&nbsp; {{ gotcard?.lname | uppercase }}</td>
                                     </tr>
                                     <tr>
-                                      <td class="ng-binding">Phone : {{ card.phone_no }}</td>
+                                      <td class="ng-binding">Phone : {{ gotcard?.phone_no }}</td>
                                     </tr>
                                     <tr ng-show="printScope.role=='Student'" class="">
-                                      <td class="ng-binding">Course : {{ card.dept }} | Year :
-                                        {{ card.year }}
+                                      <td class="ng-binding">Course : {{ gotcard?.dept }} | Year :
+                                        {{ gotcard?.year }}
                                       </td>
                                     </tr>
                                     <tr ng-show="printScope.role=='Teacher'" class="ng-hide">
-                                      <td class="ng-binding">Designation : {{ card.category }}
+                                      <td class="ng-binding">Designation : {{ gotcard?.category }}
                                       </td>
                                     </tr>
                                     <tr>
@@ -305,10 +305,10 @@
                                   <table id="p_tbl2" class="table table-striped" style="width: 50%;float:right;margin-right: 6px;table-layout: fixed;border: 1px solid black;height: 330px;     border-collapse: initial;">
                                     <tbody>
                                     <tr>
-                                      <td class="ng-binding">Email : {{ card.email}}</td>
+                                      <td class="ng-binding">Email : {{ gotcard?.email}}</td>
                                     </tr>
                                     <tr>
-                                      <td class="ng-binding">Address : {{ card.address }}</td>
+                                      <td class="ng-binding">Address : {{ gotcard?.address }}</td>
                                     </tr>
                                     <tr>
                                       <td>
@@ -354,13 +354,13 @@
 
 
 
-              <button onclick="document.getElementById('id03').style.display='block'" class="btn btn2" ><img src="assets/icons/delete.png"></button>
+              <button onclick="document.getElementById('id03').style.display='block'" class="btn btn2" (click)="getCard(card._id)"><img src="assets/icons/delete.png"></button>
 
                     <div id="id03" class="modal">
 
                       <form class="modal-content animate" action="/action_page.php">
                         <div class="imgcontainer">
-                          <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
+                          <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal" >&times;</span>
 
                         </div>
 
@@ -371,7 +371,7 @@
                                             <div class="holder_sub_book_lst">
                                            <h4>   <b>Once Deleted The Changes Cannot Be Undone!</b></h4>
                                           <p>Are You Sure?</p>
-                                                      <button class="btn btn-danger fix_radius" (click)="onDelete(card._id)">Yes &nbsp;
+                                                      <button class="btn btn-danger fix_radius" (click)="onDelete(carddel)" onclick="document.getElementById('id03').style.display='none'">Yes &nbsp;
                                                       </button>&nbsp;
                                                       <button class="btn btn-warning fix_radius" onclick="document.getElementById('id03').style.display='none'">No
                                               </button>

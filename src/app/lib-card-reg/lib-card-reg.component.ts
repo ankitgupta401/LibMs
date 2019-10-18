@@ -11,6 +11,8 @@ import { Subscription } from 'rxjs';
 })
 export class LibCardRegComponent implements OnInit, OnDestroy {
 LibCards: Libcard[] = [];
+gotcard: Libcard;
+carddel: string;
 year = 2019;
 private userSub: Subscription;
   constructor(private app: All) {
@@ -27,6 +29,19 @@ console.log(form);
   }
 onDelete(id: string) {
 this.app.DeleteUser(id);
+}
+onPrint(id: string) {
+
+// tslint:disable-next-line: prefer-for-of
+for (let i = 0; i < this.LibCards.length; i++) {
+ if (this.LibCards[i]._id === id) {
+   this.gotcard = this.LibCards[i];
+ }
+}
+}
+getCard(id: string) {
+this.carddel = id;
+
 }
  ngOnDestroy() {
 this.userSub.unsubscribe();
