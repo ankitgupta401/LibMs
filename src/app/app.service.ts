@@ -25,7 +25,7 @@ this.http.get<{ message: string, users: Libcard[]}>('http://localhost:3000/api/u
  .subscribe((postData) => {
 this.libCard = postData.users;
 this.usersUpdated.next([...this.libCard]);
-console.log(postData.users);
+
  });
 }
 getUsersUpdateListener() {
@@ -67,4 +67,20 @@ onDeleteBook(bookid: string) {
     this.booksUpdated.next([...this.books]);
   });
 }
+getCard(id: string) {
+  return {...this.libCard.find(c => c._id === id)};
+}
+updateUser(card: Libcard) {
+
+  this.http.put('http://localhost:3000/api/users/' + card._id , card)
+.subscribe((response) => {
+  const updatedusers = [...this.libCard];
+  const oldPostIndex = updatedusers.findIndex(u => u._id === card._id);
+  updatedusers[oldPostIndex] = card;
+  this.libCard = updatedusers;
+  this.usersUpdated.next([...this.libCard]);
+
+});
+}
+
 }
