@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { All } from '../app.service';
 import { Libcard } from '../Libcard.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-new-lib-card',
@@ -10,6 +11,8 @@ import { Libcard } from '../Libcard.model';
 })
 export class NewLibCardComponent implements OnInit , OnDestroy {
   // details: any[] = [];
+
+  private userSub: Subscription;
   constructor( private app: All) {
 
   }
@@ -36,10 +39,10 @@ handleFileInput(file: FileList) {
   reader.readAsDataURL(this.fileToUpload);
 }
 onSubmit(form: NgForm) {
-  console.log(form);
-  this.details = form.value;
-  this.app.addLibCard(this.details);
 
+  this.details = form.value;
+  this.details.cardNo = this.cardNo;
+  this.app.addLibCard(this.details);
 }
   print_Data(form: NgForm) {
 
@@ -51,11 +54,21 @@ onSubmit(form: NgForm) {
 
   // tslint:disable-next-line: adjacent-overload-signatures
   ngOnInit() {
+    this.app.getUsers();
+    this.userSub = this.app.getUsersUpdateListener()
+    .subscribe((users: Libcard[]) => {
+if ( users.length  <= 0) {
+this.cardNo = 1000;
+} else {
+  this.cardNo = users[users.length - 1].cardNo + 1 ;
+}
+
+    });
 
   }
 
   ngOnDestroy() {
-
+this.userSub.unsubscribe();
   }
 
 }

@@ -18,7 +18,7 @@ private userSub: Subscription;
   constructor(private app: All) {
   }
 onSubmit(form: NgForm ) {
-console.log(form);
+
 }
   ngOnInit() {
     this.app.getUsers();

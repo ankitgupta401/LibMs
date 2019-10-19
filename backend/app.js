@@ -13,7 +13,7 @@ console.log('Connected to Database');
 .catch(() => {
   console.log('Connection Failed');
 });
-var cardno=1000;
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -44,7 +44,7 @@ app.post("/api/users",(req, res, next) => {
   const user = new User({
     fname: req.body.fname,
     lname: req.body.lname,
-    cardNo: cardno++,
+    cardNo: req.body.cardNo,
     address: req.body.address,
     Roll: req.body.Roll,
     category: req.body.category,

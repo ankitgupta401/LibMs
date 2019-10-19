@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { All } from '../app.service';
 import { Books } from '../books.model';
@@ -9,8 +9,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css']
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent implements OnInit, OnDestroy {
   books: Books[] = [];
+  bookdel: string;
   private booksub: Subscription;
   constructor(private app: All) {
    }
@@ -27,5 +28,10 @@ this.books = books;
   onDelete(id: string) {
     this.app.onDeleteBook(id);
   }
-
+  getDel(id: string) {
+    this.bookdel = id;
+    }
+    ngOnDestroy() {
+      this.booksub.unsubscribe();
+    }
 }
