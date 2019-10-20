@@ -47,7 +47,8 @@
                 <td>{{ book.borrowed }}</td>
                 <td>{{ book.borrower }}</td>
                 <td>
-                    <button onclick="document.getElementById('id01').style.display='block'" class="btn btn2" (click)="getDel(book._id)"><img src="assets/icons/delete.png"></button>
+                  <button class="btn btn2" (click)="addBarCode(book.accession_no)"><img src="assets/icons/bar.png"></button>
+                    <button onclick="document.getElementById('id01').style.display='block'" class="btn btn2" (click)="getDel(book._id)"><img  src="assets/icons/delete.png"></button>
 
                     <div id="id01" class="modal">
 
