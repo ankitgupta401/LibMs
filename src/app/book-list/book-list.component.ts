@@ -13,6 +13,7 @@ import { Barcode } from '../barcode.service';
 export class BookListComponent implements OnInit, OnDestroy {
   books: Books[] = [];
   bookdel: string;
+  isLoading = false;
   private booksub: Subscription;
   constructor(private app: All, private bar: Barcode) {
    }
@@ -21,13 +22,19 @@ console.log(form);
 }
   ngOnInit() {
     this.app.getBooks();
+    this.isLoading = true;
     this.booksub = this.app.getBooksUpdateListener()
     .subscribe(( books: Books[]) => {
 this.books = books;
+this.isLoading = false;
     });
   }
   onDelete(id: string) {
     this.app.onDeleteBook(id);
+    this.isLoading = true;
+    this.app.getBooksUpdateListener().subscribe(() => {
+    this.isLoading = false;
+    });
   }
   getDel(id: string) {
     this.bookdel = id;

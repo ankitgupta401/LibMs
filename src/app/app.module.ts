@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { MatProgressSpinnerModule } from '@angular/material';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -28,6 +29,7 @@ import { NewCardLayComponent } from './new-lib-card/new-card-lay/new-card-lay.co
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BarcodeComponent } from './barcode/barcode.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -65,7 +67,9 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     AppRoutingModule,
     NgxBarcodeModule,
-    HttpClientModule
+    HttpClientModule,
+    MatProgressSpinnerModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

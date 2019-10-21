@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Books } from './books.model';
 import { Libcard } from './Libcard.model';
 import { Subject } from 'rxjs';
+import { delay } from 'q';
 
 export class All {
 private books: Books[] = [];
@@ -12,12 +13,11 @@ private booksUpdated = new Subject<Books[]>();
 constructor(private http: HttpClient) {}
 
 addLibCard(LibCard: Libcard) {
-  this.http.post<{message: string }>('http://localhost:3000/api/users', LibCard)
+   this.http.post<{message: string }>('http://localhost:3000/api/users', LibCard)
   .subscribe((responseData => {
     console.log(responseData.message);
     this.libCard.push(LibCard);
     this.usersUpdated.next([...this.libCard]);
-
   }));
 }
 getUsers() {
@@ -37,6 +37,9 @@ addBooks(book: Books) {
     console.log(responseData.message);
     this.books.push(book);
     this.booksUpdated.next([...this.books]);
+  });
+  return ({
+    message: 'done'
   });
 }
 

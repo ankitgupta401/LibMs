@@ -21,6 +21,8 @@ details: Libcard = null;
 cardNo: number;
   teacher = false;
   SelectedFile = null;
+  isLoading = false;
+  donesave = false;
   image = 'http://placehold.it/180';
     disableYear(disYear) {
 if (disYear.value === 'teacher') {
@@ -43,9 +45,13 @@ onSubmit(form: NgForm) {
   this.details = form.value;
   this.details.cardNo = this.cardNo;
   this.app.addLibCard(this.details);
+  this.isLoading = true;
+  this.app.getUsersUpdateListener().subscribe(() => {
+this.isLoading = false;
+this.donesave = true;
+  });
 }
-  print_Data(form: NgForm) {
-
+  print_Data() {
     }
 
   printPreview() {
@@ -55,6 +61,7 @@ onSubmit(form: NgForm) {
   // tslint:disable-next-line: adjacent-overload-signatures
   ngOnInit() {
     this.app.getUsers();
+    this.isLoading = true;
     this.userSub = this.app.getUsersUpdateListener()
     .subscribe((users: Libcard[]) => {
 if ( users.length  <= 0) {
@@ -62,7 +69,7 @@ this.cardNo = 1000;
 } else {
   this.cardNo = users[users.length - 1].cardNo + 1 ;
 }
-
+this.isLoading = false;
     });
 
   }

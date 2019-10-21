@@ -1,4 +1,5 @@
-<form (ngSubmit)="onSubmit(form)" #form="ngForm">
+
+<form (ngSubmit)="onSubmit(form)" #form="ngForm" >
 <div class="form">
 
 
@@ -32,7 +33,7 @@
      <div class="row">
        <div class="offset-1 col-2">
        <label for="exampleFormControlSelect1">Course:</label>
-       <select class="form-control" id="exampleFormControlSelect1" [ngModel]="'cst'" name="dept" required>
+       <select class="form-control" id="exampleFormControlSelect1" [ngModel]="'C.S.T'" name="dept" required>
          <option value="C.S.T">CST</option>
          <option value="CVIL">CIVIL</option>
          <option value="E.I.E">EIE</option>
@@ -149,7 +150,7 @@
 
      <div class="row">
        <div class="offset-4 col">
-         <button type="submit" class="btn btn-success" [disabled]="!form.valid" onclick=" document.getElementById('id02').style.display='block'" (click)="print_Data(form)" >SAVE</button>&nbsp;
+         <button type="submit" class="btn btn-success" [disabled]="!form.valid" onclick="document.getElementById('id02').style.display='block'" (click)="print_Data(form)" >SAVE</button>&nbsp;
          <button type="button" class="btn btn-warning">RESET</button>
         </div>
      </div>
@@ -166,14 +167,14 @@
 
         </div>
 
-        <div class="container">
+        <div class="container" >
     <h3>Print Library Card</h3>
     <div class="modal-body" >
         <div class="modal-body" >
-
+          <mat-spinner *ngIf="isLoading"></mat-spinner>
             <div class="row">
               <div style="padding-left: 14px;">
-                <div class="panel panel-default" style="font-size: 12px;" id="print_Container">
+                <div class="panel panel-default" style="font-size: 12px;" id="print_Container" *ngIf="!isLoading">
                   <table id="p_tbl1" class="" style="width: 49%;float: left;table-layout: fixed;border: 1px solid black;height: 363px;border-collapse:initial;">
                     <tbody>
                     <tr>
@@ -258,9 +259,6 @@
 
                           </div>
                         </div>
-
-
-
       </form>
     </div>
 

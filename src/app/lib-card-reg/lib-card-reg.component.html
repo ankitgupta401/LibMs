@@ -1,5 +1,5 @@
-
-<div class="form">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="form" >
   <div class="searchbox">
 
 
@@ -21,7 +21,7 @@
             </form>
             </div>
 
-<div class="tables" style="height:27pc; overflow: scroll;">
+<div class="tables" style="height:27pc; overflow: scroll;"  *ngIf="!isLoading">
 <table class="table">
       <thead class="thead-dark">
         <tr>
@@ -328,7 +328,7 @@
 
               <button onclick="document.getElementById('id03').style.display='block'" class="btn btn2" (click)="getCard(card._id)"><img src="assets/icons/delete.png"></button>
 
-                    <div id="id03" class="modal">
+                    <div id="id03" class="modals">
 
                       <form class="modal-content animate" action="/action_page.php">
                         <div class="imgcontainer">

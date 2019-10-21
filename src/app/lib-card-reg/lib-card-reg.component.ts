@@ -13,6 +13,7 @@ export class LibCardRegComponent implements OnInit, OnDestroy {
 LibCards: Libcard[] = [];
 gotcard: Libcard;
 carddel: string;
+isLoading = false;
 year = 2019;
 private userSub: Subscription;
   constructor(private app: All) {
@@ -22,13 +23,19 @@ onSubmit(form: NgForm ) {
 }
   ngOnInit() {
     this.app.getUsers();
+    this.isLoading = true;
     this.userSub = this.app.getUsersUpdateListener()
       .subscribe((users: Libcard[]) => {
         this.LibCards = users;
+        this.isLoading = false;
       });
   }
 onDelete(id: string) {
 this.app.DeleteUser(id);
+this.isLoading = true;
+this.app.getUsersUpdateListener().subscribe(() => {
+this.isLoading = false;
+});
 }
 onPrint(id: string) {
 
@@ -65,6 +72,11 @@ onSubmitForm(form: NgForm) {
   this.gotcard.state = form.value.state;
   this.gotcard.zip = form.value.zip;
   this.app.updateUser(this.gotcard);
+  this.isLoading = true;
+  this.app.getUsersUpdateListener()
+  .subscribe(() => {
+  this.isLoading = false;
+  });
 }
 
 getCardedit(id: string) {

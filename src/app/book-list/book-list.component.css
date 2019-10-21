@@ -3,6 +3,10 @@
   position: absolute;
 left: 20%;
 }
+mat-spinner {
+  margin: 20%;
+  margin-left: 45%;
+}
 input{
 
   width:23%;

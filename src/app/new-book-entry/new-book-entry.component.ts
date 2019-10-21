@@ -9,10 +9,15 @@ import { All } from '../app.service';
   styleUrls: ['./new-book-entry.component.css'],
 })
 export class NewBookEntryComponent implements OnInit {
-
+isLoading = false;
   constructor(private bar: Barcode, private app: All) { }
 onSubmit(form: NgForm) {
 this.app.addBooks(form.value);
+this.isLoading = true;
+this.app.getBooksUpdateListener()
+.subscribe(() => {
+this.isLoading = false;
+});
 }
 barcode( form: NgForm) {
   this.bar.barcodeGenerate(form.value.accession_no);
