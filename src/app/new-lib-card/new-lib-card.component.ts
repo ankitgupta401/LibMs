@@ -19,11 +19,12 @@ export class NewLibCardComponent implements OnInit , OnDestroy {
   fileToUpload: File = null;
 details: Libcard = null;
 cardNo: number;
+formvalid = false;
   teacher = false;
   SelectedFile = null;
   isLoading = false;
   donesave = false;
-  image = 'http://placehold.it/180';
+  image = 'assets/icons/admin.png';
     disableYear(disYear) {
 if (disYear.value === 'teacher') {
   this.teacher = true;
@@ -34,11 +35,22 @@ if (disYear.value === 'teacher') {
 
 handleFileInput(file: FileList) {
   this.fileToUpload = file.item(0);
+
+ // tslint:disable-next-line: max-line-length
+  if ( this.fileToUpload.type === 'image/jpeg' || this.fileToUpload.type === 'image/JPG' || this.fileToUpload.type === 'image/png' || this.fileToUpload.type === 'image/PNG' || this.fileToUpload.type === 'image/JPEG' || this.fileToUpload.type === 'image/JPG') {
+  if ( this.fileToUpload.size > 500000) {
+alert('File size Exceeds limit');
+return ;
+}
+  this.formvalid = true;
   const reader = new FileReader();
   reader.onload = (event: any) => {
     this.image = event.target.result;
   };
   reader.readAsDataURL(this.fileToUpload);
+} else {
+  alert('Invalid File Type');
+}
 }
 onSubmit(form: NgForm) {
 
