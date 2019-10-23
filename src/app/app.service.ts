@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Books } from './books.model';
 import { Libcard } from './Libcard.model';
 import { Subject } from 'rxjs';
-import { delay } from 'q';
+
 
 export class All {
 private books: Books[] = [];
@@ -12,8 +12,24 @@ private booksUpdated = new Subject<Books[]>();
 
 constructor(private http: HttpClient) {}
 
-addLibCard(LibCard: Libcard) {
-   this.http.post<{message: string }>('http://localhost:3000/api/users', LibCard)
+addLibCard(LibCard: Libcard , image: File) {
+  const UserData = new FormData();
+  UserData.append('cardNo', LibCard.cardNo.toString());
+  UserData.append('fname', LibCard.fname);
+  UserData.append('lname', LibCard.lname);
+  UserData.append('email', LibCard.email);
+  UserData.append('category', LibCard.category);
+  UserData.append('Roll', LibCard.Roll.toString());
+  UserData.append('dept', LibCard.dept);
+  UserData.append('year', LibCard.year);
+  UserData.append('sem', LibCard.sem);
+  UserData.append('phone_no', LibCard.phone_no.toString());
+  UserData.append('address', LibCard.address);
+  UserData.append('city', LibCard.city);
+  UserData.append('state', LibCard.state);
+  UserData.append('zip', LibCard.zip.toString());
+  UserData.append('image', image , LibCard.fname);
+  this.http.post<{message: string }>('http://localhost:3000/api/users', UserData)
   .subscribe((responseData => {
     console.log(responseData.message);
     this.libCard.push(LibCard);

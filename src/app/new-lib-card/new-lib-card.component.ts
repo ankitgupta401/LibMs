@@ -56,7 +56,7 @@ onSubmit(form: NgForm) {
 
   this.details = form.value;
   this.details.cardNo = this.cardNo;
-  this.app.addLibCard(this.details);
+  this.app.addLibCard(this.details, this.fileToUpload);
   this.isLoading = true;
   this.app.getUsersUpdateListener().subscribe(() => {
 this.isLoading = false;

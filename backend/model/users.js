@@ -14,6 +14,6 @@ sem: { type:String},
 state: { type:String, required: true},
 year: { type:String},
 zip: { type:Number, required: true},
-
+imagePath: {type:String, required: true}
 });
 module.exports = mongoose.model('User',userSchema);

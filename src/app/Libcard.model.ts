@@ -14,4 +14,5 @@ state: string;
 year: string;
 zip: number;
 cardNo: number;
+imagePath: string;
 }

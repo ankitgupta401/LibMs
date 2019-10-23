@@ -11,9 +11,10 @@ import { Subscription } from 'rxjs';
 })
 export class LibCardRegComponent implements OnInit, OnDestroy {
 LibCards: Libcard[] = [];
-gotcard: Libcard;
+gotcard: Libcard = null;
 carddel: string;
 isLoading = false;
+image = 'assets/icons/admin.png';
 year = 2019;
 private userSub: Subscription;
   constructor(private app: All) {
@@ -22,8 +23,8 @@ onSubmit(form: NgForm ) {
 
 }
   ngOnInit() {
-    this.app.getUsers();
     this.isLoading = true;
+    this.app.getUsers();
     this.userSub = this.app.getUsersUpdateListener()
       .subscribe((users: Libcard[]) => {
         this.LibCards = users;
@@ -43,6 +44,7 @@ onPrint(id: string) {
 for (let i = 0; i < this.LibCards.length; i++) {
  if (this.LibCards[i]._id === id) {
    this.gotcard = this.LibCards[i];
+   this.image = this.LibCards[i].imagePath;
  }
 }
 }
@@ -71,6 +73,8 @@ onSubmitForm(form: NgForm) {
   this.gotcard.city = form.value.city;
   this.gotcard.state = form.value.state;
   this.gotcard.zip = form.value.zip;
+  this.gotcard.imagePath = this.gotcard.imagePath;
+  this.gotcard.cardNo = this.gotcard.cardNo;
   this.app.updateUser(this.gotcard);
   this.isLoading = true;
   this.app.getUsersUpdateListener()
