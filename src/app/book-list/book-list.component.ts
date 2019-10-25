@@ -4,6 +4,8 @@ import { All } from '../app.service';
 import { Books } from '../books.model';
 import { Subscription } from 'rxjs';
 import { Barcode } from '../barcode.service';
+import { PageEvent } from '@angular/material';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-book-list',
@@ -14,6 +16,10 @@ export class BookListComponent implements OnInit, OnDestroy {
   books: Books[] = [];
   bookdel: string;
   isLoading = false;
+  totalPosts = 0;
+  postsPerPage = 10;
+  currentPage = 1;
+pageSizeOption = [ 5, 10, 20, 30, 50, 100];
   private booksub: Subscription;
   constructor(private app: All, private bar: Barcode) {
    }
@@ -21,19 +27,20 @@ onSubmit(form: NgForm) {
 console.log(form);
 }
   ngOnInit() {
-    this.app.getBooks();
+    this.app.getBooks(this.postsPerPage, this.currentPage);
     this.isLoading = true;
     this.booksub = this.app.getBooksUpdateListener()
-    .subscribe(( books: Books[]) => {
-this.books = books;
+    .subscribe(( bookData: {BOOKS: Books[], count: number }) => {
+this.books = bookData.BOOKS;
+console.log(bookData.count);
+this.totalPosts = bookData.count;
 this.isLoading = false;
     });
   }
   onDelete(id: string) {
-    this.app.onDeleteBook(id);
     this.isLoading = true;
-    this.app.getBooksUpdateListener().subscribe(() => {
-    this.isLoading = false;
+    this.app.onDeleteBook(id).subscribe(() => {
+    this.app.getBooks(this.postsPerPage , this.currentPage);
     });
   }
   getDel(id: string) {
@@ -53,11 +60,15 @@ if ( this.bar.accList.filter(u => u === accNo )) {
 alert('Already Exists in the NEW BOOK ENTRY PAGE inside the Print option');
 }
 }
-
 }
 
 
-
+onChange(PageData: PageEvent) {
+  this.isLoading = true;
+  this.currentPage = PageData.pageIndex + 1;
+  this.postsPerPage = PageData.pageSize;
+  this.app.getBooks(this.postsPerPage , this.currentPage);
+  }
 
 
 

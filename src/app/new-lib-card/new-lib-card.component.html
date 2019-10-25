@@ -136,12 +136,12 @@
 
 
  <div class="row">
-   <div class="offset-3 col-2">
+   <div class="offset-3 col-lg-1 col-xs-4 col-sm-3">
      <img id="blah" [src]="image"  >
 
      </div>
 
-   <div class="col">
+   <div class="offset-1 col">
          <input type='file' (change)="handleFileInput($event.target.files)" style="display: none;" name="image" accept="image/" ngModel #s/>
          <button type="button" class="btn btn-primary" (click)="s.click()">Upload Image</button>
      </div>

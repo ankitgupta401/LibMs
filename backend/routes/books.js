@@ -3,13 +3,26 @@ const router = express.Router();
 const Book = require("../model/book");
 
 router.get("", (req, res, next) => {
-  Book.find().then(documents =>{
-   res.status(200).json({
-     message: "Books fetched succesfully!",
-     books: documents
+  const pageSize = +req.query.pagesize;
+const currentPage = +req.query.page;
+const bookQuery = Book.find();
+let fetchedBooks ;
+if(pageSize && currentPage){
+bookQuery.skip(pageSize * (currentPage -1))
+.limit(pageSize);
+}
+ bookQuery.then(documents =>{
+   fetchedBooks = documents;
+    return Book.count();
+ }).then (count => {
+    res.status(200).json({
+      message: "Books fetched succesfully!",
+      books: fetchedBooks,
+      count: count
+    });
    });
   });
- });
+
 
  router.post("", (req, res, next) => {
   const book = new Book({

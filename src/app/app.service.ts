@@ -5,13 +5,13 @@ import { Subject } from 'rxjs';
 
 
 export class All {
-private books: Books[] = [];
+private book: Books[];
 private libCard: Libcard[] = [];
-private usersUpdated = new Subject<Libcard[]>();
-private booksUpdated = new Subject<Books[]>();
-
+private usersUpdated = new Subject<{LibCard: Libcard[], count: number}>();
+private booksUpdated = new Subject<{BOOKS: Books[], count: number}>();
 constructor(private http: HttpClient) {}
-
+count: number;
+bookcount: number;
 addLibCard(LibCard: Libcard , image: File) {
   const UserData = new FormData();
   UserData.append('cardNo', LibCard.cardNo.toString());
@@ -33,58 +33,55 @@ addLibCard(LibCard: Libcard , image: File) {
   .subscribe((responseData => {
     console.log(responseData.message);
     this.libCard.push(LibCard);
-    this.usersUpdated.next([...this.libCard]);
+    this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
   }));
 }
-getUsers() {
-this.http.get<{ message: string, users: Libcard[]}>('http://localhost:3000/api/users')
+getUsers(pagesize: number , page: number) {
+
+  const queryParams = `?pagesize=${pagesize}&page=${page}`;
+  this.http.get<{ message: string, users: Libcard[], count: number}>('http://localhost:3000/api/users' + queryParams)
  .subscribe((postData) => {
 this.libCard = postData.users;
-this.usersUpdated.next([...this.libCard]);
-
+this.count = postData.count;
+this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
  });
 }
 getUsersUpdateListener() {
   return this.usersUpdated.asObservable();
 }
 addBooks(book: Books) {
+
   this.http.post<{ message: string}>('http://localhost:3000/api/books', book)
   .subscribe(( responseData) => {
     console.log(responseData.message);
-    this.books.push(book);
-    this.booksUpdated.next([...this.books]);
+    this.book.push(book);
+    this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
   });
   return ({
     message: 'done'
   });
 }
 
-getBooks() {
-  this.http.get<{ message: string, books: Books[] }>('http://localhost:3000/api/books')
+getBooks(pagesize: number , page: number) {
+  const queryParams = `?pagesize=${pagesize}&page=${page}`;
+  this.http.get<{ message: string, books: Books[] , count: number}>('http://localhost:3000/api/books' + queryParams)
   .subscribe((postData) => {
-    this.books = postData.books;
-    this.booksUpdated.next([...this.books]);
-    console.log(postData.books);
+
+    this.book = postData.books;
+    this.bookcount = postData.count;
+    this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
+
   });
 }
 getBooksUpdateListener() {
   return this.booksUpdated.asObservable();
 }
 DeleteUser(userid: string) {
-  this.http.delete('http://localhost:3000/api/users/' + userid )
-.subscribe(() => {
-  const updatedUsers = this.libCard.filter( libCard => libCard._id !== userid);
-  this.libCard = updatedUsers;
-  this.usersUpdated.next([...this.libCard]);
-});
+  return this.http.delete('http://localhost:3000/api/users/' + userid );
+
 }
 onDeleteBook(bookid: string) {
-  this.http.delete('http://localhost:3000/api/books/' + bookid)
-  .subscribe(() => {
-    const updatedBooks = this.books.filter( books => books._id !== bookid );
-    this.books = updatedBooks;
-    this.booksUpdated.next([...this.books]);
-  });
+  return this.http.delete('http://localhost:3000/api/books/' + bookid);
 }
 getCard(id: string) {
   return {...this.libCard.find(c => c._id === id)};
@@ -97,7 +94,7 @@ updateUser(card: Libcard) {
   const oldPostIndex = updatedusers.findIndex(u => u._id === card._id);
   updatedusers[oldPostIndex] = card;
   this.libCard = updatedusers;
-  this.usersUpdated.next([...this.libCard]);
+  this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
 
 });
 }

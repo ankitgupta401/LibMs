@@ -1,5 +1,5 @@
-<mat-spinner *ngIf="isLoading"></mat-spinner>
-<div class="form" *ngIf="!isLoading">
+
+<div >
 
 
     <div class="searchbox">
@@ -16,7 +16,8 @@
                 </div>
               </form>
     </div><br>
-<div class="tables" style="height:27pc; overflow: scroll;">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="tables" style="height:24pc; overflow-x: visible; overflow-y: scroll;" class="form" *ngIf="!isLoading">
     <table class="table">
           <thead class="thead-dark">
             <tr>
@@ -52,7 +53,7 @@
 
                     <div id="id01" class="modal">
 
-                      <form class="modal-content animate" action="/action_page.php">
+                      <div class="modal-content animate" >
                         <div class="imgcontainer">
                           <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 
@@ -77,7 +78,7 @@
 
 
 
-                      </form>
+                                      </div>
                     </div><br>
 
                 </td>
@@ -87,7 +88,7 @@
          </tbody>
         </table>
   </div>
-
+  <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChange($event)"></mat-paginator>
 </div>
 
 

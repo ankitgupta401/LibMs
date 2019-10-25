@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { All } from '../app.service';
 import { Libcard } from '../Libcard.model';
 import { Subscription } from 'rxjs';
+import { PageEvent } from '@angular/material';
+import { on } from 'cluster';
 
 @Component({
   selector: 'app-lib-card-reg',
@@ -10,6 +12,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./lib-card-reg.component.css']
 })
 export class LibCardRegComponent implements OnInit, OnDestroy {
+  totalPosts = 0;
+  postsPerPage = 10;
+  currentPage = 1;
+pageSizeOption = [ 5, 10, 20, 30, 50, 100];
+
 LibCards: Libcard[] = [];
 gotcard: Libcard = null;
 carddel: string;
@@ -24,19 +31,23 @@ onSubmit(form: NgForm ) {
 }
   ngOnInit() {
     this.isLoading = true;
-    this.app.getUsers();
+    this.app.getUsers(this.postsPerPage , this.currentPage);
     this.userSub = this.app.getUsersUpdateListener()
-      .subscribe((users: Libcard[]) => {
-        this.LibCards = users;
+      .subscribe((userData: {LibCard: Libcard[], count: number}) => {
+        this.LibCards = userData.LibCard;
+        this.totalPosts = userData.count;
         this.isLoading = false;
       });
   }
 onDelete(id: string) {
-this.app.DeleteUser(id);
-this.isLoading = true;
-this.app.getUsersUpdateListener().subscribe(() => {
-this.isLoading = false;
-});
+  this.isLoading = true;
+  this.app.DeleteUser(id)
+  .subscribe(() => {
+  this.app.getUsers(this.postsPerPage , this.currentPage);
+  this.isLoading = false;
+  });
+
+
 }
 onPrint(id: string) {
 
@@ -86,5 +97,10 @@ onSubmitForm(form: NgForm) {
 getCardedit(id: string) {
 this.gotcard = this.app.getCard(id);
 }
-
+onChange(PageData: PageEvent) {
+  this.isLoading = true;
+  this.currentPage = PageData.pageIndex + 1;
+  this.totalPosts = PageData.pageSize;
+  this.app.getUsers(this.postsPerPage , this.currentPage);
+  }
 }

@@ -21,7 +21,7 @@
             </form>
             </div>
             <mat-spinner *ngIf="isLoading"></mat-spinner>
-<div class="tables" style="height:27pc; overflow: scroll;"  *ngIf="!isLoading">
+<div class="tables"   style="height:24.7pc; overflow-x: visible; overflow-y: scroll; "  *ngIf="!isLoading">
 
 <table class="table">
       <thead class="thead-dark">
@@ -34,7 +34,6 @@
           <th scope="col">Address</th>
           <th scope="col">Course</th>
           <th scope="col">Year</th>
-
           <th scope="col">Action</th>
 
 
@@ -43,7 +42,7 @@
       </thead>
       <tbody  *ngFor="let card of LibCards;let i=index">
 
-        <tr>
+        <tr >
           <th scope="row">{{ i + 1 }}</th>
           <td>{{ card.cardNo }}</td>
           <td>{{ card.fname | uppercase }} &nbsp; {{ card.lname | uppercase }}</td>
@@ -331,7 +330,7 @@
 
                     <div id="id03" class="modals">
 
-                      <form class="modal-content animate" action="/action_page.php">
+                      <div class="modal-content animate" >
                         <div class="imgcontainer">
                           <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal" >&times;</span>
 
@@ -356,7 +355,7 @@
 
 
 
-                      </form>
+                                      </div>
                     </div><br>
 
 
@@ -369,8 +368,9 @@
 
      </tbody>
     </table>
-</div>
 
+</div>
+<mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChange($event)"></mat-paginator>
 
 
 
