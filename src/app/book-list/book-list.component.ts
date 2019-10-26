@@ -16,6 +16,7 @@ export class BookListComponent implements OnInit, OnDestroy {
   books: Books[] = [];
   bookdel: string;
   isLoading = false;
+  number = 0;
   totalPosts = 0;
   postsPerPage = 10;
   currentPage = 1;
@@ -32,7 +33,7 @@ console.log(form);
     this.booksub = this.app.getBooksUpdateListener()
     .subscribe(( bookData: {BOOKS: Books[], count: number }) => {
 this.books = bookData.BOOKS;
-console.log(bookData.count);
+
 this.totalPosts = bookData.count;
 this.isLoading = false;
     });
@@ -68,6 +69,11 @@ onChange(PageData: PageEvent) {
   this.currentPage = PageData.pageIndex + 1;
   this.postsPerPage = PageData.pageSize;
   this.app.getBooks(this.postsPerPage , this.currentPage);
+  if (this.currentPage > 1 ) {
+this.number = this.postsPerPage * PageData.pageIndex;
+  } else {
+    this.number = 0;
+  }
   }
 
 

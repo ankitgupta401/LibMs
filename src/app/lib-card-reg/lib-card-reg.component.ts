@@ -4,7 +4,7 @@ import { All } from '../app.service';
 import { Libcard } from '../Libcard.model';
 import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material';
-import { on } from 'cluster';
+
 
 @Component({
   selector: 'app-lib-card-reg',
@@ -14,6 +14,7 @@ import { on } from 'cluster';
 export class LibCardRegComponent implements OnInit, OnDestroy {
   totalPosts = 0;
   postsPerPage = 10;
+  number = 0;
   currentPage = 1;
 pageSizeOption = [ 5, 10, 20, 30, 50, 100];
 
@@ -100,7 +101,13 @@ this.gotcard = this.app.getCard(id);
 onChange(PageData: PageEvent) {
   this.isLoading = true;
   this.currentPage = PageData.pageIndex + 1;
-  this.totalPosts = PageData.pageSize;
+  this.postsPerPage = PageData.pageSize;
   this.app.getUsers(this.postsPerPage , this.currentPage);
+  if ( this.currentPage > 1) {
+    this.number = this.postsPerPage;
+    console.log(this.number);
+  } else {
+    this.number = 0;
+  }
   }
 }
