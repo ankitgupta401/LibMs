@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Books } from './books.model';
 import { Libcard } from './Libcard.model';
 import { Subject } from 'rxjs';
+import { ReceiveReg } from './receiveReg.model';
 
 
 export class All {
@@ -11,6 +12,8 @@ private libCard: Libcard[] = [];
 private usersUpdated = new Subject<{LibCard: Libcard[], count: number}>();
 private booksUpdated = new Subject<{BOOKS: Books[], count: number}>();
 private toIssuebooksUpdated = new Subject<Books[]>();
+
+
 constructor(private http: HttpClient) {}
 count: number;
 bookcount: number;
@@ -127,10 +130,7 @@ return this.http.get<{message: string , book: Books[]}>('http://localhost:3000/a
 }
 
 issueBook(book: Books) {
-  this.http.put<{message: string}>('http://localhost:3000/api/books/issueOne/' + book._id , book)
-  .subscribe(result => {
-   this.booksUpdated.next({BOOKS: [...this.book] , count: this.bookcount});
-  });
+ return this.http.put<{message: string}>('http://localhost:3000/api/books/issueOne/' + book._id , book);
 }
 resetbooks() {
   this.book = [];
@@ -140,4 +140,37 @@ resetuser() {
   this.libCard = [];
   this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
 }
+
+
+getBooksForDelete(cardNo: number) {
+  return this.http.get<{ message: string , books: Books[]}>('http://localhost:3000/api/books/records/' + cardNo );
+}
+
+
+getAllIssuedBooks(pagesize: number , page: number) {
+  const queryParams = `?pagesize=${pagesize}&page=${page}`;
+  this.http.get<{ message: string, books: Books[] , count: number}>('http://localhost:3000/api/books/issuedbooks' + queryParams)
+  .subscribe((postData) => {
+
+    this.book = postData.books;
+    this.bookcount = postData.count;
+    this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
+
+  });
+}
+
+
+receiveOne(book: Books) {
+  return this.http.put<{message: string}>('http://localhost:3000/api/books/receiveOne/' + book._id , book);
+}
+
+UpdateRecReg(toRecBook: ReceiveReg) {
+ return this.http.post<{ message: string}>('http://localhost:3000/api/receive' , toRecBook);
+}
+
+getAllRecRegBooks(pagesize: number , page: number) {
+  const queryParams = `?pagesize=${pagesize}&page=${page}`;
+  return this.http.get<{ message: string, books: ReceiveReg[] , count: number}>('http://localhost:3000/api/receive' + queryParams);
+}
+
 }

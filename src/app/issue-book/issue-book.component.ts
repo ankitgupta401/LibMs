@@ -47,22 +47,25 @@ this.isLoading = false;
 });
 }
 
-resetform(form: NgForm , form2: NgForm) {
-  const cardNo = this.Libcard.cardNo;
+resetform2(form: NgForm) {
   this.isLoading = true;
+  const cardNo = this.Libcard.cardNo;
   form.reset();
-  if ( form2) {
-  form2.reset();
-  this.app.resetuser();
   this.app.resetbooks();
-} else {
-  this.app.resetbooks();
+
   this.app.getUser(cardNo);
 }
-}
-onIssue() {
-  let isIssued = false;
+resetform(form: NgForm) {
   this.isLoading = true;
+  const cardNo = this.Libcard.cardNo;
+  form.reset();
+  this.app.resetuser();
+  this.app.resetbooks();
+
+}
+onIssue(form: NgForm) {
+  this.isLoading = true;
+  let isIssued = false;
   if ( this.Libcard && this.Books.length > 0 ) {
 // tslint:disable-next-line: prefer-for-of
 for (let i = 0; i < this.Books.length; i++ ) {
@@ -71,9 +74,14 @@ this.Books[i].borrower = this.Libcard.fname + ' ' + this.Libcard.lname;
 this.Books[i].cardNo = this.Libcard.cardNo;
 this.Books[i].borrowed = true;
 this.Books[i].borrow_date = this.date;
-this.app.issueBook(this.Books[i]);
-this.app.getUser(this.Libcard.cardNo);
-this.Libcard = null;
+this.app.issueBook(this.Books[i])
+.subscribe(() => {
+this.app.resetuser();
+this.app.resetbooks();
+this.isLoading = false;
+form.reset();
+});
+
 } else {
   if (this.Books[i].cardNo !== this.Libcard.cardNo) {
   isIssued = true;
@@ -85,6 +93,9 @@ this.Libcard = null;
     this.isLoading = false;
     alert('Some Books Are Already Issued To Others');
 
+} else {
+ alert('Book issued!');
+ this.isLoading = false;
 }
 }
 

@@ -4,6 +4,7 @@ import { All } from '../app.service';
 import { Libcard } from '../Libcard.model';
 import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material';
+import { Books } from '../books.model';
 
 
 @Component({
@@ -19,12 +20,15 @@ export class LibCardRegComponent implements OnInit, OnDestroy {
 pageSizeOption = [ 5, 10, 20, 30, 50, 100];
 
 LibCards: Libcard[] = [];
+Books: Books[] = [];
 gotcard: Libcard = null;
 carddel: string;
 isLoading = false;
 image = 'assets/icons/admin.png';
 year = 2019;
+cardNo: number;
 private userSub: Subscription;
+private BooksSub: Subscription;
   constructor(private app: All) {
   }
 onSubmit(form: NgForm ) {
@@ -40,16 +44,26 @@ onSubmit(form: NgForm ) {
         this.isLoading = false;
       });
   }
-onDelete(id: string) {
+onDelete(id: string , cardNo: number) {
   this.isLoading = true;
-  this.app.DeleteUser(id)
-  .subscribe(() => {
-  this.app.getUsers(this.postsPerPage , this.currentPage);
-  this.isLoading = false;
+  this.app.getBooksForDelete(cardNo)
+  .subscribe((BookData: {message: string, books: Books[]}) => {
+    this.Books = BookData.books;
+    if (this.Books.length > 0) {
+      alert('Cant Delete... Books are issued To this User');
+      this.app.getUsers(this.postsPerPage , this.currentPage);
+      this.isLoading = false;
+    } else {
+    this.app.DeleteUser(id)
+    .subscribe(() => {
+    this.app.getUsers(this.postsPerPage , this.currentPage);
+    this.isLoading = false;
   });
 
-
+    }
+  });
 }
+
 onPrint(id: string) {
 
 // tslint:disable-next-line: prefer-for-of
@@ -60,11 +74,13 @@ for (let i = 0; i < this.LibCards.length; i++) {
  }
 }
 }
-getCard(id: string) {
+getCard(id: string , cardNo: number) {
 this.carddel = id;
+this.cardNo = cardNo;
 }
  ngOnDestroy() {
 this.userSub.unsubscribe();
+
 }
 
 
@@ -72,7 +88,7 @@ printPreview() {
   window.print();
 }
 onSubmitForm(form: NgForm) {
-
+  this.isLoading = true;
   this.gotcard.fname = form.value.fname;
   this.gotcard.lname = form.value.lname;
   this.gotcard.email = form.value.email;
@@ -88,11 +104,8 @@ onSubmitForm(form: NgForm) {
   this.gotcard.imagePath = this.gotcard.imagePath;
   this.gotcard.cardNo = this.gotcard.cardNo;
   this.app.updateUser(this.gotcard);
-  this.isLoading = true;
-  this.app.getUsersUpdateListener()
-  .subscribe(() => {
-  this.isLoading = false;
-  });
+
+
 }
 
 getCardedit(id: string) {

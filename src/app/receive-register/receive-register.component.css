@@ -1,4 +1,7 @@
 input{
   width: 20%;
 }
-
+mat-spinner {
+  margin: 20%;
+  margin-left: 45%;
+}

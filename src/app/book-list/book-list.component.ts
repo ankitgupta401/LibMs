@@ -5,7 +5,7 @@ import { Books } from '../books.model';
 import { Subscription } from 'rxjs';
 import { Barcode } from '../barcode.service';
 import { PageEvent } from '@angular/material';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 
 @Component({
   selector: 'app-book-list',

@@ -17,14 +17,14 @@
 
       <div class="buttons">
         <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button> &nbsp;
-        <button type="reset" class="btn btn-danger" (click)="resetform(forms,form)">Clear</button>
+        <button type="reset" class="btn btn-danger" (click)="resetform(form, forms)">Clear</button>
       </div>
     </div>
     </div>
     <br>
 
       <!-- info area -->
-      <div class="row">
+      <div class="row" *ngIf="!isLoading">
         <div class="col">
           <div class="input1">
             <label class="text2">Name: &nbsp; {{ Libcard?.fname | uppercase}} &nbsp; {{ Libcard?.lname | uppercase}}</label>
@@ -41,7 +41,7 @@
       </div>
 
 
-      <div class="row">
+      <div class="row" *ngIf="!isLoading">
         <div class="col">
           <div class="input3">
             <label class="text2">Card no:&nbsp;{{ Libcard?.cardNo }}</label>
@@ -60,7 +60,7 @@
   </form>
 
   <!-- Second Form Area -->
-  <form (ngSubmit)="onSubmits(forms)" #forms="ngForm">
+  <form (ngSubmit)="onSubmits(forms)" #forms="ngForm" *ngIf="!isLoading">
 
     <div class="row">
 
@@ -72,8 +72,8 @@
 
       <div class="col-4">
         <button type="submit" class="btn btn-primary" [disabled]="!forms.valid" >Add</button>&nbsp;
-        <button type="button" class="btn btn-success" [disabled]="!forms.valid" (click)="onIssue()">Issue</button>&nbsp;
-        <button type="reset" class="btn btn-danger" (click)="resetform(forms)">Clear</button>
+        <button type="button" class="btn btn-success"  (click)="onIssue(form)">Issue</button>&nbsp;
+        <button type="reset" class="btn btn-danger" (click)="resetform2(forms)">Clear</button>
 </div>
 
     </div>

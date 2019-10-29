@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const userRoutes = require('./routes/users');
 const bookRoutes = require('./routes/books');
 const adminRoutes = require('./routes/admin');
+const receiveRoutes = require('./routes/receive');
 const path = require("path");
 
 app.use(bodyParser.json());
@@ -34,5 +35,5 @@ app.use((req, res, next) => {
 app.use("/api/users" , userRoutes);
 app.use("/api/books" , bookRoutes);
 app.use("/api/admin",  adminRoutes);
-
+app.use("/api/receive",  receiveRoutes);
 module.exports = app;

@@ -26,61 +26,39 @@
                 </form>
       </div>
 <br>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
 
-
- <div class="tables" style="height:27pc; overflow: scroll;">
+ <div class="tables" style="height:24pc; overflow-y: scroll; overflow-x:visible ;" *ngIf="!isLoading">
       <table class="table">
             <thead class="thead-dark">
-              <tr>
+              <tr >
                 <th scope="col">#</th>
                 <th scope="col">Accession no</th>
-                <th scope="col">Book Name</th>
-                <th scope="col">User Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Card No</th>
                 <th scope="col">Name</th>
                 <th scope="col">Issued date</th>
-                <th scope="col">Due date</th>
+
 
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>1254</td>
-                <td>letus c</td>
-                <td>1234</td>
-                <td>Animesh</td>
-                <td>10/05/2019</td>
-                <td>16/05/2019</td>
-
-
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>1254</td>
-                <td>letus c</td>
-                <td>1234</td>
-                <td>Animesh</td>
-                <td>10/05/2019</td>
-                <td>16/05/2019</td>
-
-
+              <tr *ngFor="let book of books; let i= index;">
+                <th scope="row"> {{ i + 1 + number}}</th>
+                <td>{{ book?.accession_no }}</td>
+                <td>{{ book?.title }}</td>
+                <td> {{ book?.cardNo }} </td>
+                <td>{{ book?.borrower }}</td>
+                <td>{{ book?.borrow_date }}</td>
 
 
 
               </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>1254</td>
-                <td>letus c</td>
-                <td>1234</td>
-                <td>Animesh</td>
-                <td>10/05/2019</td>
-                <td>16/05/2019</td>
 
 
            </tbody>
           </table>
     </div>
-
+    <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChange($event)"></mat-paginator>
 </div>
 
