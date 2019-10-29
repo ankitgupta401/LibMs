@@ -9,14 +9,14 @@ import { All } from '../app.service';
   styleUrls: ['./new-book-entry.component.css'],
 })
 export class NewBookEntryComponent implements OnInit {
-
+isLoading = false;
   constructor(private bar: Barcode, private app: All) { }
 onSubmit(form: NgForm) {
-this.app.addBooks(form.value);
-
-this.app.getBooksUpdateListener()
+  this.isLoading = true;
+  this.app.addBooks(form.value);
+  this.app.getBooksUpdateListener()
 .subscribe(() => {
-
+  this.isLoading = false;
 });
 }
 barcode( form: NgForm) {

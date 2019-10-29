@@ -5,10 +5,12 @@ import { Subject } from 'rxjs';
 
 
 export class All {
-private book: Books[];
+ book: Books[] = [];
 private libCard: Libcard[] = [];
+ toIssue: Books[] = [];
 private usersUpdated = new Subject<{LibCard: Libcard[], count: number}>();
 private booksUpdated = new Subject<{BOOKS: Books[], count: number}>();
+private toIssuebooksUpdated = new Subject<Books[]>();
 constructor(private http: HttpClient) {}
 count: number;
 bookcount: number;
@@ -29,8 +31,9 @@ addLibCard(LibCard: Libcard , image: File) {
   UserData.append('state', LibCard.state);
   UserData.append('zip', LibCard.zip.toString());
   UserData.append('image', image , LibCard.fname);
-  this.http.post<{message: string }>('http://localhost:3000/api/users', UserData)
+  this.http.post<{message: string}>('http://localhost:3000/api/users', UserData)
   .subscribe((responseData => {
+
     console.log(responseData.message);
     this.libCard.push(LibCard);
     this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
@@ -76,6 +79,9 @@ getBooks(pagesize: number , page: number) {
 getBooksUpdateListener() {
   return this.booksUpdated.asObservable();
 }
+getToIssueBooksUpdateListener() {
+  return this.toIssuebooksUpdated.asObservable();
+}
 DeleteUser(userid: string) {
   return this.http.delete('http://localhost:3000/api/users/' + userid );
 
@@ -99,4 +105,39 @@ updateUser(card: Libcard) {
 });
 }
 
+getLastUser() {
+  this.http.get<{ message: string, users: Libcard[]}>('http://localhost:3000/api/users/last')
+ .subscribe((postData) => {
+this.libCard = postData.users;
+this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
+ });
+}
+getUser(cardNo: number) {
+  this.http.get<{ message: string , user: Libcard[] , books: Books[]}>('http://localhost:3000/api/users/issue/' + cardNo )
+  .subscribe((response) => {
+    this.libCard = response.user;
+    this.book = response.books;
+    this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
+    this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
+  });
+}
+
+getBook(accessionNo: number) {
+return this.http.get<{message: string , book: Books[]}>('http://localhost:3000/api/books/' + accessionNo);
+}
+
+issueBook(book: Books) {
+  this.http.put<{message: string}>('http://localhost:3000/api/books/issueOne/' + book._id , book)
+  .subscribe(result => {
+   this.booksUpdated.next({BOOKS: [...this.book] , count: this.bookcount});
+  });
+}
+resetbooks() {
+  this.book = [];
+  this.booksUpdated.next({BOOKS: [...this.book] , count: this.bookcount});
+}
+resetuser() {
+  this.libCard = [];
+  this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
+}
 }

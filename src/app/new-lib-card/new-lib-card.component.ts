@@ -72,13 +72,14 @@ this.donesave = true;
 
   // tslint:disable-next-line: adjacent-overload-signatures
   ngOnInit() {
-    this.app.getUsers(0, 0);
+    this.app.getLastUser();
     this.isLoading = true;
     this.userSub = this.app.getUsersUpdateListener()
     .subscribe((userData: {LibCard: Libcard[], count: number}) => {
 if ( userData.LibCard.length  <= 0) {
 this.cardNo = 1000;
 } else {
+
   this.cardNo = userData.LibCard[userData.LibCard.length - 1].cardNo + 1 ;
 }
 this.isLoading = false;

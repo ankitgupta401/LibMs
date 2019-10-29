@@ -2,6 +2,7 @@ const express =require('express');
 const router = express.Router();
 const User = require("../model/users");
 const multer = require('multer');
+const Book = require("../model/book")
 const MIME_TYPE_MAP = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
@@ -40,7 +41,7 @@ userQuery.skip(pageSize * (currentPage -1))
 }
 userQuery.then(documents =>{
   fetchedUsers = documents;
-  return User.count();
+  return User.countDocuments();
   }).then (count => {res.status(200).json({
     message: "Posts fetched succesfully!",
     users: fetchedUsers,
@@ -49,6 +50,34 @@ userQuery.then(documents =>{
 });
  });
 
+
+
+ router.get("/last", (req, res, next) => {
+  User.countDocuments().then(count => {
+
+    User.find().skip(count - 1).then(documents =>{
+    res.status(200).json({
+      message: "Posts fetched succesfully!",
+      users: documents,
+    });
+  });
+  });
+   });
+
+   router.get("/issue/:cardNo", (req, res, next) => {
+    let  fetchedusers;
+     User.find({cardNo: req.params.cardNo}).then(documents => {
+      fetchedusers = documents;
+     }).then(() => {
+     Book.find({cardNo: req.params.cardNo}).then(result => {
+     res.status(200).json({
+      message: "got the user",
+      user: fetchedusers,
+      books: result
+    });
+    });
+  });
+     });
 
 
 
@@ -72,12 +101,18 @@ userQuery.then(documents =>{
      imagePath: url + "/images/" + req.file.filename
    });
 
-   user.save();
-   res.status(201).json({
+   user.save()
+   .then(() => {res.status(201).json({
      message: "The user was Added successfully",
-
   });
- });
+}).catch (err => {
+  res.status(500).json({
+    error: err
+  })
+})
+  });
+
+
  router.delete("/:id",(req,res,next) => {
   User.deleteOne({ _id: req.params.id }).then(result => {
     console.log(result);
@@ -105,12 +140,12 @@ userQuery.then(documents =>{
       imagePath: req.body.imagePath
   });
     User.updateOne({ _id: req.params.id }, user).then( result =>{
-      console.log(req.params.id)
-      console.log(result);
+
       res.status(200).json({
         message: "the user is updated successfully"
       })
     });
   });
+
 
   module.exports =router;

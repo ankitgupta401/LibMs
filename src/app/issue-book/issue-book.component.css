@@ -77,3 +77,7 @@ width:30%;
     padding: 7px;
 }
 
+mat-spinner {
+  margin: 20%;
+  margin-left: 45%;
+}

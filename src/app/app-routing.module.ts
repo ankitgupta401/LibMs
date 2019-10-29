@@ -11,11 +11,13 @@ import { LibRegLayComponent } from './lib-card-reg/lib-reg-lay/lib-reg-lay.compo
 import { NewCardLayComponent } from './new-lib-card/new-card-lay/new-card-lay.component';
 import { BarcodeComponent } from './barcode/barcode.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LogincompComponent } from './logincomp/logincomp.component';
 
 
 
 
 const appRoutes: Routes = [
+
   { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   { path: 'dashboard', component: LayDashboardComponent  },
   { path: 'new-book-entry', component: LayComponent },
@@ -27,6 +29,7 @@ const appRoutes: Routes = [
   { path: 'lib-card-list', component: LibRegLayComponent   },
   { path: 'new-lib-card', component: NewCardLayComponent  },
   { path: 'barcodes', component: BarcodeComponent  },
+  { path: 'login' , component: LogincompComponent},
  { path: 'page-not-found', component: PageNotFoundComponent  },
  { path: '**', redirectTo: '/page-not-found' },
 ];

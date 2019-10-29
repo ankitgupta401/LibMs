@@ -2,7 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { MatProgressSpinnerModule , MatPaginatorModule} from '@angular/material';
+import { MatProgressSpinnerModule ,
+   MatPaginatorModule,
+  MatInputModule,
+  MatCardModule,
+   MatButtonModule,
+    MatToolbarModule,
+     MatExpansionModule} from '@angular/material';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -30,6 +36,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { BarcodeComponent } from './barcode/barcode.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LogincompComponent } from './logincomp/logincomp.component';
 
 
 
@@ -58,6 +65,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NewCardLayComponent,
     PageNotFoundComponent,
     BarcodeComponent,
+    LogincompComponent,
   ],
 
   imports: [
@@ -70,6 +78,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgxBarcodeModule,
     HttpClientModule,
     MatProgressSpinnerModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatExpansionModule,
     MatPaginatorModule,
     BrowserAnimationsModule
   ],

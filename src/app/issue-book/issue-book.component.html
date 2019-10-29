@@ -5,24 +5,19 @@
     <!-- First input area -->
     <div class="row">
       <div class="offset-1 col-2">
-        <div class="dropdown">
-          <select class="form-control" id="exampleFormControlSelect12"  [ngModel]="'student'" name="category" required>
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
-          </select>
-        </div>
+
       </div>
       <div class="col-5">
       <div class="input">
 
-        <input type="text" class="form-control" placeholder="Card no" ngModel name="cardNo" required>
+        <input type="number" class="form-control" placeholder="Card no" ngModel name="cardNo" required>
       </div>
       </div>
       <div class="col-4">
 
       <div class="buttons">
         <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button> &nbsp;
-        <button type="reset" class="btn btn-danger">Clear</button>
+        <button type="reset" class="btn btn-danger" (click)="resetform(forms,form)">Clear</button>
       </div>
     </div>
     </div>
@@ -32,7 +27,7 @@
       <div class="row">
         <div class="col">
           <div class="input1">
-            <label class="text2">Name:</label>
+            <label class="text2">Name: &nbsp; {{ Libcard?.fname | uppercase}} &nbsp; {{ Libcard?.lname | uppercase}}</label>
           </div>
         </div>
 
@@ -40,7 +35,7 @@
 
         <div class="col">
           <div class="input2">
-            <label class="text2">Dept:</label>
+            <label class="text2">Dept: &nbsp; {{ Libcard?.dept | uppercase}}</label>
           </div>
         </div>
       </div>
@@ -49,7 +44,7 @@
       <div class="row">
         <div class="col">
           <div class="input3">
-            <label class="text2">Card no:</label>
+            <label class="text2">Card no:&nbsp;{{ Libcard?.cardNo }}</label>
           </div>
         </div>
 
@@ -58,33 +53,27 @@
 
         <div class="col">
           <div class="input4">
-            <label class="text2">Year:</label>
+            <label class="text2">Year: &nbsp; {{ Libcard?.year}}</label>
           </div>
         </div>
       </div>
   </form>
 
   <!-- Second Form Area -->
-  <form (ngSubmit)="onSubmit(form2)" #form2="ngForm">
+  <form (ngSubmit)="onSubmits(forms)" #forms="ngForm">
 
     <div class="row">
-      <div class="offset-1 col-2">
-            <select class="form-control" id="exampleFormControlSelect1" [ngModel]="'Borrow'" name="category" required >
-              <option value="Borrow">Borrow</option>
-              <option value="Read">Read</option>
-            </select>
-          </div>
 
-          <div class="col-5">
+          <div class="offset-1 col-5">
         <input type="number" class="form-control" placeholder="Accession no" ngModel name="accession_no"
           required>
           </div>
 
 
       <div class="col-4">
-        <button type="button" class="btn btn-primary" [disabled]="!form2.valid">Add</button>&nbsp;
-        <button type="submit" class="btn btn-success" [disabled]="!form2.valid">Issue</button>&nbsp;
-        <button type="reset" class="btn btn-danger">Clear</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!forms.valid" >Add</button>&nbsp;
+        <button type="button" class="btn btn-success" [disabled]="!forms.valid" (click)="onIssue()">Issue</button>&nbsp;
+        <button type="reset" class="btn btn-danger" (click)="resetform(forms)">Clear</button>
 </div>
 
     </div>
@@ -95,9 +84,10 @@
 
 
   <br>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
   <!-- Table Area -->
-  <div class="adjust">
-    <div class="tables" style="height:18pc; overflow: scroll;">
+  <div class="adjust" *ngIf="!isLoading">
+    <div class="tables" style="height:18pc; overflow-x: visible; overflow-y: scroll;">
       <table class="table">
         <thead class="thead-dark">
           <tr>
@@ -107,50 +97,27 @@
             <th scope="col">Title </th>
             <th scope="col">Author </th>
           <!----<th scope="col"> Sub-Title </th>-->
-            <th scope="col">Edition </th>
-            <th scope="col">Edition Year </th>
+            <th scope="col">Borrowed By </th>
+            <th scope="col">Issued To </th>
             <th scope="col">Publisher </th>
-            <th scope="col">Availiability </th>
+            <th scope="col">Borrowed </th>
           </tr>
         </thead>
 
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>1254</td>
-            <td>letus c</td>
-            <td>1234</td>
-            <td>Animesh</td>
-            <td>10/05/2019</td>
-            <td>16/05/2019</td>
-
-
+          <tr  *ngFor="let book of Books; let i=index " >
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ book?.accession_no }}</td>
+            <td>{{ book?.isbn }}</td>
+            <td>{{ book?.title }}</td>
+            <td>{{ book?.author }}</td>
+            <td>{{ book?.borrower | uppercase}}</td>
+            <td>{{ book?.cardNo }}</td>
+            <td>{{ book?.publisher }}</td>
+            <td>{{ book?.borrowed }}</td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>1254</td>
-            <td>letus c</td>
-            <td>1234</td>
-            <td>Animesh</td>
-            <td>10/05/2019</td>
-            <td>16/05/2019</td>
-
-
-
-
-
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>1254</td>
-            <td>letus c</td>
-            <td>1234</td>
-            <td>Animesh</td>
-            <td>10/05/2019</td>
-            <td>16/05/2019</td>
-
-
         </tbody>
+
 
       </table>
     </div>

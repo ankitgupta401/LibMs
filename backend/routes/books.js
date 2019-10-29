@@ -13,7 +13,7 @@ bookQuery.skip(pageSize * (currentPage -1))
 }
  bookQuery.then(documents =>{
    fetchedBooks = documents;
-    return Book.count();
+    return Book.countDocuments();
  }).then (count => {
     res.status(200).json({
       message: "Books fetched succesfully!",
@@ -44,16 +44,65 @@ bookQuery.skip(pageSize * (currentPage -1))
   borrower: "",
   borrow_date:"",
   })
-  book.save();
-  res.status(201).json({
-    message: "Book saved Successfully!"
-  });
+  book.save()
+  .then(() => {
+    res.status(201).json({
+      message: "Book saved Successfully!"
+    });
+  }).catch(err => {
+        res.status(500).json({
+    error: err
+    });
+  })
+
 });
 
 router.delete("/:id",(req,res,next) =>{
   Book.deleteOne({ _id: req.params.id }).then(result => {
-    console.log(result);
+
     res.status(200).json({ message: "Book Deleted"});
   });
 });
+
+router.get("/:accessionNo",(req,res,next) => {
+  Book.find({ accession_no: req.params.accessionNo})
+  .then(documents => {
+res.status(200).json({
+message: "book found",
+book : documents
+});
+});
+});
+
+
+router.put("/issueOne/:id", (req, res, next) => {
+const book = new Book({
+  _id: req.body._id,
+  accession_no: req.body.accession_no,
+  author: req.body.author,
+  cost: req.body.cost,
+  edition: req.body.edition,
+  isbn: req.body.isbn,
+  pages: req.body.pages,
+  publisher: req.body.publisher,
+  remark: req.body.remark,
+  source: req.body.source,
+  subject: req.body.subject,
+  title:req.body.title,
+  topics:req.body.topics,
+  volume: req.body.volume,
+  year: req.body.year,
+  borrowed: req.body.borrowed,
+  borrower: req.body.borrower,
+  cardNo: req.body.cardNo,
+  borrow_date: req.body.borrow_date,
+});
+Book.updateOne({_id: req.body._id}, book).then(() =>{
+  res.status(200).json({
+    message: 'Book Issued'
+  });
+});
+});
+
+
  module.exports = router;

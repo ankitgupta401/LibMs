@@ -1,6 +1,7 @@
 const mongoose =require('mongoose');
+const uniqueValidator = require("mongoose-unique-validator");
 const bookSchema = mongoose.Schema({
-  accession_no: { type:Number, required: true},
+  accession_no: { type:Number, required: true, unique: true},
   author: { type:String, required: true},
   cost: { type:Number, required: true},
   edition: { type:String },
@@ -16,6 +17,8 @@ const bookSchema = mongoose.Schema({
   year: { type:Number },
   borrowed: { type:Boolean, required: true},
   borrower: { type:String},
+  cardNo: { type:Number},
   borrow_date: { type:String},
 });
+bookSchema.plugin(uniqueValidator);
 module.exports =mongoose.model( 'Book', bookSchema);

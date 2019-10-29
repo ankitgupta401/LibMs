@@ -27,7 +27,7 @@
               <th scope="col">Author</th>
               <th scope="col">Pages</th>
               <th scope="col">Subject</th>
-              <th scope="col">Year</th>
+              <th scope="col">Issued To</th>
               <th scope="col">Borrowed</th>
               <th scope="col">Borrower</th>
               <th scope="col">Action</th>
@@ -44,9 +44,9 @@
                 <td>{{ book.author }}</td>
                 <td>{{ book.pages }}</td>
                 <td>{{ book.subject }}</td>
-                <td>{{ book.year }}</td>
+                <td>{{ book.cardNo }}</td>
                 <td>{{ book.borrowed }}</td>
-                <td>{{ book.borrower }}</td>
+                <td>{{ book.borrower | uppercase}}</td>
                 <td>
                   <button class="btn btn2" (click)="addBarCode(book.accession_no)"><img src="assets/icons/bar.png"></button>
                     <button onclick="document.getElementById('id01').style.display='block'" class="btn btn2" (click)="getDel(book._id)"><img  src="assets/icons/delete.png"></button>
