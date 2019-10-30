@@ -76,7 +76,7 @@ this.donesave = true;
     this.isLoading = true;
     this.userSub = this.app.getUsersUpdateListener()
     .subscribe((userData: {LibCard: Libcard[], count: number}) => {
-if ( userData.LibCard.length  <= 0) {
+if ( userData.LibCard.length <= 0 ) {
 this.cardNo = 1000;
 } else {
 

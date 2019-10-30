@@ -54,13 +54,21 @@ userQuery.then(documents =>{
 
  router.get("/last", (req, res, next) => {
   User.countDocuments().then(count => {
-
+if (count === 0 ) {
+  User.find().then(documents => {
+    res.status(200).json({
+      message: "Posts fetched succesfully!",
+      users: documents,
+    });
+  });
+} else {
     User.find().skip(count - 1).then(documents =>{
     res.status(200).json({
       message: "Posts fetched succesfully!",
       users: documents,
     });
   });
+}
   });
    });
 
