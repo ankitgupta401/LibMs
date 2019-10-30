@@ -37,6 +37,7 @@ import { BarcodeComponent } from './barcode/barcode.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LogincompComponent } from './logincomp/logincomp.component';
+import { AboutComponent } from './about/about.component';
 
 
 
@@ -66,6 +67,7 @@ import { LogincompComponent } from './logincomp/logincomp.component';
     PageNotFoundComponent,
     BarcodeComponent,
     LogincompComponent,
+    AboutComponent,
   ],
 
   imports: [

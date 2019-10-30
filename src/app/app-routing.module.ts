@@ -12,6 +12,7 @@ import { NewCardLayComponent } from './new-lib-card/new-card-lay/new-card-lay.co
 import { BarcodeComponent } from './barcode/barcode.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LogincompComponent } from './logincomp/logincomp.component';
+import { AboutComponent } from './about/about.component';
 
 
 
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
   { path: 'new-lib-card', component: NewCardLayComponent  },
   { path: 'barcodes', component: BarcodeComponent  },
   { path: 'login' , component: LogincompComponent},
+  { path: 'about' , component: AboutComponent},
  { path: 'page-not-found', component: PageNotFoundComponent  },
  { path: '**', redirectTo: '/page-not-found' },
 ];
