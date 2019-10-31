@@ -68,6 +68,7 @@ import { AboutComponent } from './about/about.component';
     BarcodeComponent,
     LogincompComponent,
     AboutComponent,
+    
   ],
 
   imports: [
