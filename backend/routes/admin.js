@@ -45,7 +45,8 @@ Admin.findOne({email: req.body.email }).then(user => {
   }
   const token = jwt.sign({email: fetchedAdmin.email, userId: fetchedAdmin._id}, 'secret_this_should_be_longer', {expiresIn: "4h"});
   res.status(200).json({
-    token: token
+    token: token,
+    expiresIn: 14400
   })
 })
 .catch(err => {

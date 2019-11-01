@@ -20,7 +20,6 @@ a{
   padding-top:10% ;
   padding-right: 3rem;
   color: white;
-  background-color:#5d6d73;
 
 }
 nav{
@@ -32,8 +31,11 @@ nav{
 }
 .adjust-m{
   display: block;
-  padding: -0.5rem 1rem;
 
+
+}
+.adjusts {
+padding-top: 1% ;
 }
 
 img{
@@ -41,6 +43,18 @@ img{
   background: transparent !important;
 }
 #navbarDropdownMenuLink{
-  background: lightgray;
   cursor: pointer;
 }
+.dropdown-menu a{
+  background: white;
+}
+.dropdown-menu a:hover {
+  cursor: pointer;
+  background: #5d6d73;
+
+  }
+  .dropdown-menu {
+padding: 0;
+    background: white;
+  }
+

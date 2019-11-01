@@ -7,6 +7,9 @@ mat-spinner {
 }
 mat-card {
   padding: 10%;
-  padding-right: 30%;
   margin: 30px;
+}
+form {
+
+ padding-left: 20%;
 }

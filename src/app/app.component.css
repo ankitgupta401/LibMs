@@ -69,3 +69,8 @@ img{
 }
 
 
+app-logincomp {
+  position: absolute;
+  width: 100%;
+left: 10%;
+}

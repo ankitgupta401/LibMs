@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Barcode } from './barcode.service';
 import { All } from './app.service';
+import { LoginService } from './logincomp/login.service';
 
 
 @Component({
@@ -10,8 +12,11 @@ import { All } from './app.service';
 providers: [Barcode, All]
 
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit , OnDestroy {
   title = 'Libms';
+  isAuthenticated = false;
+  isLoading: false;
+  private isAuthSub: Subscription;
   onOpen = 0;
   open = true;
   toggle(): void {
@@ -25,9 +30,18 @@ export class AppComponent implements OnInit {
 
   }
 
-constructor(private bar: Barcode) {}
-ngOnInit(): void {
+constructor(private bar: Barcode, private isAuth: LoginService) {}
+ngOnInit() {
+this.isAuth.autoAuthUser();
+this.isAuthenticated = this.isAuth.getIsAuth();
+this.isAuthSub = this.isAuth.getisAuthListner()
+.subscribe(result => {
+  this.isAuthenticated = result;
+});
+}
 
+ngOnDestroy() {
+this.isAuthSub.unsubscribe();
 }
 }
 

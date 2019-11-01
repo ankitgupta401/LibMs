@@ -1,8 +1,8 @@
 const express =require('express');
 const router = express.Router();
 const Book = require("../model/book");
-
-router.get("", (req, res, next) => {
+const checkAuth = require("../middleware/check-auth");
+router.get("", checkAuth,(req, res, next) => {
   const pageSize = +req.query.pagesize;
 const currentPage = +req.query.page;
 const bookQuery = Book.find();
@@ -23,7 +23,7 @@ bookQuery.skip(pageSize * (currentPage -1))
    });
   });
 
-  router.get("/issuedbooks", (req, res, next) => {
+  router.get("/issuedbooks", checkAuth, (req, res, next) => {
     const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const bookQuery = Book.find({ borrowed: true});
@@ -44,7 +44,7 @@ bookQuery.skip(pageSize * (currentPage -1))
      });
     });
 
- router.post("", (req, res, next) => {
+ router.post("", checkAuth, (req, res, next) => {
   const book = new Book({
   accession_no: req.body.accession_no,
   author:req.body.author,
@@ -78,14 +78,14 @@ bookQuery.skip(pageSize * (currentPage -1))
 
 });
 
-router.delete("/:id",(req,res,next) =>{
+router.delete("/:id",  checkAuth,(req,res,next) =>{
   Book.deleteOne({ _id: req.params.id }).then(result => {
 
     res.status(200).json({ message: "Book Deleted"});
   });
 });
 
-router.get("/:accessionNo",(req,res,next) => {
+router.get("/:accessionNo", checkAuth,(req,res,next) => {
   Book.find({ accession_no: req.params.accessionNo})
   .then(documents => {
 res.status(200).json({
@@ -96,7 +96,7 @@ book : documents
 });
 
 
-router.get("/records/:cardNo",(req,res,next) => {
+router.get("/records/:cardNo", checkAuth,(req,res,next) => {
   Book.find({ cardNo: req.params.cardNo})
   .then(documents => {
 res.status(200).json({
@@ -106,7 +106,7 @@ books : documents
 });
 });
 
-router.put("/issueOne/:id", (req, res, next) => {
+router.put("/issueOne/:id", checkAuth, (req, res, next) => {
 const book = new Book({
   _id: req.body._id,
   accession_no: req.body.accession_no,
@@ -134,7 +134,7 @@ Book.updateOne({_id: req.body._id}, book).then(() =>{
   });
 });
 });
-router.put("/receiveOne/:id", (req, res, next) => {
+router.put("/receiveOne/:id", checkAuth, (req, res, next) => {
   const book = new Book({
     _id: req.body._id,
     accession_no: req.body.accession_no,

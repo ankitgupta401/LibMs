@@ -34,10 +34,11 @@ import { NewLibCardComponent } from './new-lib-card/new-lib-card.component';
 import { NewCardLayComponent } from './new-lib-card/new-card-lay/new-card-lay.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BarcodeComponent } from './barcode/barcode.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LogincompComponent } from './logincomp/logincomp.component';
 import { AboutComponent } from './about/about.component';
+import { AuthInterceptor } from './logincomp/auth-interceptor';
 
 
 
@@ -68,7 +69,7 @@ import { AboutComponent } from './about/about.component';
     BarcodeComponent,
     LogincompComponent,
     AboutComponent,
-    
+
   ],
 
   imports: [
@@ -89,7 +90,7 @@ import { AboutComponent } from './about/about.component';
     MatPaginatorModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+providers: [ {provide: HTTP_INTERCEPTORS , useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

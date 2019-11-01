@@ -1,14 +1,13 @@
 .Sgppics{
-
-    position: absolute;
+position: absolute;
     right: 33%;
     top:10%;
     opacity:0.3;
 }
 
 .quotes{
-    position: absolute;
+position: absolute;
     top: 2%;
     padding: 14%;
-    
+
 }

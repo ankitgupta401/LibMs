@@ -1,8 +1,9 @@
 const express =require('express');
 const router = express.Router();
 const Book = require("../model/receive");
+const checkAuth = require("../middleware/check-auth");
 
-router.post("", (req,res,next) => {
+router.post("", checkAuth, (req,res,next) => {
   const book = new Book({
     accession_no: req.body.accession_no,
     author:req.body.author,
@@ -38,7 +39,7 @@ router.post("", (req,res,next) => {
 });
 
 
-router.get("", (req, res, next) => {
+router.get("", checkAuth, (req, res, next) => {
   const pageSize = +req.query.pagesize;
 const currentPage = +req.query.page;
 const bookQuery = Book.find();

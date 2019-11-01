@@ -1,5 +1,8 @@
 <mat-card class="col-10">
   <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <h2 *ngIf="!isLoading" style="text-align: center;">Admin Login</h2>
+  <br>
+  <br>
   <form (submit)="onLogin(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
     <mat-form-field>
       <input matInput name="email" ngModel type="email" placeholder="E-Mail" #emailInput="ngModel" required email>

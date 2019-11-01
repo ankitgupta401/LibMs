@@ -2,7 +2,9 @@ const express =require('express');
 const router = express.Router();
 const User = require("../model/users");
 const multer = require('multer');
-const Book = require("../model/book")
+const Book = require("../model/book");
+const checkAuth = require("../middleware/check-auth");
+
 const MIME_TYPE_MAP = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
@@ -30,7 +32,7 @@ const storage = multer.diskStorage({
   }
 });
 
-router.get("", (req, res, next) => {
+router.get("", checkAuth,(req, res, next) => {
 const pageSize = +req.query.pagesize;
 const currentPage = +req.query.page;
 const userQuery = User.find();
@@ -52,7 +54,7 @@ userQuery.then(documents =>{
 
 
 
- router.get("/last", (req, res, next) => {
+ router.get("/last",checkAuth, (req, res, next) => {
   User.countDocuments().then(count => {
 if (count === 0 ) {
   User.find().then(documents => {
@@ -72,7 +74,7 @@ if (count === 0 ) {
   });
    });
 
-   router.get("/issue/:cardNo", (req, res, next) => {
+   router.get("/issue/:cardNo", checkAuth,(req, res, next) => {
     let  fetchedusers;
      User.find({cardNo: req.params.cardNo}).then(documents => {
       fetchedusers = documents;
@@ -89,7 +91,7 @@ if (count === 0 ) {
 
 
 
- router.post("", multer({storage: storage}).single("image"),(req, res, next) => {
+ router.post("", checkAuth,multer({storage: storage}).single("image"),(req, res, next) => {
   url = req.protocol + "://" + req.get("host");
   const user = new User({
      fname: req.body.fname,
@@ -121,14 +123,14 @@ if (count === 0 ) {
   });
 
 
- router.delete("/:id",(req,res,next) => {
+ router.delete("/:id", checkAuth,(req,res,next) => {
   User.deleteOne({ _id: req.params.id }).then(result => {
     console.log(result);
     res.status(200).json({ message: "User Deleted"});
   });
  });
 
- router.put("/:id",(req,res,next) => {
+ router.put("/:id",checkAuth,(req,res,next) => {
   const user =new User({
     _id: req.body._id,
     fname: req.body.fname,
