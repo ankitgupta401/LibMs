@@ -16,7 +16,7 @@ export class LoginService {
     const admin: AdminModel = {email: ema , password: pass};
     this.http.post('http://localhost:3000/api/admin/login' , admin)
     .subscribe(response => {
-      // console.log(response);
+      console.log(response);
     });
   }
 }
