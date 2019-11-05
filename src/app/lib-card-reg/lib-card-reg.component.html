@@ -8,11 +8,24 @@
 
             &nbsp;&nbsp;
             <div class="row">
-              <div class="col-3">
+            <div class="col-2">
+                <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" >
+                    <option value="">ALL</option>
+                    <option value="C.S.T">CST</option>
+                    <option value="CVIL">CIVIL</option>
+                    <option value="E.I.E">EIE</option>
+                    <option value="E.T.C.E">ETCE</option>
+                    <option value="E.E">EE</option>
+                    <option value="ARCH">ARCHITECTURE</option>
+                    <option value="PHARM">PHARMACY</option>
+                  </select>
+
+            </div>
+              <div class="col">
                    <input type="text" class="form-control" placeholder="Email" name="email" ngModel email > &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;</div>or
-              <div class="col-3">
+              <div class="col">
                    <input type="text" class="form-control" placeholder="Card No" name="card_no" ngModel >&nbsp; &nbsp;</div>or
-                <div class="col-3">
+                <div class="col">
                       <input type="text" class="form-control" placeholder="Phone No" name="phone_no" ngModel ></div>
                       <div class="col">
                       &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button></div>

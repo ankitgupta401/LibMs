@@ -24,7 +24,7 @@ onSubmit(form: NgForm) {
   console.log(form);
 }
   ngOnInit() {
-    this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage);
+    this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, );
     this.isLoading = true;
     this.booksub = this.app.getBooksUpdateListener()
     .subscribe(( bookData: {BOOKS: Books[], count: number }) => {

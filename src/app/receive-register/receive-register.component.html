@@ -7,11 +7,17 @@
 
         <div class="dropdown">
 
-          <select class="form-control" id="exampleFormControlSelect1" [ngModel]="'student'" name="category ">
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
-
+          <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" >
+            <option value="">ALL</option>
+            <option value="C.S.T">CST</option>
+            <option value="CVIL">CIVIL</option>
+            <option value="E.I.E">EIE</option>
+            <option value="E.T.C.E">ETCE</option>
+            <option value="E.E">EE</option>
+            <option value="ARCH">ARCHITECTURE</option>
+            <option value="PHARM">PHARMACY</option>
           </select>
+
 
         </div>
         &nbsp;
@@ -21,7 +27,7 @@
 
         <input type="text" class="form-control" placeholder="Card No" ngModel name="card_no"><a>&nbsp; or &nbsp;</a>
 
-        <input type="text" class="form-control" placeholder="Isbn" ngModel name="isbn">
+        <input type="text" class="form-control" placeholder="Title" ngModel name="title">
 
         &nbsp; <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>
       </div>
