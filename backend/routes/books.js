@@ -26,15 +26,22 @@ bookQuery.skip(pageSize * (currentPage -1))
   router.get("/issuedbooks", checkAuth, (req, res, next) => {
     const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  const bookQuery = Book.find({ borrowed: true});
+  const dept = req.query.dept;
+  let bookQuery = Book.find({ borrowed: true});
+  if(dept != '') {
+   bookQuery = Book.find({ borrower_dept: dept});
+  }
   let fetchedBooks ;
   if(pageSize && currentPage){
-  bookQuery.skip(pageSize * (currentPage -1))
-  .limit(pageSize);
+     bookQuery.skip(pageSize * (currentPage -1))
+      .limit(pageSize);
   }
    bookQuery.then(documents =>{
      fetchedBooks = documents;
-      return Book.countDocuments({borrowed: true});
+     if(dept != '') {
+      return Book.countDocuments({borrower_dept: dept});
+     }
+      return Book.countDocuments({ borrowed: true});
    }).then (count => {
       res.status(200).json({
         message: "Books fetched succesfully!",
@@ -64,7 +71,10 @@ bookQuery.skip(pageSize * (currentPage -1))
   cardNo: null,
   borrower: "",
   borrow_date:"",
-  })
+  borrower_email: "",
+  borrower_phone: null,
+  borrower_dept: ''
+  });
   book.save()
   .then(() => {
     res.status(201).json({
@@ -127,6 +137,9 @@ const book = new Book({
   borrower: req.body.borrower,
   cardNo: req.body.cardNo,
   borrow_date: req.body.borrow_date,
+  borrower_email: req.body.borrower_email,
+  borrower_phone: req.body.borrower_phone,
+  borrower_dept: req.body.borrower_dept
 });
 Book.updateOne({_id: req.body._id}, book).then(() =>{
   res.status(200).json({

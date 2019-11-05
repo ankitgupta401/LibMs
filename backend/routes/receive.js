@@ -24,7 +24,8 @@ router.post("", checkAuth, (req,res,next) => {
     borrow_date: req.body.borrow_date,
     receive_date: req.body.receive_date,
     fine: req.body.fine,
-    Note:req.body.Note
+    Note:req.body.Note,
+    borrower_dept: req.body.borrower_dept
     })
     book.save()
     .then(() => {
@@ -42,14 +43,20 @@ router.post("", checkAuth, (req,res,next) => {
 router.get("", checkAuth, (req, res, next) => {
   const pageSize = +req.query.pagesize;
 const currentPage = +req.query.page;
-const bookQuery = Book.find();
-let fetchedBooks ;
+const dept = req.query.dept;
+  let bookQuery = Book.find();
+  if(dept != '') {
+   bookQuery = Book.find({ borrower_dept: dept});
+  }
 if(pageSize && currentPage){
 bookQuery.skip(pageSize * (currentPage -1))
 .limit(pageSize);
 }
  bookQuery.then(documents =>{
    fetchedBooks = documents;
+   if(dept != '') {
+    return Book.countDocuments({ borrower_dept: dept});
+   }
     return Book.countDocuments();
  }).then (count => {
     res.status(200).json({

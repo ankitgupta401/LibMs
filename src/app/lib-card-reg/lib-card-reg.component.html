@@ -9,7 +9,7 @@
             &nbsp;&nbsp;
             <div class="row">
             <div class="col-2">
-                <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" >
+                <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" (change)="deptSort(form)">
                     <option value="">ALL</option>
                     <option value="C.S.T">CST</option>
                     <option value="CVIL">CIVIL</option>

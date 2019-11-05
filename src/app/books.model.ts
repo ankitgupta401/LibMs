@@ -18,4 +18,7 @@ borrowed: boolean;
 borrower: string;
 cardNo: number;
 borrow_date: string;
+borrower_email: string;
+borrower_phone: number;
+borrower_dept: string;
 }

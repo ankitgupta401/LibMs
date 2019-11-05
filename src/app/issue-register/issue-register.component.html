@@ -6,7 +6,7 @@
           &nbsp;
           <div  class="dropdown">
 
-            <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" >
+            <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" (change)="deptSort(form)">
               <option value="">ALL</option>
               <option value="C.S.T">CST</option>
               <option value="CVIL">CIVIL</option>

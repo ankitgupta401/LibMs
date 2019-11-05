@@ -6,10 +6,10 @@
                     &nbsp;
                     <div  class="dropdown">
 
-                        <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" >
+                        <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" (change)="deptSort(form)">
                           <option value="">ALL</option>
                           <option value="C.S.T">CST</option>
-                          <option value="CVIL">CIVIL</option>
+                          <option value="CIVIL">CIVIL</option>
                           <option value="E.I.E">EIE</option>
                           <option value="E.T.C.E">ETCE</option>
                           <option value="E.E">EE</option>
@@ -44,6 +44,7 @@
                 <th scope="col">Book Name</th>
                 <th scope="col">Card No</th>
                 <th scope="col">Name</th>
+                <th scope="col"> Dept</th>
                 <th scope="col"> Issued Date</th>
 
                 <th scope="col">Action</th>
@@ -57,6 +58,7 @@
                 <td>{{ book?.title | uppercase}}</td>
                 <td>{{  book?.cardNo }}</td>
                 <td>{{ book?.borrower | uppercase }}</td>
+                <td>{{  book?.borrower_dept }}</td>
                 <td>{{ book?.borrow_date }}</td>
 
                 <td>
@@ -118,7 +120,7 @@
                     </form>
                   </div>
 
-                  <button onclick="document.getElementById('id02').style.display='block'" class="btn  "><img
+                  <button onclick="document.getElementById('id02').style.display='block'" class="btn  " (click)="getbook(book?._id)"><img
                       src="assets/icons/mail.png"></button>
 
                   <div id="id02" class="modal">
@@ -140,7 +142,7 @@
                                   <tr>
                                     <td>
                                       <input type="text" placeholder="Email Address" id="date_of_return"
-                                        ng-model="date_of_return" class="form-control fix_radius">
+                                        [ngModel]="email" class="form-control fix_radius" name="email">
                                     </td>
 
 

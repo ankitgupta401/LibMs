@@ -27,6 +27,7 @@ isLoading = false;
 image = 'assets/icons/admin.png';
 year = 2019;
 cardNo: number;
+dept = '';
 private userSub: Subscription;
 private BooksSub: Subscription;
   constructor(private app: All) {
@@ -36,7 +37,7 @@ onSubmit(form: NgForm ) {
 }
   ngOnInit() {
     this.isLoading = true;
-    this.app.getUsers(this.postsPerPage , this.currentPage);
+    this.app.getUsers(this.postsPerPage , this.currentPage, this.dept);
     this.userSub = this.app.getUsersUpdateListener()
       .subscribe((userData: {LibCard: Libcard[], count: number}) => {
         this.LibCards = userData.LibCard;
@@ -51,12 +52,12 @@ onDelete(id: string , cardNo: number) {
     this.Books = BookData.books;
     if (this.Books.length > 0) {
       alert('Cant Delete... Books are issued To this User');
-      this.app.getUsers(this.postsPerPage , this.currentPage);
+      this.app.getUsers(this.postsPerPage , this.currentPage, this.dept);
       this.isLoading = false;
     } else {
     this.app.DeleteUser(id)
     .subscribe(() => {
-    this.app.getUsers(this.postsPerPage , this.currentPage);
+    this.app.getUsers(this.postsPerPage , this.currentPage, this.dept);
     this.isLoading = false;
   });
 
@@ -104,9 +105,15 @@ onSubmitForm(form: NgForm) {
   this.gotcard.imagePath = this.gotcard.imagePath;
   this.gotcard.cardNo = this.gotcard.cardNo;
   this.app.updateUser(this.gotcard);
-
-
 }
+
+deptSort(form: NgForm) {
+  this.isLoading = true;
+  this.dept = form.value.dept;
+  this.app.getUsers(this.postsPerPage , this.currentPage, this.dept);
+  }
+
+
 
 getCardedit(id: string) {
 this.gotcard = this.app.getCard(id);
@@ -115,7 +122,7 @@ onChange(PageData: PageEvent) {
   this.isLoading = true;
   this.currentPage = PageData.pageIndex + 1;
   this.postsPerPage = PageData.pageSize;
-  this.app.getUsers(this.postsPerPage , this.currentPage);
+  this.app.getUsers(this.postsPerPage , this.currentPage, this.dept);
   if ( this.currentPage > 1) {
     this.number = this.postsPerPage;
     console.log(this.number);

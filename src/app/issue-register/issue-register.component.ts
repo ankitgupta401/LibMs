@@ -17,6 +17,7 @@ export class IssueRegisterComponent implements OnInit , OnDestroy {
   currentPage = 1;
 pageSizeOption = [ 5, 10, 20, 30, 50, 100];
 isLoading = false;
+dept = '';
 private booksub: Subscription;
 books: Books[] = [];
   constructor(private app: All) { }
@@ -24,7 +25,7 @@ onSubmit(form: NgForm) {
   console.log(form);
 }
   ngOnInit() {
-    this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, );
+    this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage , this.dept);
     this.isLoading = true;
     this.booksub = this.app.getBooksUpdateListener()
     .subscribe(( bookData: {BOOKS: Books[], count: number }) => {
@@ -33,12 +34,18 @@ this.totalPosts = bookData.count;
 this.isLoading = false;
     });
   }
+  deptSort(form: NgForm) {
+  this.isLoading = true;
+  this.dept = form.value.dept;
+  this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
+
+  }
 
   onChange(PageData: PageEvent) {
     this.isLoading = true;
     this.currentPage = PageData.pageIndex + 1;
     this.postsPerPage = PageData.pageSize;
-    this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage);
+    this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
     if (this.currentPage > 1 ) {
   this.number = this.postsPerPage * PageData.pageIndex;
     } else {

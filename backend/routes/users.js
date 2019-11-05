@@ -35,7 +35,11 @@ const storage = multer.diskStorage({
 router.get("", checkAuth,(req, res, next) => {
 const pageSize = +req.query.pagesize;
 const currentPage = +req.query.page;
-const userQuery = User.find();
+const dept = req.query.dept;
+  let userQuery = User.find();
+  if(dept != '') {
+   userQuery = User.find({ dept: dept});
+  }
 let fetchedUsers ;
 if(pageSize && currentPage){
 userQuery.skip(pageSize * (currentPage -1))
@@ -43,6 +47,9 @@ userQuery.skip(pageSize * (currentPage -1))
 }
 userQuery.then(documents =>{
   fetchedUsers = documents;
+  if(dept != '') {
+    return User.countDocuments({ dept: dept});
+   }
   return User.countDocuments();
   }).then (count => {res.status(200).json({
     message: "Posts fetched succesfully!",

@@ -19,6 +19,9 @@ const bookSchema = mongoose.Schema({
   borrower: { type:String},
   cardNo: { type:Number},
   borrow_date: { type:String},
+  borrower_email: {type:String},
+  borrower_phone: {type: Number},
+  borrower_dept: {type: String}
 });
 bookSchema.plugin(uniqueValidator);
 module.exports =mongoose.model( 'Book', bookSchema);

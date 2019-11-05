@@ -74,6 +74,9 @@ this.Books[i].borrower = this.Libcard.fname + ' ' + this.Libcard.lname;
 this.Books[i].cardNo = this.Libcard.cardNo;
 this.Books[i].borrowed = true;
 this.Books[i].borrow_date = this.date;
+this.Books[i].borrower_email = this.Libcard.email;
+this.Books[i].borrower_phone = this.Libcard.phone_no;
+this.Books[i].borrower_dept = this.Libcard.dept;
 this.app.issueBook(this.Books[i])
 .subscribe(() => {
 this.app.resetuser();

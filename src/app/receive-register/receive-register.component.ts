@@ -16,6 +16,7 @@ number = 0;
 totalPosts = 0;
 postsPerPage = 10;
 currentPage = 1;
+dept = '';
 pageSizeOption = [ 5, 10, 20, 30, 50, 100];
 booksub: Subscription;
   constructor(private app: All) { }
@@ -24,7 +25,7 @@ console.log(form);
 }
   ngOnInit() {
     this.isLoading = true;
-    this.booksub =  this.app.getAllRecRegBooks(this.postsPerPage , this.currentPage)
+    this.booksub =  this.app.getAllRecRegBooks(this.postsPerPage , this.currentPage, this.dept)
 .subscribe(response => {
 this.recReg = response.books;
 this.totalPosts = response.count;
@@ -37,7 +38,7 @@ this.isLoading = false;
     this.isLoading = true;
     this.currentPage = PageData.pageIndex + 1;
     this.postsPerPage = PageData.pageSize;
-    this.app.getAllRecRegBooks(this.postsPerPage , this.currentPage)
+    this.app.getAllRecRegBooks(this.postsPerPage , this.currentPage, this.dept)
     .subscribe(response => {
       this.recReg = response.books;
       this.totalPosts = response.count;
@@ -50,7 +51,17 @@ this.isLoading = false;
     }
     }
 
+    deptSort(form: NgForm) {
+      this.isLoading = true;
+      this.dept = form.value.dept;
+      this.app.getAllRecRegBooks(this.postsPerPage , this.currentPage, this.dept)
+    .subscribe(response => {
+      this.recReg = response.books;
+      this.totalPosts = response.count;
+      this.isLoading = false;
+      });
 
+    }
 ngOnDestroy() {
 this.booksub.unsubscribe();
 }

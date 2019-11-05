@@ -42,10 +42,9 @@ addLibCard(LibCard: Libcard , image: File) {
     this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
   }));
 }
-getUsers(pagesize: number , page: number) {
-
-  const queryParams = `?pagesize=${pagesize}&page=${page}`;
-  this.http.get<{ message: string, users: Libcard[], count: number}>('http://localhost:3000/api/users' + queryParams)
+getUsers(pagesize: number , page: number , dept: string ) {
+const queryParams = `?pagesize=${pagesize}&page=${page}&dept=${dept}`;
+this.http.get<{ message: string, users: Libcard[], count: number}>('http://localhost:3000/api/users' + queryParams)
  .subscribe((postData) => {
 this.libCard = postData.users;
 this.count = postData.count;
@@ -147,15 +146,15 @@ getBooksForDelete(cardNo: number) {
 }
 
 
-getAllIssuedBooks(pagesize: number , page: number) {
-  const queryParams = `?pagesize=${pagesize}&page=${page}`;
-  this.http.get<{ message: string, books: Books[] , count: number}>('http://localhost:3000/api/books/issuedbooks' + queryParams)
-  .subscribe((postData) => {
+getAllIssuedBooks(pagesize: number , page: number , dept: string) {
 
+const queryParams = `?pagesize=${pagesize}&page=${page}&dept=${dept}`;
+this.http.get<{ message: string, books: Books[] , count: number}>('http://localhost:3000/api/books/issuedbooks' + queryParams)
+  .subscribe((postData) => {
     this.book = postData.books;
     this.bookcount = postData.count;
     this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
-
+    console.log(postData.message);
   });
 }
 
@@ -168,8 +167,8 @@ UpdateRecReg(toRecBook: ReceiveReg) {
  return this.http.post<{ message: string}>('http://localhost:3000/api/receive' , toRecBook);
 }
 
-getAllRecRegBooks(pagesize: number , page: number) {
-  const queryParams = `?pagesize=${pagesize}&page=${page}`;
+getAllRecRegBooks(pagesize: number , page: number, dept: string) {
+  const queryParams = `?pagesize=${pagesize}&page=${page}&dept=${dept}`;
   return this.http.get<{ message: string, books: ReceiveReg[] , count: number}>('http://localhost:3000/api/receive' + queryParams);
 }
 

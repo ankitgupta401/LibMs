@@ -15,13 +15,15 @@ export class ReceiveBookComponent implements OnInit , OnDestroy {
   totalPosts = 0;
   postsPerPage = 10;
   number = 0;
+  dept = '';
   currentPage = 1;
 pageSizeOption = [ 5, 10, 20, 30, 50, 100];
 isLoading = false;
 books: Books[] = [];
-gotbook: Books;
+gotbook: Books = null;
 today;
 date;
+email = '';
 private booksub: Subscription;
   constructor(private app: All) { }
 onSubmit2(form2: NgForm) {
@@ -35,23 +37,33 @@ onSubmit2(form2: NgForm) {
     this.gotbook.borrower = '';
     this.app.receiveOne(this.gotbook)
     .subscribe(() => {
-      this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage);
+      this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
     });
   });
 }
+
+deptSort(form: NgForm) {
+this.isLoading = true;
+this.dept = form.value.dept;
+this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
+
+}
+
+
 
 onSubmit(form: NgForm) {
   console.log(form);
 }
 getbook(id: string) {
 this.gotbook = this.books.find(b => b._id === id);
+this.email = this.gotbook.borrower_email;
 }
 
 onChange(PageData: PageEvent) {
   this.isLoading = true;
   this.currentPage = PageData.pageIndex + 1;
   this.postsPerPage = PageData.pageSize;
-  this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage);
+  this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
   if (this.currentPage > 1 ) {
 this.number = this.postsPerPage * PageData.pageIndex;
   } else {
@@ -64,7 +76,7 @@ this.number = this.postsPerPage * PageData.pageIndex;
   ngOnInit() {
     this.today = new Date();
     this.date = this.today.getFullYear() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate();
-    this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage);
+    this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
     this.isLoading = true;
     this.booksub = this.app.getBooksUpdateListener()
     .subscribe(( bookData: {BOOKS: Books[], count: number }) => {

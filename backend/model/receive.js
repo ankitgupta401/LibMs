@@ -20,7 +20,8 @@ const recbookSchema = mongoose.Schema({
   borrow_date: { type:String},
   receive_date: { type:String},
   fine: { type:Number},
-  Note: { type:String}
+  Note: { type:String},
+  borrower_dept: {type: String}
 });
 
 module.exports =mongoose.model( 'ReceivedBook', recbookSchema);
