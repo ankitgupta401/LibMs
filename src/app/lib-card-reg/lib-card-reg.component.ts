@@ -33,6 +33,18 @@ private BooksSub: Subscription;
   constructor(private app: All) {
   }
 onSubmit(form: NgForm ) {
+this.isLoading = true;
+const isAcc = form.value.eamail;
+if (isAcc) {
+    this.app.findUserEmail(this.postsPerPage , this.currentPage, form.value.email);
+  } else {
+    if ( form.value.cardNo ) {
+      this.app.getUser(form.value.cardNo);
+    } else {
+      this.app.findUserPhone(form.value.phone_no);
+    }
+
+  }
 
 }
   ngOnInit() {

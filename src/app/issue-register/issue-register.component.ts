@@ -22,7 +22,13 @@ private booksub: Subscription;
 books: Books[] = [];
   constructor(private app: All) { }
 onSubmit(form: NgForm) {
-  console.log(form);
+  this.isLoading = true;
+  const isAcc = form.value.accession_no;
+  if (isAcc) {
+  this.app.findbookAcc(form.value.accession_no);
+  } else {
+    this.app.findbookCard(this.postsPerPage , this.currentPage, form.value.cardNo);
+  }
 }
   ngOnInit() {
     this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage , this.dept);

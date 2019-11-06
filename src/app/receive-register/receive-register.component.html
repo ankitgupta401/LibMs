@@ -5,7 +5,7 @@
       <div class="form-row">
         &nbsp;
 
-        <div class="dropdown">
+        <div class="dropdown col-1">
 
           <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" (change)="deptSort(form)">
             <option value="">ALL</option>
@@ -25,9 +25,8 @@
           &nbsp;</a>
 
 
-        <input type="text" class="form-control" placeholder="Card No" ngModel name="card_no"><a>&nbsp; or &nbsp;</a>
+        <input type="text" class="form-control" placeholder="Card No" ngModel name="cardNo"><a>&nbsp;  &nbsp;</a>
 
-        <input type="text" class="form-control" placeholder="Title" ngModel name="title">
 
         &nbsp; <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>
       </div>

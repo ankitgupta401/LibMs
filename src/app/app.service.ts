@@ -7,7 +7,7 @@ import { ReceiveReg } from './receiveReg.model';
 
 export class All {
  book: Books[] = [];
-private libCard: Libcard[] = [];
+  libCard: Libcard[] = [];
  toIssue: Books[] = [];
 private usersUpdated = new Subject<{LibCard: Libcard[], count: number}>();
 private booksUpdated = new Subject<{BOOKS: Books[], count: number}>();
@@ -55,7 +55,6 @@ getUsersUpdateListener() {
   return this.usersUpdated.asObservable();
 }
 addBooks(book: Books) {
-
   this.http.post<{ message: string}>('http://localhost:3000/api/books', book)
   .subscribe(( responseData) => {
     console.log(responseData.message);
@@ -170,6 +169,80 @@ UpdateRecReg(toRecBook: ReceiveReg) {
 getAllRecRegBooks(pagesize: number , page: number, dept: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&dept=${dept}`;
   return this.http.get<{ message: string, books: ReceiveReg[] , count: number}>('http://localhost:3000/api/receive' + queryParams);
+}
+
+findbookAcc( accessionNo: number) {
+this.http.get<{message: string , book: Books[]}>('http://localhost:3000/api/books/' + accessionNo)
+.subscribe((result) => {
+if (result.book[0].borrowed) {
+  this.book = result.book;
+  this.booksUpdated.next({BOOKS: [...this.book], count: result.book.length});
+}
+});
+}
+findallbookAcc( accessionNo: number) {
+  this.http.get<{message: string , books: Books[]}>('http://localhost:3000/api/books/all/' + accessionNo)
+  .subscribe((result) => {
+    this.book = result.books;
+    this.booksUpdated.next({BOOKS: [...this.book], count: result.books.length});
+  });
+  }
+
+findbookCard(pagesize: number , page: number , cardNo: number) {
+  const queryParams = `?pagesize=${pagesize}&page=${page}&cardNo=${cardNo}`;
+  this.http.get<{message: string , books: Books[], count: number}>('http://localhost:3000/api/books/getbycard' + queryParams)
+  .subscribe((result) => {
+    this.book = result.books;
+    this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
+
+  });
+}
+
+findbookTitle(pagesize: number , page: number , title: string) {
+  const queryParams = `?pagesize=${pagesize}&page=${page}&title=${title}`;
+  this.http.get<{message: string , books: Books[], count: number}>('http://localhost:3000/api/books/getbytitle' + queryParams)
+  .subscribe((result) => {
+    this.book = result.books;
+    this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
+
+  });
+}
+findbookAuthor(pagesize: number , page: number , author: string) {
+  const queryParams = `?pagesize=${pagesize}&page=${page}&author=${author}`;
+  this.http.get<{message: string , books: Books[], count: number}>('http://localhost:3000/api/books/getbyauthor' + queryParams)
+  .subscribe((result) => {
+    this.book = result.books;
+    this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
+
+  });
+}
+
+findallrecregAcc(pagesize: number , page: number , accessionNo: number) {
+  const queryParams = `?pagesize=${pagesize}&page=${page}&accessionNo=${accessionNo}`;
+  return this.http.get<{message: string , books: ReceiveReg[]}>('http://localhost:3000/api/receive/all/' + queryParams);
+  }
+
+  findallrecregCard(pagesize: number , page: number , cardNo: number) {
+  const queryParams = `?pagesize=${pagesize}&page=${page}&cardNo=${cardNo}`;
+  return this.http.get<{message: string , books: ReceiveReg[], count: number}>('http://localhost:3000/api/receive/getbycard' + queryParams);
+}
+
+findUserEmail(pagesize: number , page: number , email: string) {
+  const queryParams = `?pagesize=${pagesize}&page=${page}&email=${email}`;
+  this.http.get<{message: string , users: Libcard[], count: number}>('http://localhost:3000/api/users/email' + queryParams)
+  .subscribe((result) => {
+    this.libCard = result.users;
+    this.usersUpdated.next({LibCard: [...this.libCard ], count: result.count});
+
+  });
+}
+
+findUserPhone(phoneNo: any) {
+  this.http.get<{ message: string , user: Libcard[] }>('http://localhost:3000/api/users/get/' + phoneNo )
+  .subscribe((response) => {
+    this.libCard = response.user;
+    this.usersUpdated.next({LibCard: [...this.libCard ], count: 1 });
+  });
 }
 
 }

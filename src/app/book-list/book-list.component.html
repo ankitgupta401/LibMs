@@ -11,7 +11,7 @@
 
                      <input type="text" class="form-control" placeholder="Title" ngModel name="title">&nbsp; or &nbsp;
 
-                        <input type="number" class="form-control" placeholder="Isbn" ngModel name="isbn">
+                        <input type="text" class="form-control" placeholder="Author" ngModel name="author">
                         &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>
                 </div>
               </form>
@@ -40,7 +40,7 @@
               <tr *ngFor="let book of books; let i=index">
                 <th scope="row">{{ i + 1 + number }}</th>
                 <td>{{ book.accession_no }}</td>
-                <td>{{ book.title }}</td>
+                <td>{{ book.title | uppercase}}</td>
                 <td>{{ book.author }}</td>
                 <td>{{ book.pages }}</td>
                 <td>{{ book.subject }}</td>

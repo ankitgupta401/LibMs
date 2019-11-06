@@ -16,6 +16,10 @@ const MIME_TYPE_MAP = {
 
 
 
+
+
+
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const isValid = MIME_TYPE_MAP[file.mimetype];
@@ -31,6 +35,44 @@ const storage = multer.diskStorage({
  cb(null, name + '-' + Date.now() + '.' +  ext);
   }
 });
+
+router.get("/email", checkAuth,(req, res, next) => {
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const email= req.query.email;
+    let userQuery = User.find();
+    if(email != '') {
+     userQuery = User.find({ email: email.toLowerCase()});
+    }
+  let fetchedUsers ;
+  if(pageSize && currentPage){
+  userQuery.skip(pageSize * (currentPage -1))
+  .limit(pageSize);
+  }
+  userQuery.then(documents =>{
+    fetchedUsers = documents;
+    if(email != '') {
+      return User.countDocuments({ email: email.toLowerCase()});
+     }
+    return User.countDocuments();
+    }).then (count => {res.status(200).json({
+      message: "Posts fetched succesfully!",
+      users: fetchedUsers,
+      count: count
+    });
+  });
+   });
+
+   router.get("/get/:phoneNo", checkAuth,(req, res, next) => {
+     User.find({phone_no: req.params.phoneNo}).
+     then(documents => {
+     res.status(200).json({
+      message: "got the user",
+      user: documents,
+    });
+    });
+  });
+
 
 router.get("", checkAuth,(req, res, next) => {
 const pageSize = +req.query.pagesize;
@@ -101,15 +143,15 @@ if (count === 0 ) {
  router.post("", checkAuth,multer({storage: storage}).single("image"),(req, res, next) => {
   url = req.protocol + "://" + req.get("host");
   const user = new User({
-     fname: req.body.fname,
-     lname: req.body.lname,
+     fname: req.body.fname.toUpperCase(),
+     lname: req.body.lname.toUpperCase(),
      cardNo: req.body.cardNo,
      address: req.body.address,
      Roll: req.body.Roll,
      category: req.body.category,
-     city: req.body.city,
-     dept: req.body.dept,
-     email: req.body.email,
+     city: req.body.city.toUpperCase(),
+     dept: req.body.dep ,
+     email: req.body.email.toLowerCase(),
      phone_no: req.body.phone_no,
      sem: req.body.sem,
      state: req.body.state,

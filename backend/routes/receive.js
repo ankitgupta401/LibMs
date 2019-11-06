@@ -3,6 +3,67 @@ const router = express.Router();
 const Book = require("../model/receive");
 const checkAuth = require("../middleware/check-auth");
 
+router.get("/all", checkAuth,(req, res, next) => {
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const accessionNo = req.query.accessionNo;
+  let bookQuery = Book.find();
+  if(accessionNo != '') {
+   bookQuery = Book.find({ accession_no: accessionNo});
+  }
+  let fetchedBooks ;
+  if(pageSize && currentPage){
+     bookQuery.skip(pageSize * (currentPage -1))
+      .limit(pageSize);
+  }
+   bookQuery.then(documents =>{
+     fetchedBooks = documents;
+     if(accessionNo != '') {
+      return Book.countDocuments({ accession_no: accessionNo});
+     }
+      return Book.countDocuments();
+   }).then (count => {
+      res.status(200).json({
+        message: "Books fetched succesfully!",
+        books: fetchedBooks,
+        count: count
+      });
+     });
+    });
+
+
+
+    router.get("/getbycard", checkAuth, (req, res, next) => {
+      const pageSize = +req.query.pagesize;
+      const currentPage = +req.query.page;
+      const cardNo = req.query.cardNo;
+      let bookQuery = Book.find();
+      if(cardNo != '') {
+       bookQuery = Book.find({ cardNo: cardNo});
+      }
+      let fetchedBooks ;
+      if(pageSize && currentPage){
+         bookQuery.skip(pageSize * (currentPage -1))
+          .limit(pageSize);
+      }
+       bookQuery.then(documents =>{
+         fetchedBooks = documents;
+         if(cardNo != '') {
+          return Book.countDocuments({cardNo: cardNo});
+         }
+          return Book.countDocuments();
+       }).then (count => {
+          res.status(200).json({
+            message: "Books fetched succesfully!",
+            books: fetchedBooks,
+            count: count
+          });
+         });
+    });
+
+
+
+
 router.post("", checkAuth, (req,res,next) => {
   const book = new Book({
     accession_no: req.body.accession_no,

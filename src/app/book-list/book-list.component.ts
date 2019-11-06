@@ -25,7 +25,18 @@ pageSizeOption = [ 5, 10, 20, 30, 50, 100];
   constructor(private app: All, private bar: Barcode) {
    }
 onSubmit(form: NgForm) {
-console.log(form);
+  this.isLoading = true;
+  const isAcc = form.value.accession_no;
+  if (isAcc) {
+  this.app.findallbookAcc(form.value.accession_no);
+  } else {
+    if ( form.value.title ) {
+      this.app.findbookTitle(this.postsPerPage , this.currentPage, form.value.title);
+    } else {
+      this.app.findbookAuthor(this.postsPerPage , this.currentPage, form.value.author);
+    }
+
+  }
 }
   ngOnInit() {
     this.app.getBooks(this.postsPerPage, this.currentPage);

@@ -35,6 +35,7 @@ onSubmit2(form2: NgForm) {
     this.gotbook.cardNo = null;
     this.gotbook.borrowed = false;
     this.gotbook.borrower = '';
+    this.gotbook.borrower_dept = '';
     this.app.receiveOne(this.gotbook)
     .subscribe(() => {
       this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
@@ -52,7 +53,13 @@ this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
 
 
 onSubmit(form: NgForm) {
-  console.log(form);
+  this.isLoading = true;
+  const isAcc = form.value.accession_no;
+  if (isAcc) {
+  this.app.findbookAcc(form.value.accession_no);
+  } else {
+    this.app.findbookCard(this.postsPerPage , this.currentPage, form.value.cardNo);
+  }
 }
 getbook(id: string) {
 this.gotbook = this.books.find(b => b._id === id);

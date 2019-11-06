@@ -19,9 +19,24 @@ currentPage = 1;
 dept = '';
 pageSizeOption = [ 5, 10, 20, 30, 50, 100];
 booksub: Subscription;
+booksubs2: Subscription;
   constructor(private app: All) { }
 onSubmit(form: NgForm) {
-console.log(form);
+  this.isLoading = true;
+  const isAcc = form.value.accession_no;
+  if (isAcc) {
+    this.booksubs2 = this.app.findallrecregAcc(this.postsPerPage , this.currentPage, form.value.accession_no)
+  .subscribe(response => {
+    this.recReg = response.books;
+    this.isLoading = false;
+  });
+  } else {
+    this.booksubs2  = this.app.findallrecregCard(this.postsPerPage , this.currentPage, form.value.cardNo)
+    .subscribe(response => {
+      this.recReg = response.books;
+      this.isLoading = false;
+    });
+  }
 }
   ngOnInit() {
     this.isLoading = true;
@@ -64,5 +79,6 @@ this.isLoading = false;
     }
 ngOnDestroy() {
 this.booksub.unsubscribe();
+this.booksubs2.unsubscribe();
 }
 }
