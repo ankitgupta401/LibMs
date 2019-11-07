@@ -41,12 +41,26 @@ if (isAcc) {
     if ( form.value.cardNo ) {
       this.app.getUser(form.value.cardNo);
     } else {
+      if ( form.value.phone_no ) {
       this.app.findUserPhone(form.value.phone_no);
+      }
     }
-
   }
-
 }
+
+onClear(form: NgForm) {
+this.isLoading = true;
+form.reset();
+this.app.getUsers(this.postsPerPage , this.currentPage, this.dept);
+this.userSub = this.app.getUsersUpdateListener()
+      .subscribe((userData: {LibCard: Libcard[], count: number}) => {
+        this.LibCards = userData.LibCard;
+        this.totalPosts = userData.count;
+        this.isLoading = false;
+      });
+}
+
+
   ngOnInit() {
     this.isLoading = true;
     this.app.getUsers(this.postsPerPage , this.currentPage, this.dept);

@@ -4,7 +4,7 @@ import { All } from '../app.service';
 import { Books } from '../books.model';
 import { Subscription } from 'rxjs';
 import { Barcode } from '../barcode.service';
-import { PageEvent } from '@angular/material';
+import { PageEvent, throwToolbarMixedModesError, TransitionCheckState } from '@angular/material';
 
 
 @Component({
@@ -55,6 +55,14 @@ this.isLoading = false;
     this.app.getBooks(this.postsPerPage , this.currentPage);
     });
   }
+  onClear(form: NgForm) {
+  this.isLoading = true;
+  this.app.getBooks(this.postsPerPage, this.currentPage);
+  form.reset();
+  }
+
+
+
   getDel(id: string) {
     this.bookdel = id;
     }

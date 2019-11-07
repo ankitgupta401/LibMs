@@ -8,7 +8,7 @@
 
             &nbsp;&nbsp;
             <div class="row">
-            <div class="col-2">
+            <div class="col-1">
                 <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" (change)="deptSort(form)">
                     <option value="">ALL</option>
                     <option value="C.S.T">CST</option>
@@ -22,15 +22,16 @@
 
             </div>
               <div class="col">
-                   <input type="text" class="form-control" placeholder="Email" name="email" ngModel email > &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;</div>or
+                   <input type="text" class="form-control" placeholder="Email" name="email" ngModel email > </div>
               <div class="col">
-                   <input type="text" class="form-control" placeholder="Card No" name="cardNo" ngModel >&nbsp; &nbsp;</div>or
+                   <input type="text" class="form-control" placeholder="Card No" name="cardNo" ngModel ></div>
                 <div class="col">
                       <input type="text" class="form-control" placeholder="Phone No" name="phone_no" ngModel ></div>
                       <div class="col">
-                      &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button></div>
+                       <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button> &nbsp;
+                          <button type="clear" class="btn btn-danger" (click)="onClear(form)" >CLEAR</button></div>
                       </div>
-
+<br>
             </form>
             </div>
             <mat-spinner *ngIf="isLoading"></mat-spinner>

@@ -1,29 +1,30 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<form (ngSubmit)="onSubmit(form)" #form="ngForm" >
+<form (ngSubmit)="onSubmit(form)" #form="ngForm" *ngIf="!isLoading" >
 
   <div class="form">
 
 
     <div class="row">
-      <div class="col-6">
-        <label for="text" class="title"><b class="redMark">*</b> Title:</label>
-        <input type="text" class="form-control" ngModel name="title" required>
-      </div>
-      <div class="col-6">
-        <label for="text"><b class="redMark">*</b> Author:</label>
-        <input type="text" class="form-control" ngModel name="author" required>
-      </div>
+        <div class="col-6">
+            <label for="text"><b class="redMark">*</b> Isbn:</label>
+            <input type="text" class="form-control"  [ngModel]= "isbn" name="isbn" required (blur)="searchbook(form)">
+          </div>
+          <div class="col-6">
+              <label for="text" class="title"><b class="redMark">*</b> Title:</label>
+              <input type="text" class="form-control" [ngModel]= "book?.title" name="title" required>
+            </div>
+
     </div>
 
 
     <div class="row">
       <div class="col-6">
         <label for="text"><b class="redMark">*</b> Pages:</label>
-        <input type="number" class="form-control" ngModel name="pages" required>
+        <input type="number" class="form-control" [ngModel]= "book?.pages" name="pages" required>
       </div>
       <div class="col-6">
         <label for="pwd">Subject:</label>
-        <input type="text" class="form-control" ngModel name="subject">
+        <input type="text" class="form-control" [ngModel]= "book?.subject" name="subject">
       </div>
     </div>
 
@@ -31,7 +32,7 @@
     <div class="row">
       <div class="col-6">
         <label for="text">Topics:</label>
-        <input type="text" class="form-control" ngModel name="topics">
+        <input type="text" class="form-control" [ngModel]= "book?.topics" name="topics">
       </div>
       <div class="col-6">
         <label for="text"><b class="redMark">*</b> Accession No:</label>
@@ -43,23 +44,23 @@
     <div class="row">
       <div class="col-6">
         <label for="text"><b class="redMark">*</b> Cost:</label>
-        <input type="number" class="form-control" ngModel name="cost" required>
+        <input type="number" class="form-control" [ngModel]= "book?.cost" name="cost" required>
       </div>
       <div class="col-6">
         <label for="text"><b class="redMark">*</b> Publisher:</label>
-        <input type="text" class="form-control" ngModel name="publisher" required>
+        <input type="text" class="form-control" [ngModel]= "book?.publisher" name="publisher" required>
       </div>
     </div>
 
 
     <div class="row">
       <div class="col-6">
-        <label for="text">Source:</label>
-        <input type="text" class="form-control" ngModel name="source">
+        <label for="text">Location:</label>
+        <input type="text" class="form-control" [ngModel]= "book?.source" name="source">
       </div>
       <div class="col-6 ">
         <label for="text">Remark:</label>
-        <input type="text" class="form-control" ngModel name="remark">
+        <input type="text" class="form-control" [ngModel]= "book?.remark" name="remark">
       </div>
     </div>
 
@@ -68,12 +69,12 @@
     <div class="row">
       <div class="col-6">
         <label for="text">Year:</label>
-        <input type="number" class="form-control" ngModel name="year">
+        <input type="number" class="form-control" [ngModel]= "book?.year" name="year">
       </div>
       <div class="col-6">
-        <label for="text"><b class="redMark">*</b> Isbn:</label>
-        <input type="number" class="form-control" ngModel name="isbn" required>
-      </div>
+          <label for="text"><b class="redMark">*</b> Author:</label>
+          <input type="text" class="form-control" [ngModel]= "book?.author" name="author" required>
+        </div>
     </div>
 
 
@@ -81,11 +82,11 @@
     <div class="row">
       <div class="col-6">
         <label for="text">Edition:</label>
-        <input type="text" class="form-control" ngModel name="edition">
+        <input type="text" class="form-control" [ngModel]= "book?.edition" name="edition">
       </div>
       <div class="col-6">
         <label for="text">Vol:</label>
-        <input type="text" class="form-control" ngModel name="volume">
+        <input type="text" class="form-control" [ngModel]= "book?.volume" name="volume">
       </div>
     </div>
 

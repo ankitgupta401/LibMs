@@ -4,13 +4,25 @@ const Book = require("../model/book");
 const checkAuth = require("../middleware/check-auth");
 
 
+router.get("/get/:isbn", checkAuth, (req,res,next) => {
+const isbn= req.params.isbn;
+Book.find({isbn: isbn})
+.then(documents => {
+res.status(200).json({
+books: documents,
+message: "got matching book"
+});
+});
+});
+
 router.get("/getbytitle", checkAuth, (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const title = req.query.title;
+  const regex = new RegExp(escapeRegex(title), 'gi');
   let bookQuery = Book.find();
   if(title != '') {
-   bookQuery = Book.find({ title: title.toUpperCase()});
+   bookQuery = Book.find({ title: regex});
   }
   let fetchedBooks ;
   if(pageSize && currentPage){
@@ -36,9 +48,10 @@ router.get("/getbyauthor", checkAuth, (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const author = req.query.author;
+  const regex = new RegExp(escapeRegex(author), 'gi');
   let bookQuery = Book.find();
   if(author != '') {
-   bookQuery = Book.find({ author: author.toUpperCase()});
+   bookQuery = Book.find({ author: regex});
   }
   let fetchedBooks ;
   if(pageSize && currentPage){
@@ -284,7 +297,9 @@ router.put("/receiveOne/:id", checkAuth, (req, res, next) => {
     });
   });
   });
-
+  function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 
 

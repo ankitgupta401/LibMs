@@ -150,7 +150,7 @@ if (count === 0 ) {
      Roll: req.body.Roll,
      category: req.body.category,
      city: req.body.city.toUpperCase(),
-     dept: req.body.dep ,
+     dept: req.body.dept,
      email: req.body.email.toLowerCase(),
      phone_no: req.body.phone_no,
      sem: req.body.sem,

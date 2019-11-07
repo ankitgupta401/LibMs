@@ -245,4 +245,13 @@ findUserPhone(phoneNo: any) {
   });
 }
 
+searchByIsbn(isbn: string) {
+  return this.http.get<{ message: string , books: Books[] }>('http://localhost:3000/api/books/get/' + isbn );
+}
+
+findallbookAcc2( accessionNo: number) {
+ return this.http.get<{message: string , books: Books[]}>('http://localhost:3000/api/books/all/' + accessionNo);
+  }
+
+
 }

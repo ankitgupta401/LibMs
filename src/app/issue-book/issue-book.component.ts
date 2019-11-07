@@ -97,8 +97,7 @@ form.reset();
     alert('Some Books Are Already Issued To Others');
 
 } else {
- alert('Book issued!');
- this.isLoading = false;
+  this.isLoading = false;
 }
 }
 

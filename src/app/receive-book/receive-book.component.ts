@@ -58,7 +58,11 @@ onSubmit(form: NgForm) {
   if (isAcc) {
   this.app.findbookAcc(form.value.accession_no);
   } else {
-    this.app.findbookCard(this.postsPerPage , this.currentPage, form.value.cardNo);
+    if (form.value.cardNo) {
+      this.app.findbookCard(this.postsPerPage , this.currentPage, form.value.cardNo);
+    } else {
+      this.isLoading = false;
+    }
   }
 }
 getbook(id: string) {
@@ -81,10 +85,10 @@ this.number = this.postsPerPage * PageData.pageIndex;
 
 
   ngOnInit() {
+    this.isLoading = true;
     this.today = new Date();
     this.date = this.today.getFullYear() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate();
     this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
-    this.isLoading = true;
     this.booksub = this.app.getBooksUpdateListener()
     .subscribe(( bookData: {BOOKS: Books[], count: number }) => {
 this.books = bookData.BOOKS;
@@ -92,6 +96,13 @@ this.totalPosts = bookData.count;
 this.isLoading = false;
     });
   }
+
+  onClear(form: NgForm) {
+    this.isLoading = true;
+    this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
+    form.reset();
+  }
+
 
 ngOnDestroy() {
   this.booksub.unsubscribe();

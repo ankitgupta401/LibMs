@@ -7,12 +7,13 @@
           <div class="form-row ">
 
               &nbsp; &nbsp;
-                     <input type="number" class="form-control" placeholder="Type Acession no" ngModel name="accession_no" > &nbsp; or &nbsp;
+                     <input type="number" class="form-control" placeholder="Type Acession no" ngModel name="accession_no" > &nbsp;  &nbsp;
 
-                     <input type="text" class="form-control" placeholder="Title" ngModel name="title">&nbsp; or &nbsp;
+                     <input type="text" class="form-control" placeholder="Title" ngModel name="title">&nbsp;  &nbsp;
 
                         <input type="text" class="form-control" placeholder="Author" ngModel name="author">
-                        &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>
+                        &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>&nbsp;  &nbsp;
+                        <button type="submit" class="btn btn-danger" (click)="onClear(form)" >Clear</button>
                 </div>
               </form>
     </div><br>
@@ -25,7 +26,7 @@
               <th scope="col">Accession no</th>
               <th scope="col">Title</th>
               <th scope="col">Author</th>
-              <th scope="col">Pages</th>
+              <th scope="col">Location</th>
               <th scope="col">Subject</th>
               <th scope="col">Issued To</th>
               <th scope="col">Borrowed</th>
@@ -42,7 +43,7 @@
                 <td>{{ book.accession_no }}</td>
                 <td>{{ book.title | uppercase}}</td>
                 <td>{{ book.author }}</td>
-                <td>{{ book.pages }}</td>
+                <td>{{ book.source }}</td>
                 <td>{{ book.subject }}</td>
                 <td>{{ book.cardNo }}</td>
                 <td>{{ book.borrowed }}</td>

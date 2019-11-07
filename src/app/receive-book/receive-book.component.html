@@ -19,12 +19,12 @@
 
                           </div>
                           &nbsp;
-                    <input type="text" class="form-control col-1 col-md-3" placeholder="Type Acession no" ngModel name="accession_no"> <a>&nbsp; or &nbsp;</a>
+                    <input type="text" class="form-control col-1 col-md-3" placeholder="Type Acession no" ngModel name="accession_no"> <a>&nbsp;  &nbsp;</a>
 
 
                         <input type="text" class="form-control col-1 col-md-3" placeholder="Card No" ngModel name="cardNo"><a>&nbsp; &nbsp;</a>
-                              &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>
-
+                              &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button> <a>&nbsp; &nbsp;</a>
+                              <button type="clear" class="btn btn-danger" (click)="onClear(form)">Clear</button>
                             </div>
 
             </form>
