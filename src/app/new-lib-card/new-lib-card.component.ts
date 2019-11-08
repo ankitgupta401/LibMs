@@ -13,6 +13,8 @@ export class NewLibCardComponent implements OnInit , OnDestroy {
   // details: any[] = [];
 
   private userSub: Subscription;
+  today: Date;
+  date: any;
   constructor( private app: All) {
 
   }
@@ -55,7 +57,7 @@ return ;
 onSubmit(form: NgForm) {
 
   this.details = form.value;
-  this.details.cardNo = this.cardNo;
+  this.details.cardNo = form.value.dept + this.date + form.value.Roll;
   this.app.addLibCard(this.details, this.fileToUpload);
   this.isLoading = true;
   this.app.getUsersUpdateListener().subscribe(() => {
@@ -72,23 +74,13 @@ this.donesave = true;
 
   // tslint:disable-next-line: adjacent-overload-signatures
   ngOnInit() {
-    this.app.getLastUser();
-    this.isLoading = true;
-    this.userSub = this.app.getUsersUpdateListener()
-    .subscribe((userData: {LibCard: Libcard[], count: number}) => {
-if ( userData.LibCard.length <= 0 ) {
-this.cardNo = 1000;
-} else {
-
-  this.cardNo = userData.LibCard[userData.LibCard.length - 1].cardNo + 1 ;
-}
-this.isLoading = false;
-    });
+    this.today = new Date();
+    this.date = this.today.getUTCFullYear();
 
   }
 
   ngOnDestroy() {
-this.userSub.unsubscribe();
+
   }
 
 }

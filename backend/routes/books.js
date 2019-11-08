@@ -6,7 +6,7 @@ const checkAuth = require("../middleware/check-auth");
 
 router.get("/get/:isbn", checkAuth, (req,res,next) => {
 const isbn= req.params.isbn;
-Book.find({isbn: isbn})
+Book.find({isbn: isbn , deleted: false})
 .then(documents => {
 res.status(200).json({
 books: documents,
@@ -22,7 +22,7 @@ router.get("/getbytitle", checkAuth, (req, res, next) => {
   const regex = new RegExp(escapeRegex(title), 'gi');
   let bookQuery = Book.find();
   if(title != '') {
-   bookQuery = Book.find({ title: regex});
+   bookQuery = Book.find({ title: regex , deleted: false});
   }
   let fetchedBooks ;
   if(pageSize && currentPage){
@@ -32,7 +32,7 @@ router.get("/getbytitle", checkAuth, (req, res, next) => {
    bookQuery.then(documents =>{
      fetchedBooks = documents;
      if(title != '') {
-      return Book.countDocuments({title: title.toUpperCase()});
+      return Book.countDocuments({title: regex , deleted: false});
      }
       return Book.countDocuments();
    }).then (count => {
@@ -51,7 +51,7 @@ router.get("/getbyauthor", checkAuth, (req, res, next) => {
   const regex = new RegExp(escapeRegex(author), 'gi');
   let bookQuery = Book.find();
   if(author != '') {
-   bookQuery = Book.find({ author: regex});
+   bookQuery = Book.find({ author: regex, deleted: false});
   }
   let fetchedBooks ;
   if(pageSize && currentPage){
@@ -61,7 +61,7 @@ router.get("/getbyauthor", checkAuth, (req, res, next) => {
    bookQuery.then(documents =>{
      fetchedBooks = documents;
      if(author != '') {
-      return Book.countDocuments({author: author.toUpperCase()});
+      return Book.countDocuments({author: regex, deleted: false});
      }
       return Book.countDocuments();
    }).then (count => {
@@ -78,9 +78,9 @@ router.get("/getbycard", checkAuth, (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const cardNo = req.query.cardNo;
-  let bookQuery = Book.find({ borrowed: true});
+  let bookQuery = Book.find({ borrowed: true , deleted: false});
   if(cardNo != '') {
-   bookQuery = Book.find({ cardNo: cardNo});
+   bookQuery = Book.find({ cardNo: cardNo , deleted: false});
   }
   let fetchedBooks ;
   if(pageSize && currentPage){
@@ -90,9 +90,9 @@ router.get("/getbycard", checkAuth, (req, res, next) => {
    bookQuery.then(documents =>{
      fetchedBooks = documents;
      if(cardNo != '') {
-      return Book.countDocuments({cardNo: cardNo});
+      return Book.countDocuments({cardNo: cardNo , deleted: false});
      }
-      return Book.countDocuments({ borrowed: true});
+      return Book.countDocuments({ borrowed: true , deleted: false});
    }).then (count => {
       res.status(200).json({
         message: "Books fetched succesfully!",
@@ -106,9 +106,9 @@ router.get("/getbycard", checkAuth, (req, res, next) => {
 router.get("/all/:accessionNo", checkAuth,(req, res, next) => {
 const accessionNo = req.params.accessionNo;
 let fetchedBooks ;
-Book.find({accession_no:accessionNo }).then(documents =>{
+Book.find({accession_no:accessionNo, deleted: false }).then(documents =>{
    fetchedBooks = documents;
-    return Book.countDocuments({accession_no:accessionNo });
+    return Book.countDocuments({accession_no:accessionNo, deleted: false });
  }).then (count => {
     res.status(200).json({
       message: "Books fetched succesfully!",
@@ -121,7 +121,7 @@ Book.find({accession_no:accessionNo }).then(documents =>{
 router.get("", checkAuth,(req, res, next) => {
   const pageSize = +req.query.pagesize;
 const currentPage = +req.query.page;
-const bookQuery = Book.find();
+const bookQuery = Book.find({ deleted: false});
 let fetchedBooks ;
 if(pageSize && currentPage){
 bookQuery.skip(pageSize * (currentPage -1))
@@ -129,7 +129,7 @@ bookQuery.skip(pageSize * (currentPage -1))
 }
  bookQuery.then(documents =>{
    fetchedBooks = documents;
-    return Book.countDocuments();
+    return Book.countDocuments({deleted: false});
  }).then (count => {
     res.status(200).json({
       message: "Books fetched succesfully!",
@@ -143,9 +143,9 @@ bookQuery.skip(pageSize * (currentPage -1))
     const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const dept = req.query.dept;
-  let bookQuery = Book.find({ borrowed: true});
+  let bookQuery = Book.find({ borrowed: true , deleted: false});
   if(dept != '') {
-   bookQuery = Book.find({ borrower_dept: dept});
+   bookQuery = Book.find({ borrower_dept: dept, deleted: false});
   }
   let fetchedBooks ;
   if(pageSize && currentPage){
@@ -155,9 +155,9 @@ bookQuery.skip(pageSize * (currentPage -1))
    bookQuery.then(documents =>{
      fetchedBooks = documents;
      if(dept != '') {
-      return Book.countDocuments({borrower_dept: dept});
+      return Book.countDocuments({borrower_dept: dept, deleted: false});
      }
-      return Book.countDocuments({ borrowed: true});
+      return Book.countDocuments({ borrowed: true, deleted: false});
    }).then (count => {
       res.status(200).json({
         message: "Books fetched succesfully!",
@@ -170,7 +170,7 @@ bookQuery.skip(pageSize * (currentPage -1))
  router.post("", checkAuth, (req, res, next) => {
   const book = new Book({
   accession_no: req.body.accession_no,
-  author:req.body.author.toUpperCase(),
+  author:req.body.author,
   cost: req.body.cost,
   edition: req.body.edition,
   isbn: req.body.isbn,
@@ -179,7 +179,7 @@ bookQuery.skip(pageSize * (currentPage -1))
   remark: req.body.remark,
   source: req.body.source,
   subject: req.body.subject,
-  title: req.body.title.toUpperCase(),
+  title: req.body.title,
   topics:req.body.topics,
   volume: req.body.volume,
   year: req.body.year,
@@ -189,7 +189,8 @@ bookQuery.skip(pageSize * (currentPage -1))
   borrow_date:"",
   borrower_email: "",
   borrower_phone: null,
-  borrower_dept: ''
+  borrower_dept: '',
+  deleted: false
   });
   book.save()
   .then(() => {
@@ -204,15 +205,43 @@ bookQuery.skip(pageSize * (currentPage -1))
 
 });
 
-router.delete("/:id",  checkAuth,(req,res,next) =>{
-  Book.deleteOne({ _id: req.params.id }).then(result => {
-
-    res.status(200).json({ message: "Book Deleted"});
+router.put("/deleteOne/:id",  checkAuth,(req,res,next) =>{
+  const book = new Book({
+    _id: req.body._id,
+    accession_no: null,
+    author: req.body.author,
+    cost: req.body.cost,
+    edition: req.body.edition,
+    isbn: req.body.isbn,
+    pages: req.body.pages,
+    publisher: req.body.publisher,
+    remark: req.body.remark,
+    source: req.body.source,
+    subject: req.body.subject,
+    title:req.body.title,
+    topics:req.body.topics,
+    volume: req.body.volume,
+    year: req.body.year,
+    borrowed: req.body.borrowed,
+    borrower: req.body.borrower,
+    cardNo: req.body.cardNo,
+    borrow_date: req.body.borrow_date,
+    borrower_email: req.body.borrower_email,
+    borrower_phone: req.body.borrower_phone,
+    borrower_dept: req.body.borrower_dept,
+    deleted: true
   });
-});
+
+  Book.updateOne({_id: req.body._id}, book).then(() =>{
+    res.status(200).json({
+      message: 'Book Deleted'
+    });
+  });
+  });
+
 
 router.get("/:accessionNo", checkAuth,(req,res,next) => {
-  Book.find({ accession_no: req.params.accessionNo})
+  Book.find({ accession_no: req.params.accessionNo, deleted: false})
   .then(documents => {
 res.status(200).json({
 message: "book found",
@@ -223,7 +252,7 @@ book : documents
 
 
 router.get("/records/:cardNo", checkAuth,(req,res,next) => {
-  Book.find({ cardNo: req.params.cardNo})
+  Book.find({ cardNo: req.params.cardNo })
   .then(documents => {
 res.status(200).json({
 message: "Books Issued",
@@ -255,7 +284,8 @@ const book = new Book({
   borrow_date: req.body.borrow_date,
   borrower_email: req.body.borrower_email,
   borrower_phone: req.body.borrower_phone,
-  borrower_dept: req.body.borrower_dept
+  borrower_dept: req.body.borrower_dept,
+  deleted: req.body.deleted
 });
 
 Book.updateOne({_id: req.body._id}, book).then(() =>{
@@ -289,7 +319,8 @@ router.put("/receiveOne/:id", checkAuth, (req, res, next) => {
     borrower: req.body.borrower,
     cardNo: req.body.cardNo,
     borrow_date: req.body.borrow_date,
-    borrower_dept: req.body.borrower_dept
+    borrower_dept: req.body.borrower_dept,
+    deleted: req.body.deleted
   });
   Book.updateOne({_id: req.body._id}, book).then(() =>{
     res.status(200).json({
@@ -297,6 +328,7 @@ router.put("/receiveOne/:id", checkAuth, (req, res, next) => {
     });
   });
   });
+
   function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };

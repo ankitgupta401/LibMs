@@ -249,7 +249,7 @@
                                     <tr>
                                       <td id="p_img_td" rowspan="8" style="width: 186px;border-right: 1px solid lightgrey;">
                                         <img  class="img-rounded" alt="User Pic" style="width: 169px;height: 156px;" [src]="image">
-                                        <ngx-barcode [bc-value]="gotcard?.cardNo" [bc-display-value]="true" ></ngx-barcode> &nbsp;
+                                        <ngx-barcode [bc-width]="1" [bc-value]="gotcard?.cardNo" [bc-display-value]="true" ></ngx-barcode> &nbsp;
                                       </td>
                                       <td style="background-color: beige;padding-bottom: 0px;height: 42px;">
                                         <h3 style="text-align:center;font-weight: bold;margin: 2px;margin-bottom: -4px;">
@@ -303,7 +303,7 @@
                                     </tr>
                                     <tr>
                                       <td>
-                                        <ul class="list-group" style="margin-bottom: -1px;">
+                                        <ul class="list-group" style="margin-bottom: 45px;">
                                                                                   <li class="list-group-item" style="padding: 2px 15px !important;">1. The holder of this card is register person of Demo University.</li>
                                                                                       <li class="list-group-item" style="padding: 2px 15px !important;">2. By this registeration the holder agreeds to abide by the Rules and Regulation of the Institute.</li>
                                                                                       <li class="list-group-item" style="padding: 2px 15px !important;">3. The Card is for personal use and it is not transfareble.</li>
@@ -340,7 +340,7 @@
 
 
 
-              <button onclick="document.getElementById('id03').style.display='block'" class="btn btn2" (click)="getCard(card._id , card.cardNo)"><img src="assets/icons/delete.png"></button>
+              <button onclick="document.getElementById('id03').style.display='block'" class="btn btn2" (click)="getCard(card , card.cardNo)"><img src="assets/icons/delete.png"></button>
 
                     <div id="id03" class="modals">
 

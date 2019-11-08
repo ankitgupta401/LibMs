@@ -50,7 +50,7 @@
                 <td>{{ book.borrower | uppercase}}</td>
                 <td>
                   <button class="btn btn2" (click)="addBarCode(book.accession_no)"><img src="assets/icons/bar.png"></button>
-                    <button onclick="document.getElementById('id01').style.display='block'" class="btn btn2" (click)="getDel(book._id)"><img  src="assets/icons/delete.png"></button>
+                    <button onclick="document.getElementById('id01').style.display='block'" class="btn btn2" (click)="getDel(book)"><img  src="assets/icons/delete.png"></button>
 
                     <div id="id01" class="modal">
 
@@ -67,7 +67,7 @@
                                             <div class="holder_sub_book_lst">
                                            <h4>   <b>Once Deleted The Changes Cannot Be Undone!</b></h4>
                                           <p>Are You Sure?</p>
-                                                      <button class="btn btn-danger fix_radius" (click)="onDelete(bookdel)">Yes &nbsp;
+                                                      <button class="btn btn-danger fix_radius" (click)="onDelete(gotBook)">Yes &nbsp;
                                                       </button>&nbsp;
                                                       <button class="btn btn-warning fix_radius" onclick="document.getElementById('id01').style.display='none'">No
                                               </button>

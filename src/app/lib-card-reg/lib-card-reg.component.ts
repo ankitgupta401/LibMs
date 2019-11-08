@@ -71,7 +71,7 @@ this.userSub = this.app.getUsersUpdateListener()
         this.isLoading = false;
       });
   }
-onDelete(id: string , cardNo: number) {
+onDelete(card: Libcard , cardNo: string) {
   this.isLoading = true;
   this.app.getBooksForDelete(cardNo)
   .subscribe((BookData: {message: string, books: Books[]}) => {
@@ -81,7 +81,7 @@ onDelete(id: string , cardNo: number) {
       this.app.getUsers(this.postsPerPage , this.currentPage, this.dept);
       this.isLoading = false;
     } else {
-    this.app.DeleteUser(id)
+    this.app.DeleteUser(card)
     .subscribe(() => {
     this.app.getUsers(this.postsPerPage , this.currentPage, this.dept);
     this.isLoading = false;

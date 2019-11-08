@@ -20,7 +20,7 @@ num = 0;
   constructor(private bar: Barcode, private app: All) { }
 onSubmit(form: NgForm) {
   this.isLoading = true;
-
+  const book: Books = form.value;
   this.app.findallbookAcc2(form.value.accession_no)
     .subscribe(result => {
       this.gotAcc = result.books;
@@ -28,7 +28,7 @@ onSubmit(form: NgForm) {
         alert('A book with the same "Accession No" already exists');
         this.isLoading = false;
       } else {
-        this.app.addBooks(form.value);
+        this.app.addBooks(book);
       }
     });
 

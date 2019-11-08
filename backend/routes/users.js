@@ -40,9 +40,9 @@ router.get("/email", checkAuth,(req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const email= req.query.email;
-    let userQuery = User.find();
+    let userQuery = User.find({ deleted: false});
     if(email != '') {
-     userQuery = User.find({ email: email.toLowerCase()});
+     userQuery = User.find({ email: email.toLowerCase() , deleted: false});
     }
   let fetchedUsers ;
   if(pageSize && currentPage){
@@ -52,9 +52,9 @@ router.get("/email", checkAuth,(req, res, next) => {
   userQuery.then(documents =>{
     fetchedUsers = documents;
     if(email != '') {
-      return User.countDocuments({ email: email.toLowerCase()});
+      return User.countDocuments({ email: email.toLowerCase(), deleted: false});
      }
-    return User.countDocuments();
+    return User.countDocuments({deleted: false});
     }).then (count => {res.status(200).json({
       message: "Posts fetched succesfully!",
       users: fetchedUsers,
@@ -64,7 +64,7 @@ router.get("/email", checkAuth,(req, res, next) => {
    });
 
    router.get("/get/:phoneNo", checkAuth,(req, res, next) => {
-     User.find({phone_no: req.params.phoneNo}).
+     User.find({phone_no: req.params.phoneNo , deleted: false}).
      then(documents => {
      res.status(200).json({
       message: "got the user",
@@ -78,9 +78,9 @@ router.get("", checkAuth,(req, res, next) => {
 const pageSize = +req.query.pagesize;
 const currentPage = +req.query.page;
 const dept = req.query.dept;
-  let userQuery = User.find();
+  let userQuery = User.find({deleted: false});
   if(dept != '') {
-   userQuery = User.find({ dept: dept});
+   userQuery = User.find({ dept: dept , deleted: false});
   }
 let fetchedUsers ;
 if(pageSize && currentPage){
@@ -90,9 +90,9 @@ userQuery.skip(pageSize * (currentPage -1))
 userQuery.then(documents =>{
   fetchedUsers = documents;
   if(dept != '') {
-    return User.countDocuments({ dept: dept});
+    return User.countDocuments({ dept: dept , deleted: false});
    }
-  return User.countDocuments();
+  return User.countDocuments({ deleted: false});
   }).then (count => {res.status(200).json({
     message: "Posts fetched succesfully!",
     users: fetchedUsers,
@@ -103,32 +103,13 @@ userQuery.then(documents =>{
 
 
 
- router.get("/last",checkAuth, (req, res, next) => {
-  User.countDocuments().then(count => {
-if (count === 0 ) {
-  User.find().then(documents => {
-    res.status(200).json({
-      message: "Posts fetched succesfully!",
-      users: documents,
-    });
-  });
-} else {
-    User.find().skip(count - 1).then(documents =>{
-    res.status(200).json({
-      message: "Posts fetched succesfully!",
-      users: documents,
-    });
-  });
-}
-  });
-   });
 
    router.get("/issue/:cardNo", checkAuth,(req, res, next) => {
     let  fetchedusers;
-     User.find({cardNo: req.params.cardNo}).then(documents => {
+     User.find({cardNo: req.params.cardNo , deleted: false}).then(documents => {
       fetchedusers = documents;
      }).then(() => {
-     Book.find({cardNo: req.params.cardNo}).then(result => {
+     Book.find({cardNo: req.params.cardNo, deleted: false}).then(result => {
      res.status(200).json({
       message: "got the user",
       user: fetchedusers,
@@ -157,7 +138,8 @@ if (count === 0 ) {
      state: req.body.state,
      year: req.body.year,
      zip: req.body.zip,
-     imagePath: url + "/images/" + req.file.filename
+     imagePath: url + "/images/" + req.file.filename,
+     deleted: false
    });
 
    user.save()
@@ -172,12 +154,33 @@ if (count === 0 ) {
   });
 
 
- router.delete("/:id", checkAuth,(req,res,next) => {
-  User.deleteOne({ _id: req.params.id }).then(result => {
-    console.log(result);
-    res.status(200).json({ message: "User Deleted"});
+ router.put("/deleteOne/:id", checkAuth,(req,res,next) => {
+  const user =new User({
+    _id: req.body._id,
+    fname: req.body.fname,
+      lname: req.body.lname,
+      cardNo: '',
+      address: req.body.address,
+      Roll:'(' + req.body.Roll + ')',
+      category: req.body.category,
+      city: req.body.city,
+      dept: req.body.dept,
+      email: '(' + req.body.email + ')',
+      phone_no:'(' + req.body.phone_no + ')',
+      sem: req.body.sem,
+      state: req.body.state,
+      year: req.body.year,
+      zip: req.body.zip,
+      imagePath: req.body.imagePath,
+      deleted: true
   });
- });
+    User.updateOne({ _id: req.params.id }, user).then( result =>{
+
+      res.status(200).json({
+        message: "The user is deleted successfully"
+      })
+    });
+  });
 
  router.put("/:id",checkAuth,(req,res,next) => {
   const user =new User({

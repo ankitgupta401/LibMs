@@ -57,7 +57,6 @@ resetform2(form: NgForm) {
 }
 resetform(form: NgForm) {
   this.isLoading = true;
-  const cardNo = this.Libcard.cardNo;
   form.reset();
   this.app.resetuser();
   this.app.resetbooks();

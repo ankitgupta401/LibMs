@@ -13,6 +13,6 @@ sem: string;
 state: string;
 year: string;
 zip: number;
-cardNo: number;
+cardNo: string;
 imagePath: string;
 }

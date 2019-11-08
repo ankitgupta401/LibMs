@@ -16,7 +16,7 @@ volume: string;
 year: number;
 borrowed: boolean;
 borrower: string;
-cardNo: number;
+cardNo: string;
 borrow_date: string;
 borrower_email: string;
 borrower_phone: number;

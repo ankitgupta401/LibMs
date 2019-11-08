@@ -19,6 +19,7 @@ export class BookListComponent implements OnInit, OnDestroy {
   number = 0;
   totalPosts = 0;
   postsPerPage = 10;
+  gotBook: Books;
   currentPage = 1;
 pageSizeOption = [ 5, 10, 20, 30, 50, 100];
   private booksub: Subscription;
@@ -49,22 +50,27 @@ this.totalPosts = bookData.count;
 this.isLoading = false;
     });
   }
-  onDelete(id: string) {
+  onDelete(book: Books ) {
     this.isLoading = true;
-    this.app.onDeleteBook(id).subscribe(() => {
+    if ( book.borrowed ) {
+      this.isLoading = false;
+      return;
+    }
+    this.app.onDeleteBook(book).subscribe(() => {
     this.app.getBooks(this.postsPerPage , this.currentPage);
     });
   }
   onClear(form: NgForm) {
+  form.reset();
   this.isLoading = true;
   this.app.getBooks(this.postsPerPage, this.currentPage);
-  form.reset();
+
   }
 
 
 
-  getDel(id: string) {
-    this.bookdel = id;
+  getDel(book: Books) {
+this.gotBook = book;
     }
     ngOnDestroy() {
       this.booksub.unsubscribe();

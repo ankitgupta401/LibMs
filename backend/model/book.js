@@ -17,11 +17,12 @@ const bookSchema = mongoose.Schema({
   year: { type:Number },
   borrowed: { type:Boolean, required: true},
   borrower: { type:String},
-  cardNo: { type:Number},
+  cardNo: { type:String},
   borrow_date: { type:String},
   borrower_email: {type:String},
   borrower_phone: {type: Number},
-  borrower_dept: {type: String}
+  borrower_dept: {type: String},
+  deleted: { type: Boolean}
 });
 bookSchema.plugin(uniqueValidator);
 module.exports =mongoose.model( 'Book', bookSchema);

@@ -32,7 +32,7 @@ onSubmit2(form2: NgForm) {
   this.app.UpdateRecReg(toRecBook)
   .subscribe(() => {
     this.gotbook.borrow_date = '';
-    this.gotbook.cardNo = null;
+    this.gotbook.cardNo = '';
     this.gotbook.borrowed = false;
     this.gotbook.borrower = '';
     this.gotbook.borrower_dept = '';

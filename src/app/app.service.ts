@@ -55,6 +55,7 @@ getUsersUpdateListener() {
   return this.usersUpdated.asObservable();
 }
 addBooks(book: Books) {
+  console.log(book);
   this.http.post<{ message: string}>('http://localhost:3000/api/books', book)
   .subscribe(( responseData) => {
     console.log(responseData.message);
@@ -83,12 +84,12 @@ getBooksUpdateListener() {
 getToIssueBooksUpdateListener() {
   return this.toIssuebooksUpdated.asObservable();
 }
-DeleteUser(userid: string) {
-  return this.http.delete('http://localhost:3000/api/users/' + userid );
+DeleteUser(card: Libcard) {
+  return this.http.put('http://localhost:3000/api/users/deleteOne/' + card._id , card);
 
 }
-onDeleteBook(bookid: string) {
-  return this.http.delete('http://localhost:3000/api/books/' + bookid);
+onDeleteBook(book: Books) {
+  return this.http.put('http://localhost:3000/api/books/deleteOne/' + book._id , book);
 }
 getCard(id: string) {
   return {...this.libCard.find(c => c._id === id)};
@@ -113,7 +114,7 @@ this.libCard = postData.users;
 this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
  });
 }
-getUser(cardNo: number) {
+getUser(cardNo: string) {
   this.http.get<{ message: string , user: Libcard[] , books: Books[]}>('http://localhost:3000/api/users/issue/' + cardNo )
   .subscribe((response) => {
     this.libCard = response.user;
@@ -140,7 +141,7 @@ resetuser() {
 }
 
 
-getBooksForDelete(cardNo: number) {
+getBooksForDelete(cardNo: string) {
   return this.http.get<{ message: string , books: Books[]}>('http://localhost:3000/api/books/records/' + cardNo );
 }
 
@@ -188,7 +189,7 @@ findallbookAcc( accessionNo: number) {
   });
   }
 
-findbookCard(pagesize: number , page: number , cardNo: number) {
+findbookCard(pagesize: number , page: number , cardNo: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&cardNo=${cardNo}`;
   this.http.get<{message: string , books: Books[], count: number}>('http://localhost:3000/api/books/getbycard' + queryParams)
   .subscribe((result) => {
@@ -222,7 +223,7 @@ findallrecregAcc(pagesize: number , page: number , accessionNo: number) {
   return this.http.get<{message: string , books: ReceiveReg[]}>('http://localhost:3000/api/receive/all/' + queryParams);
   }
 
-  findallrecregCard(pagesize: number , page: number , cardNo: number) {
+  findallrecregCard(pagesize: number , page: number , cardNo: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&cardNo=${cardNo}`;
   return this.http.get<{message: string , books: ReceiveReg[], count: number}>('http://localhost:3000/api/receive/getbycard' + queryParams);
 }
