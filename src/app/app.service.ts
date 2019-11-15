@@ -19,7 +19,7 @@ count: number;
 bookcount: number;
 addLibCard(LibCard: Libcard , image: File) {
   const UserData = new FormData();
-  UserData.append('cardNo', LibCard.cardNo.toString());
+  UserData.append('cardNo', LibCard.cardNo);
   UserData.append('fname', LibCard.fname);
   UserData.append('lname', LibCard.lname);
   UserData.append('email', LibCard.email);
@@ -253,6 +253,11 @@ searchByIsbn(isbn: string) {
 findallbookAcc2( accessionNo: number) {
  return this.http.get<{message: string , books: Books[]}>('http://localhost:3000/api/books/all/' + accessionNo);
   }
+
+getlastTeacher() {
+return this.http.get<{message: string , Card: Libcard[], count: number}>('http://localhost:3000/api/users/getTeacher');
+}
+
 
 
 }

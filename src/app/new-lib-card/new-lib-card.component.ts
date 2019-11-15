@@ -55,15 +55,33 @@ return ;
 }
 }
 onSubmit(form: NgForm) {
-
-  this.details = form.value;
-  this.details.cardNo = form.value.dept + this.date + form.value.Roll;
-  this.app.addLibCard(this.details, this.fileToUpload);
   this.isLoading = true;
-  this.app.getUsersUpdateListener().subscribe(() => {
+  this.details = form.value;
+  console.log(this.details.category);
+  if (this.details.category === 'student') {
+  this.details.cardNo = form.value.dept + this.date + form.value.Roll;
+} else {
+  this.app.getlastTeacher().subscribe(result => {
+console.log(result);
+if (result.Card ) {
+  this.details.Roll = result.Card.length + 1;
+  this.details.cardNo = form.value.dept + this.date + 'T' + this.details.Roll;
+  this.details.year = 'teacher';
+
+} else {
+  this.details.Roll = 1;
+  this.details.cardNo = form.value.dept + this.date + 'T' + '1';
+  this.details.year = 'teacher';
+}
+this.app.addLibCard(this.details, this.fileToUpload);
+this.app.getUsersUpdateListener().subscribe(() => {
 this.isLoading = false;
 this.donesave = true;
   });
+  });
+}
+
+
 }
   print_Data() {
     }
