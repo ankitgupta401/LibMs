@@ -1,7 +1,7 @@
 const mongoose =require('mongoose');
 const uniqueValidator = require("mongoose-unique-validator");
 const bookSchema = mongoose.Schema({
-  accession_no: { type:Number, required: true, unique: true},
+  accession_no: { type:Number, required: true},
   author: { type:String, required: true},
   cost: { type:Number, required: true},
   edition: { type:String },

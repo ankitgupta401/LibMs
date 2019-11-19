@@ -23,12 +23,14 @@ onSubmit(form: NgForm) {
   const book: Books = form.value;
   this.app.findallbookAcc2(form.value.accession_no)
     .subscribe(result => {
+      console.log(result);
       this.gotAcc = result.books;
       if ( this.gotAcc.length > 0 ) {
         alert('A book with the same "Accession No" already exists');
         this.isLoading = false;
       } else {
         this.app.addBooks(book);
+
       }
     });
 
@@ -60,7 +62,10 @@ this.app.searchByIsbn(form.value.isbn)
 }
 }
 
-
+onClear(form: NgForm) {
+  form.reset();
+  this.isbn = '';
+}
 ngOnInit() {
   this.bookSubs = this.app.getBooksUpdateListener()
   .subscribe((result) => {

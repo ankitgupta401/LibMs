@@ -98,7 +98,7 @@
         <button type="submit" class=" btn btn-success cen2 " [disabled]="!form.valid" (click)="barcode(form)">SAVE</button>
         &nbsp;
         <button type="button" class="btn btn-primary" routerLink="/barcodes" > Print</button>
-        <button type="reset" class="btn btn-warning cen">CLEAR</button>
+        <button type="button" class="btn btn-warning cen" (click)="onClear(form)">CLEAR</button>
       </div>
     </div>
   </div>

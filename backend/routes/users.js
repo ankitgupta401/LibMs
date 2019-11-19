@@ -37,13 +37,9 @@ const storage = multer.diskStorage({
 });
 
 router.get("/getTeacher", checkAuth,(req,res,next) => {
-  let fetchedUsers;
-User.find({category: 'teacher' , deleted: false}).then(documents => {
-fetchedUsers= documents;
-});
+
 User.countDocuments({category: 'teacher' , deleted: false}).then(count => {
 res.status(200).json({
-Card: fetchedUsers,
 message: "teacher fetched successful",
 count: count
 });
@@ -174,7 +170,7 @@ userQuery.then(documents =>{
     _id: req.body._id,
     fname: req.body.fname,
       lname: req.body.lname,
-      cardNo: '',
+      cardNo: req.body.cardNo,
       address: req.body.address,
       Roll:req.body.Roll ,
       category: req.body.category,

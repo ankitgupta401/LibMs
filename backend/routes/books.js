@@ -106,7 +106,7 @@ router.get("/getbycard", checkAuth, (req, res, next) => {
 router.get("/all/:accessionNo", checkAuth,(req, res, next) => {
 const accessionNo = req.params.accessionNo;
 let fetchedBooks ;
-Book.find({accession_no:accessionNo, deleted: false }).then(documents =>{
+Book.find({accession_no: accessionNo, deleted: false }).then(documents =>{
    fetchedBooks = documents;
     return Book.countDocuments({accession_no:accessionNo, deleted: false });
  }).then (count => {
@@ -208,7 +208,7 @@ bookQuery.skip(pageSize * (currentPage -1))
 router.put("/deleteOne/:id",  checkAuth,(req,res,next) =>{
   const book = new Book({
     _id: req.body._id,
-    accession_no: null,
+    accession_no: req.body.accession_no,
     author: req.body.author,
     cost: req.body.cost,
     edition: req.body.edition,
