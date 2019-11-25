@@ -116,6 +116,17 @@
             <td>{{ book?.publisher }}</td>
             <td>{{ book?.borrowed }}</td>
           </tr>
+          <tr  *ngFor="let book2 of Books2; let i=index " >
+            <th scope="row">{{ i + 1 + lengthOfBooks}}</th>
+            <td>{{ book2?.accession_no }}</td>
+            <td>{{ book2?.isbn }}</td>
+            <td>{{ book2?.title }}</td>
+            <td>{{ book2?.author }}</td>
+            <td>{{ book2?.borrower | uppercase}}</td>
+            <td>{{ book2?.cardNo }}</td>
+            <td>{{ book2?.publisher }}</td>
+            <td>{{ book2?.borrowed }}</td>
+          </tr>
         </tbody>
 
 
