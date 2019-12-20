@@ -117,10 +117,12 @@ userQuery.then(documents =>{
 
    router.get("/issue/:cardNo", checkAuth,(req, res, next) => {
     let  fetchedusers;
-     User.find({cardNo: req.params.cardNo , deleted: false}).then(documents => {
+    const regex = new RegExp(escapeRegex(req.params.cardNo), 'gi');
+     User.find({cardNo: regex , deleted: false}).then(documents => {
       fetchedusers = documents;
+
      }).then(() => {
-     Book.find({cardNo: req.params.cardNo, deleted: false}).then(result => {
+     Book.find({cardNo: regex, deleted: false}).then(result => {
      res.status(200).json({
       message: "got the user",
       user: fetchedusers,
@@ -219,6 +221,10 @@ userQuery.then(documents =>{
       })
     });
   });
+
+  function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 
   module.exports =router;

@@ -1,5 +1,5 @@
 <div class="form">
-  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm" *ngIf="!isLoading">
 
     <!--div class="heading"><span>NEW BOOK ENTRY</span></div-->
     <!-- First input area -->

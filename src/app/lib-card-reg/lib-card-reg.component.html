@@ -64,7 +64,7 @@
           <td>{{ card.phone_no }}</td>
           <td>{{ card.address | uppercase }}</td>
           <td>{{ card.dept  }}</td>
-          <td>{{ card.year}}</td>
+          <td>{{ card.year | uppercase }}</td>
 
           <td>
               <button onclick="document.getElementById('id01').style.display='block'" class="btn btn2" (click)="getCardedit(card._id)"><img src="assets/icons/pen.png"></button>
@@ -279,7 +279,7 @@
                                       </td>
                                     </tr>
                                     <tr ng-show="printScope.role=='Teacher'" class="ng-hide">
-                                      <td class="ng-binding">Designation : {{ gotcard?.category }}
+                                      <td class="ng-binding">Designation : {{ gotcard?.category | uppercase }}
                                       </td>
                                     </tr>
                                     <tr>

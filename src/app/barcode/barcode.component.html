@@ -1,7 +1,41 @@
 <br>
-<div >
-<td  *ngFor="let policy of accList; let i = index">
-    <ngx-barcode [bc-value]="accList[i]" [bc-display-value]="true" ></ngx-barcode> &nbsp;
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div *ngIf="!isLoading">
+
+<td  *ngFor="let policy of Barcodes; let i = index">
+    <ngx-barcode [bc-value]="Barcodes[i].accession_no" [bc-display-value]="true" ></ngx-barcode> &nbsp;
   </td>
-  <button class="btn btn-primary" (click)="print()">Print</button>
+<div>
+  <button class="btn btn-primary" (click)="print()">Print</button> &nbsp;&nbsp;
+  <button onclick="document.getElementById('id03').style.display='block'" class="btn btn-danger" > Clear</button>
+</div>
+  <div id="id03" class="modals">
+
+    <div class="modal-content animate" >
+      <div class="imgcontainer">
+        <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal" >&times;</span>
+
+      </div>
+
+      <div class="container">
+  <h3>Delete Barcodes</h3>
+  <div class="modal-body" style="padding-top: 4%; padding-left: 20%;">
+                        <div class="row">
+                          <div class="holder_sub_book_lst">
+                         <h4>   <b>Once Cleared The Changes Cannot Be Undone!</b></h4>
+                        <p>Are You Sure?</p>
+                                    <button class="btn btn-danger fix_radius" onclick="document.getElementById('id03').style.display='none'" (click)="ClearAll()" >Yes &nbsp;
+                                    </button>&nbsp;
+                                    <button class="btn btn-warning fix_radius" onclick="document.getElementById('id03').style.display='none'">No
+                            </button>
+                                  </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                    </div>
+  </div>
 </div>

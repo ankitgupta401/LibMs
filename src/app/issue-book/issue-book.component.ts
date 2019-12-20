@@ -68,7 +68,7 @@ onIssue(form: NgForm) {
     for (let i = 0; i < this.Books2.length; i++ ) {
       console.log(this.Libcard.cardNo);
       console.log(this.Books2[i].cardNo);
-      if (this.Books2[i].cardNo !== '') {
+      if (this.Books2[i].borrowed === true) {
         this.isLoading = false;
         alert('Some Books Are Already Issued To Others');
 
@@ -89,13 +89,13 @@ onIssue(form: NgForm) {
             this.Books2[i].borrower_dept = this.Libcard.dept;
             this.app.issueBook(this.Books2[i])
             .subscribe(() => {
+              alert('Book Issued');
               this.app.resetuser();
               this.app.resetbooks();
               this.Books2 = [];
               this.Books = [];
               this.isLoading = false;
               form.reset();
-              alert('Book Issued');
             });
             }
             }

@@ -4,6 +4,7 @@ import { Barcode } from '../barcode.service';
 import { All } from '../app.service';
 import { Subscription } from 'rxjs';
 import { Books } from '../books.model';
+import { Bars } from '../barcode.model';
 
 @Component({
   selector: 'app-new-book-entry',
@@ -36,7 +37,8 @@ onSubmit(form: NgForm) {
 
 }
 barcode( form: NgForm) {
-  this.bar.barcodeGenerate(form.value.accession_no);
+const bars: Bars = {_id: null, accession_no: form.value.accession_no};
+this.bar.barcodeGenerate(bars);
 }
 
 searchbook(form: NgForm) {

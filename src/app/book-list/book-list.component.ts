@@ -5,6 +5,8 @@ import { Books } from '../books.model';
 import { Subscription } from 'rxjs';
 import { Barcode } from '../barcode.service';
 import { PageEvent, throwToolbarMixedModesError, TransitionCheckState } from '@angular/material';
+import { Bars } from '../barcode.model';
+
 
 
 @Component({
@@ -78,14 +80,20 @@ this.gotBook = book;
 
 
 addBarCode(accNo: number) {
-if ( this.bar.accList.length <= 0) {
-  this.bar.barcodeGenerate(accNo);
-  alert('Barcode is generated in the NEW BOOK ENTRY PAGE inside the Print option');
-} else {
-if ( this.bar.accList.filter(u => u === accNo )) {
-alert('Already Exists in the NEW BOOK ENTRY PAGE inside the Print option');
-}
-}
+  this.isLoading = true;
+  this.bar.findAll(accNo)
+  .subscribe(result => {
+    console.log(result);
+    if (result.codes.length > 0) {
+    alert('Already exists in the New Book Entry Page/ Print ');
+    } else {
+      const bars: Bars = {_id: null, accession_no: accNo};
+      this.bar.barcodeGenerate(bars);
+    }
+    this.isLoading = false;
+  });
+
+
 }
 
 

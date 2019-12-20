@@ -39,7 +39,9 @@ if (isAcc) {
     this.app.findUserEmail(this.postsPerPage , this.currentPage, form.value.email);
   } else {
     if ( form.value.cardNo ) {
-      this.app.getUser(form.value.cardNo);
+      const card = form.value.cardNo;
+      console.log(card);
+      this.app.getUser( card );
     } else {
       if ( form.value.phone_no ) {
       this.app.findUserPhone(form.value.phone_no);
