@@ -9,7 +9,7 @@
             &nbsp;&nbsp;
             <div class="row">
             <div class="col-1">
-                <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" (change)="deptSort(form)">
+                <select class="form-control"  [ngModel]="''" name="dept" (change)="deptSort(form)">
                     <option value="">ALL</option>
                     <option value="C.S.T">CST</option>
                     <option value="CVIL">CIVIL</option>
@@ -109,7 +109,7 @@
     <div class="row">
         <div class="offset-1 col-2">
         <label for="exampleFormControlSelect1">Course:</label>
-        <select class="form-control" id="exampleFormControlSelect1" [ngModel]="gotcard?.dept" name="dept" required>
+        <select class="form-control"  [ngModel]="gotcard?.dept" name="dept" required>
           <option value="C.S.T">CST</option>
           <option value="CVIL">CIVIL</option>
           <option value="E.I.E">EIE</option>
@@ -133,7 +133,7 @@
 
          <div class="col-2">
              <label for="exampleFormControlSelect1">Semester:</label>
-             <select class="form-control" id="exampleFormControlSelect1"   [ngModel]="gotcard?.sem" name="sem" >
+             <select class="form-control"    [ngModel]="gotcard?.sem" name="sem" >
               <option value="1st">1st sem</option>
               <option value="2nd">2nd sem</option>
               <option value="3rd">3rd sem</option>
@@ -153,7 +153,7 @@
       <div class="row">
           <div class="offset-1 col-10">
         <label for="exampleFormControlTextarea1">Address:</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [ngModel]="gotcard?.address" name="address" required></textarea>
+        <textarea class="form-control" rows="3" [ngModel]="gotcard?.address" name="address" required></textarea>
         </div>
         </div>
 
@@ -166,7 +166,7 @@
 
       <div class="col-3">
       <label for="exampleFormControlSelect1">State:</label>
-      <select class="form-control" id="exampleFormControlSelect1" [ngModel]="gotcard?.state" name="state" required>
+      <select class="form-control"  [ngModel]="gotcard?.state" name="state" required>
         <option value="Andhra Pradesh">Andhra Pradesh</option>
         <option value="Arunachal Pradesh">Arunachal Pradesh</option>
         <option value="Assam">Assam</option>

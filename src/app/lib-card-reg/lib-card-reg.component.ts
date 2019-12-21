@@ -133,6 +133,7 @@ onSubmitForm(form: NgForm) {
   this.gotcard.imagePath = this.gotcard.imagePath;
   this.gotcard.cardNo = this.gotcard.cardNo;
   this.app.updateUser(this.gotcard);
+
 }
 
 deptSort(form: NgForm) {

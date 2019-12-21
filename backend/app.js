@@ -7,6 +7,7 @@ const bookRoutes = require('./routes/books');
 const adminRoutes = require('./routes/admin');
 const barcodeRoutes = require('./routes/barcode');
 const receiveRoutes = require('./routes/receive');
+const emailRoutes = require('./routes/email');
 const path = require("path");
 
 app.use(bodyParser.json());
@@ -38,4 +39,5 @@ app.use("/api/books" , bookRoutes);
 app.use("/api/admin",  adminRoutes);
 app.use("/api/receive",  receiveRoutes);
 app.use("/api/barcode",  barcodeRoutes);
+app.use("/api/email",  emailRoutes);
 module.exports = app;

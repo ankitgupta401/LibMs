@@ -46,7 +46,6 @@ count: count
 });
 });
 
-
 router.get("/email", checkAuth,(req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
@@ -191,7 +190,7 @@ userQuery.then(documents =>{
 
       res.status(200).json({
         message: "The user is deleted successfully"
-      })
+      });
     });
   });
 

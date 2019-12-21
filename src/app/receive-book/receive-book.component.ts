@@ -20,6 +20,8 @@ export class ReceiveBookComponent implements OnInit , OnDestroy {
 pageSizeOption = [ 5, 10, 20, 30, 50, 100];
 isLoading = false;
 books: Books[] = [];
+// tslint:disable-next-line: max-line-length
+
 gotbook: Books = null;
 today;
 date;
@@ -83,7 +85,14 @@ this.number = this.postsPerPage * PageData.pageIndex;
 
   }
 
-
+SendEmail(form: NgForm) {
+  this.isLoading = true;
+  this.app.sendEmail(form.value.email, form.value.content)
+  .subscribe(postData => {
+this.isLoading = false;
+alert(postData.message);
+  });
+}
   ngOnInit() {
     this.isLoading = true;
     this.today = new Date();

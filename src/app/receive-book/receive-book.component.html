@@ -125,7 +125,7 @@
 
                   <div id="id02" class="modal">
 
-                    <form class="modal-content animate" action="/action_page.php">
+                    <form class="modal-content animate" (ngSubmit)="SendEmail(form3)"  #form3="ngForm">
                       <div class="imgcontainer">
                         <span onclick="document.getElementById('id02').style.display='none'" class="close"
                           title="Close Modal">&times;</span>
@@ -149,8 +149,8 @@
                                   </tr>
                                   <tr>
                                     <td colspan="3">
-                                      <textarea rows="2"  ng-model="note_on_return"
-                                        class="form-control fix_radius" placeholder="Notice"></textarea>
+                                      <textarea rows="2"  ngModel ="'Dear Student, We have come to see that the book with the title {{gotbook?.title}} was issued by you on {{ gotbook?.borrow_date }} . Kindly Return the Book as soon as possible to avoid any fines.'" name="content"
+                                        class="form-control fix_radius" placeholder="Notice" ></textarea>
                                     </td>
                                   </tr>
                                   <tr>

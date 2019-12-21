@@ -166,6 +166,48 @@ bookQuery.skip(pageSize * (currentPage -1))
       });
      });
     });
+router.get("/getByCardNo/:cardNo",checkAuth,(req,res,next) => {
+Book.find({cardNo: req.params.cardNo})
+.then(result => {
+  res.status(200).json({message: 'got Book', book: result});
+});
+});
+
+router.post("/updateEmail",checkAuth,(req,res,next) => {
+  const book = new Book({
+    _id: req.body._id,
+    accession_no: req.body.accession_no,
+    author: req.body.author,
+    cost: req.body.cost,
+    edition: req.body.edition,
+    isbn: req.body.isbn,
+    pages: req.body.pages,
+    publisher: req.body.publisher,
+    remark: req.body.remark,
+    source: req.body.source,
+    subject: req.body.subject,
+    title:req.body.title,
+    topics:req.body.topics,
+    volume: req.body.volume,
+    year: req.body.year,
+    borrowed: req.body.borrowed,
+    borrower: req.body.borrower,
+    cardNo: req.body.cardNo,
+    borrow_date: req.body.borrow_date,
+    borrower_email: req.body.borrower_email,
+    borrower_phone: req.body.borrower_phone,
+    borrower_dept: req.body.borrower_dept,
+    deleted: req.body.deleted
+  });
+
+  Book.updateOne({_id: req.body._id}, book).then(() =>{
+    res.status(200).json({
+      message: 'Book Updated'
+    });
+  });
+
+});
+
 
  router.post("", checkAuth, (req, res, next) => {
   const book = new Book({

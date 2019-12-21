@@ -3,6 +3,7 @@ import { Books } from './books.model';
 import { Libcard } from './Libcard.model';
 import { Subject } from 'rxjs';
 import { ReceiveReg } from './receiveReg.model';
+import { Email } from './email.model';
 
 
 export class All {
@@ -54,6 +55,17 @@ this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
 getUsersUpdateListener() {
   return this.usersUpdated.asObservable();
 }
+
+sendEmail(emails: string, contents: string) {
+const emailContent: Email = {
+  email: emails,
+  content: contents
+};
+
+return this.http.post<{ message: string}>('http://localhost:3000/api/email' , emailContent);
+}
+
+
 addBooks(book: Books) {
   console.log(book);
   this.http.post<{ message: string}>('http://localhost:3000/api/books', book)
@@ -98,11 +110,30 @@ updateUser(card: Libcard) {
 
   this.http.put('http://localhost:3000/api/users/' + card._id , card)
 .subscribe((response) => {
-  const updatedusers = [...this.libCard];
-  const oldPostIndex = updatedusers.findIndex(u => u._id === card._id);
-  updatedusers[oldPostIndex] = card;
-  this.libCard = updatedusers;
-  this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
+  this.http.get<{message: string , book: Books[]}>('http://localhost:3000/api/books/getByCardNo/' + card.cardNo)
+  .subscribe(postData => {
+    console.log(postData);
+    if (postData.book.length > 0) {
+      // tslint:disable-next-line: prefer-for-of
+      for (let i = 0; i < postData.book.length; i++ ) {
+      postData.book[i].borrower_email = card.email;
+      this.http.post<{message: string}>('http://localhost:3000/api/books/updateEmail/' , postData.book[i])
+      .subscribe((postData2) => {
+      });
+      }
+      const updatedusers = [...this.libCard];
+      const oldPostIndex = updatedusers.findIndex(u => u._id === card._id);
+      updatedusers[oldPostIndex] = card;
+      this.libCard = updatedusers;
+      this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
+    } else {
+      const updatedusers = [...this.libCard];
+      const oldPostIndex = updatedusers.findIndex(u => u._id === card._id);
+      updatedusers[oldPostIndex] = card;
+      this.libCard = updatedusers;
+      this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
+    }
+  });
 
 });
 }
