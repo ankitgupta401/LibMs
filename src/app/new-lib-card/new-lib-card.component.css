@@ -32,7 +32,12 @@ mat-spinner {
   from {transform: scale(0)}
   to {transform: scale(1)}
 }
-
+.hide {
+  display: none;
+}
+.show {
+  display: inline-block;
+}
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
   span.psw {

@@ -19,6 +19,7 @@ export class NewLibCardComponent implements OnInit , OnDestroy {
 
   }
   fileToUpload: File = null;
+  isValid = false;
 details: Libcard = null;
 cardNo: number;
 formvalid = false;
@@ -54,18 +55,76 @@ return ;
   alert('Invalid File Type');
 }
 }
+
+
 onSubmit(form: NgForm) {
   this.isLoading = true;
   this.details = form.value;
+  let year = 1;
   console.log(this.details.category);
   if (this.details.category === 'student') {
-  this.details.cardNo = form.value.dept + this.date + form.value.Roll;
-  this.app.addLibCard(this.details, this.fileToUpload);
-  this.app.getUsersUpdateListener().subscribe(() => {
-this.isLoading = false;
-this.donesave = true;
-  });
+    if ( this.details.year === '2nd') {
+ year = 2;
+    }
+    if (this.details.year === '3rd') {
+      year = 3;
+    }
+    this.app.findUserPhoneNo(this.details.phone_no)
+    .subscribe(postData => {
+if ( postData.user.length > 0) {
+  this.isLoading = false;
+  return alert('Phone no. already used in another card');
+
 } else {
+this.app.findUserEmails(this.details.email)
+.subscribe((postData2) => {
+  if (postData2.user.length > 0) {
+    this.isLoading = false;
+    return alert('Email address already used');
+  } else {
+     this.app.findUserCard(form.value.dept + this.date + year + form.value.Roll)
+     .subscribe(postData3 => {
+       if (postData3.user.length > 0 ) {
+        this.isLoading = false;
+        return alert('Roll no Already used. Another user already exists. Please Check your roll no');
+       } else {
+        this.isValid = true;
+        console.log(year);
+        this.details.cardNo = form.value.dept + this.date + year + form.value.Roll;
+        this.app.addLibCard(this.details, this.fileToUpload);
+        this.app.getUsersUpdateListener().subscribe(() => {
+    this.isLoading = false;
+    this.donesave = true;
+      });
+       }
+     });
+   }
+});
+ }
+    });
+
+} else {
+  this.app.findUserPhoneNo(this.details.phone_no)
+  .subscribe(postData => {
+if ( postData.user.length > 0) {
+this.isLoading = false;
+return alert('Phone no. already used in another card');
+
+} else {
+this.app.findUserEmails(this.details.email)
+.subscribe((postData2) => {
+if (postData2.user.length > 0) {
+  this.isLoading = false;
+  return alert('Email address already used');
+} else {
+   this.app.findUserCard( form.value.dept + this.date + 'T' + this.details.Roll)
+   .subscribe(postData3 => {
+     if (postData3.user.length > 0 ) {
+      this.isLoading = false;
+      return alert('Roll no Already used. Another user already exists. Please Check your roll no');
+     } else {
+
+
   this.app.getlastTeacher().subscribe(result => {
 console.log(result);
 if (result.count > 0) {
@@ -78,7 +137,7 @@ if (result.count > 0) {
   this.details.cardNo = form.value.dept + this.date + 'T' + '1';
   this.details.year = 'teacher';
 }
-
+this.isValid = true;
 this.app.addLibCard(this.details, this.fileToUpload);
 this.app.getUsersUpdateListener().subscribe(() => {
 this.isLoading = false;
@@ -86,7 +145,16 @@ this.donesave = true;
   });
   });
 }
+});
 }
+});
+}
+});
+}
+}
+
+
+
   print_Data() {
     }
 

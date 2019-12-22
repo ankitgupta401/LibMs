@@ -83,6 +83,26 @@ router.get("/email", checkAuth,(req, res, next) => {
     });
   });
 
+  router.get("/Email/:email", checkAuth,(req, res, next) => {
+    User.find({email: req.params.email , deleted: false}).
+    then(documents => {
+    res.status(200).json({
+     message: "got the user",
+     user: documents,
+   });
+   });
+ });
+ router.get("/Card/:cardNo", checkAuth,(req, res, next) => {
+  User.find({cardNo: req.params.cardNo , deleted: false}).
+  then(documents => {
+  res.status(200).json({
+   message: "got the user",
+   user: documents,
+ });
+ });
+});
+
+
 
 router.get("", checkAuth,(req, res, next) => {
 const pageSize = +req.query.pagesize;

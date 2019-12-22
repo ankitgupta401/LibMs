@@ -20,7 +20,7 @@
      </div>
      <div class=" col-3">
       <label for="exampleFormControlSelect1" >Role:</label>
-      <select class="form-control" id="exampleFormControlSelect1" #f (change)="disableYear(f)" [ngModel]="'student'" name="category" required>
+      <select class="form-control"  #f (change)="disableYear(f)" [ngModel]="'student'" name="category" required>
        <option value="student">Student</option>
        <option value="teacher">Teacher</option>
        </select>
@@ -33,7 +33,7 @@
      <div class="row">
        <div class="offset-1 col-2">
        <label for="exampleFormControlSelect1">Course:</label>
-       <select class="form-control" id="exampleFormControlSelect1" [ngModel]="'C.S.T'" name="dept" required>
+       <select class="form-control"  [ngModel]="'C.S.T'" name="dept" required>
          <option value="C.S.T">CST</option>
          <option value="CVIL">CIVIL</option>
          <option value="E.I.E">EIE</option>
@@ -57,7 +57,7 @@
 
         <div class="col-2">
             <label for="exampleFormControlSelect1">Semester:</label>
-            <select class="form-control" id="exampleFormControlSelect1"  [disabled]="teacher" [ngModel]="'1st'" name="sem" >
+            <select class="form-control"   [disabled]="teacher" [ngModel]="'1st'" name="sem" >
              <option value="1st">1st sem</option>
              <option value="2nd">2nd sem</option>
              <option value="3rd">3rd sem</option>
@@ -78,7 +78,7 @@
         <div class="row">
           <div class="offset-1 col-10">
         <label for="exampleFormControlTextarea1">Address:</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" ngModel name="address" required></textarea>
+        <textarea class="form-control" rows="3" ngModel name="address" required></textarea>
         </div>
         </div>
 
@@ -91,7 +91,7 @@
 
       <div class="col-3">
       <label for="exampleFormControlSelect1">State:</label>
-      <select class="form-control" id="exampleFormControlSelect1" [ngModel]="'West Bengal'" name="state" required>
+      <select class="form-control"[ngModel]="'West Bengal'" name="state" required>
 
         <option value="Andhra Pradesh">Andhra Pradesh</option>
         <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -159,18 +159,19 @@
 
 
 
-    <div id="id02" class="modal">
+    <div id="id02" class="modal" >
 
       <form class="modal-content animate" >
-        <div class="imgcontainer">
+        <div class="imgcontainer" >
           <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
 
         </div>
 
         <div class="container" >
     <h3>Print Library Card</h3>
+    <div >
     <div class="modal-body" >
-        <div class="modal-body" >
+        <div class="modal-body" *ngIf="isValid">
           <mat-spinner *ngIf="isLoading"></mat-spinner>
             <div class="row">
               <div style="padding-left: 14px;">
@@ -259,6 +260,7 @@
 
                           </div>
                         </div>
+                      </div>
       </form>
     </div>
 

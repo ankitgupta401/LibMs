@@ -290,5 +290,15 @@ return this.http.get<{message: string , count: number}>('http://localhost:3000/a
 }
 
 
+findUserPhoneNo(phoneNo: any) {
+  return this.http.get<{ message: string , user: Libcard[] }>('http://localhost:3000/api/users/get/' + phoneNo );
 
+}
+
+findUserEmails(email: string) {
+  return this.http.get<{message: string , user: Libcard[], count: number}>('http://localhost:3000/api/users/Email/' + email);
+}
+findUserCard(cardNo: string) {
+  return this.http.get<{message: string, user: Libcard[] }>('http://localhost:3000/api/users/Card/' + cardNo);
+}
 }
