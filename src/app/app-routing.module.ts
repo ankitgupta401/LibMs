@@ -13,6 +13,7 @@ import { BarcodeComponent } from './barcode/barcode.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LogincompComponent } from './logincomp/logincomp.component';
 import { AboutComponent } from './about/about.component';
+import { ManageAccountComponent } from './manage-account/manage-account.component';
 
 
 
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
   { path: 'barcodes', component: BarcodeComponent  },
   { path: 'login' , component: LogincompComponent},
   { path: 'about' , component: AboutComponent},
+  { path: 'manage' , component: ManageAccountComponent},
  { path: 'page-not-found', component: PageNotFoundComponent  },
  { path: '**', redirectTo: '/page-not-found' },
 ];

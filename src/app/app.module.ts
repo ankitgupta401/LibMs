@@ -39,6 +39,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LogincompComponent } from './logincomp/logincomp.component';
 import { AboutComponent } from './about/about.component';
 import { AuthInterceptor } from './logincomp/auth-interceptor';
+import { ManageAccountComponent } from './manage-account/manage-account.component';
 
 
 
@@ -69,6 +70,7 @@ import { AuthInterceptor } from './logincomp/auth-interceptor';
     BarcodeComponent,
     LogincompComponent,
     AboutComponent,
+    ManageAccountComponent,
 
   ],
 

@@ -10,8 +10,10 @@
          <img src="assets/icons/admin.png">
         </a>
         <div ngbDropdownMenu class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink" style="left: -87%;" >
+
+          <a class="dropdown-item" [routerLink]="['/manage']"> My Account</a>
+
           <a class="dropdown-item" (click)="onLogout()">Logout</a>
-          <a class="dropdown-item" href="#"> My Account</a>
              </div>
           </li>
         </ul>

@@ -1,0 +1,74 @@
+<div class="bg-image" >
+  <img src="assets/icons/Manage.png">
+</div>
+<mat-card class="bg-text">
+
+  <h2>Edit Account Details</h2>
+  <br><br> <br>
+  &nbsp; &nbsp; &nbsp; &nbsp;
+ <button class="btn btn5 btn-success" onclick="document.getElementById('id03').style.display='block'" ><img class="img-size" src="assets/icons/change.png"> Change Password </button> <br> <br>&nbsp; &nbsp; &nbsp; &nbsp;
+ <button class="btn btn5 btn-success" onclick="document.getElementById('id04').style.display='block'" ><img class="img-size2" src="assets/icons/512.png">&nbsp; &nbsp; &nbsp; Email </button>
+
+ <div id="id03" class="modals">
+
+   <div class="modal-content animate" >
+     <div class="imgcontainer">
+       <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal" >&times;</span>
+
+     </div>
+
+     <div class="container">
+ <h3 style="color: black;">Change Password</h3>
+ <div class="modal-body" style="padding-top: 4%; padding-left: 20%;">
+                       <div class="row">
+                         <div class="holder_sub_book_lst" style="color: black;" >
+                      Current Password:  &nbsp;<input type="password" name="current_pass" ngModel> <br> <br>
+                        New Password:&nbsp; &nbsp; &nbsp; &nbsp;<input type="password" name="new_pass" ngModel> <br> <br>
+                        Confirm Password: <input type="password" name="confirm_pass" ngModel><br> <br>
+                                   <button class="btn btn-danger fix_radius"  onclick="document.getElementById('id03').style.display='none'">Change&nbsp;
+                                   </button>&nbsp;
+                                   <button class="btn btn-warning fix_radius" onclick="document.getElementById('id03').style.display='none'">Close
+                           </button>
+                                 </div>
+
+                         </div>
+                       </div>
+                     </div>
+
+
+
+                   </div>
+ </div><br>
+
+ <div id="id04" class="modals">
+
+  <div class="modal-content animate" >
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id04').style.display='none'" class="close" title="Close Modal" >&times;</span>
+
+    </div>
+
+    <div class="container">
+<h3 style="color: black;">Change Email</h3>
+<div class="modal-body" style="padding-top: 4%; padding-left: 20%;">
+                      <div class="row">
+                        <div class="holder_sub_book_lst" style="color: black;">
+                     Current Email:  &nbsp;  &nbsp;<input type="email" name="current_email" ngModel> <br> <br>
+                       New Email:&nbsp;  &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<input type="email" name="new_email" ngModel> <br> <br>
+                      Enter Password: <input type="password" name="pass" ngModel><br> <br>
+                                  <button class="btn btn-danger fix_radius"  onclick="document.getElementById('id04').style.display='none'">Change&nbsp;
+                                  </button>&nbsp;
+                                  <button class="btn btn-warning fix_radius" onclick="document.getElementById('id04').style.display='none'">Close
+                          </button>
+                                </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                  </div>
+</div><br>
+</mat-card>
+
