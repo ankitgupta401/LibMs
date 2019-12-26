@@ -23,31 +23,36 @@ private bookSub: Subscription;
 private userSub: Subscription;
   constructor(private app: All) { }
 onSubmit(form: NgForm) {
-  this.isLoading = true;
-  this.app.getUser(form.value.cardNo);
+  if (form.valid === true ) {
+    this.isLoading = true;
+    this.app.getUser(form.value.cardNo);
+  }
 
 }
 
 onSubmits(form: NgForm) {
-  this.isLoading = true;
-  this.app.getBook(form.value.accession_no)
-  .subscribe(result => {
-    if ( result.book.length > 0) {
-    if ( !this.Books.find(m => m.accession_no === result.book[0].accession_no)) {
-this.Books2.push(result.book[0]);
-this.isLoading = false;
-} else {
+  if (form.valid === true) {
+    this.isLoading = true;
+    this.app.getBook(form.value.accession_no)
+    .subscribe(result => {
+      if ( result.book.length > 0) {
+      if ( !this.Books.find(m => m.accession_no === result.book[0].accession_no)) {
+  this.Books2.push(result.book[0]);
   this.isLoading = false;
-  alert('Already Exists');
-
-}
+  } else {
     this.isLoading = false;
-} else {
-  this.isLoading = false;
-  alert('Not a Book');
+    alert('Already Exists');
 
-}
-});
+  }
+      this.isLoading = false;
+  } else {
+    this.isLoading = false;
+    alert('Not a Book');
+
+  }
+  });
+  }
+
 }
 
 resetform2(form: NgForm) {

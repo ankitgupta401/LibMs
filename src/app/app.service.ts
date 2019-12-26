@@ -4,6 +4,7 @@ import { Libcard } from './Libcard.model';
 import { Subject } from 'rxjs';
 import { ReceiveReg } from './receiveReg.model';
 import { Email } from './email.model';
+import { AdminModel } from './logincomp/admin.model';
 
 
 export class All {
@@ -300,5 +301,17 @@ findUserEmails(email: string) {
 }
 findUserCard(cardNo: string) {
   return this.http.get<{message: string, user: Libcard[] }>('http://localhost:3000/api/users/Card/' + cardNo);
+}
+verifyAdminPass(pass: string) {
+return this.http.get<{message: string, valid: boolean}>('http://localhost:3000/api/admin/get/' + pass);
+}
+
+changePass(pass: string) {
+return this.http.get<{message: string}>('http://localhost:3000/api/admin/change/' + pass);
+}
+changeEmail(changes: any) {
+
+return this.http.post<{message: string}>('http://localhost:3000/api/admin/emailChange', changes);
+
 }
 }

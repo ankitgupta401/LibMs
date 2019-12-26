@@ -10,7 +10,7 @@
       <div class="col-5">
       <div class="input">
 
-        <input type="text" class="form-control" placeholder="Card no" ngModel name="cardNo" required>
+        <input type="text" class="form-control" placeholder="Card no" ngModel name="cardNo" required (blur)="onSubmit(form)">
       </div>
       </div>
       <div class="col-4">
@@ -66,7 +66,7 @@
 
           <div class="offset-3 col-5">
         <input type="number" class="form-control" placeholder="Accession no" ngModel name="accession_no"
-          required>
+          required (blur)="onSubmits(forms)">
           </div>
 
 
