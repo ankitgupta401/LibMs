@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AdminModel } from './admin.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { error } from 'util';
 @Injectable({ providedIn: 'root' })
 export class LoginService {
   constructor(private http: HttpClient , private router: Router) {}
  private Token: string;
  private isAuthenticated = false;
  private TokenTimer: any;
+ private isCredValid = false;
  private isAuthinticatedListner = new Subject<boolean>();
 getisAuthListner() {
   return this.isAuthinticatedListner.asObservable();
@@ -31,7 +33,7 @@ createUser(ema: string, pass: string) {
   }
 login(ema: string , pass: string) {
     const admin: AdminModel = {email: ema , password: pass};
-    this.http.post<{token: string, expiresIn: number}>('http://localhost:3000/api/admin/login' , admin)
+    this.http.post<{message: string, token: string, expiresIn: number }>('http://localhost:3000/api/admin/login' , admin)
     .subscribe(response => {
       const token = response.token;
       if ( token !== null ) {
@@ -46,12 +48,16 @@ login(ema: string , pass: string) {
         console.log(expirationDate);
         this.saveAuthData(token, expirationDate);
         this.router.navigate(['/']);
-      } else {
-        alert('invalid user');
+
       }
 
+    }, (err: HttpErrorResponse) => {
+       alert('Invalid Credentials!!');
+       this.isAuthinticatedListner.next(false);
     });
   }
+
+
   autoAuthUser() {
     const authInformation = this.getAuthData();
     if (!authInformation) {
