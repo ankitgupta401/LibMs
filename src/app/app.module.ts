@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule ,
    MatButtonModule,
     MatToolbarModule,
      MatExpansionModule} from '@angular/material';
+import { ChartsModule } from 'ng2-charts';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -90,7 +91,8 @@ import { ManageAccountComponent } from './manage-account/manage-account.componen
     MatToolbarModule,
     MatExpansionModule,
     MatPaginatorModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ChartsModule
   ],
 providers: [ {provide: HTTP_INTERCEPTORS , useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]

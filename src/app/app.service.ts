@@ -310,8 +310,30 @@ changePass(pass: string) {
 return this.http.get<{message: string}>('http://localhost:3000/api/admin/change/' + pass);
 }
 changeEmail(changes: any) {
-
 return this.http.post<{message: string}>('http://localhost:3000/api/admin/emailChange', changes);
+}
+getIssueData() {
+ return this.http.get<{message: string, issueData: number , receiveData: number}>('http://localhost:3000/api/receive/IssueData');
 
 }
+
+getTodayReport() {
+  return this.http.get<{message: string, issueData: number , receiveData: number}>('http://localhost:3000/api/receive/IssueDataToday');
 }
+getLastWeek() {
+  return this.http.get<{message: string, issueData: number, receiveData: number}>('http://localhost:3000/api/receive/lastWeek');
+}
+getThisMonth() {
+  return this.http.get<{message: string, issueData: number, receiveData: number}>('http://localhost:3000/api/receive/thisMonth');
+}
+getLastMonth() {
+  return this.http.get<{message: string, issueData: number, receiveData: number}>('http://localhost:3000/api/receive/lastMonth');
+}
+getThisYear() {
+  return this.http.get<{message: string, issueData: number, receiveData: number}>('http://localhost:3000/api/receive/thisYear');
+}
+getLifetime() {
+  return this.http.get<{message: string, issueData: number, receiveData: number}>('http://localhost:3000/api/receive/lifetime');
+}
+}
+
