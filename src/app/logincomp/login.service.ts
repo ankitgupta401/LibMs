@@ -56,7 +56,10 @@ login(ema: string , pass: string) {
        this.isAuthinticatedListner.next(false);
     });
   }
+resetPass() {
+ return  this.http.get<{message: string}>('http://localhost:3000/api/admin/reset');
 
+}
 
   autoAuthUser() {
     const authInformation = this.getAuthData();

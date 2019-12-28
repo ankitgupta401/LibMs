@@ -12,12 +12,17 @@ export class ManageAccountComponent implements OnInit {
 
   constructor(private app: All) { }
   ChangePass(form: NgForm) {
+    const data = form.value;
     this.isLoading = true;
-    if (form.value.new_pass === form.value.confirm_pass && form.valid === true) {
- this.app.verifyAdminPass(form.value.current_pass)
+    if (data.new_pass.length < 8) {
+      this.isLoading = false;
+      return alert('The Password Shoud Atleast Be of 8 Characters.');
+     }
+    if (data.new_pass === data.confirm_pass && form.valid === true) {
+ this.app.verifyAdminPass(data.current_pass)
  .subscribe(postData => {
 if (postData.valid === true) {
-this.app.changePass(form.value.new_pass)
+this.app.changePass(data.new_pass)
 .subscribe(result => {
   this.isLoading = false;
   return alert('Password Changed Successfully');

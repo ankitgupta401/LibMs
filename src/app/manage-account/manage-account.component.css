@@ -10,7 +10,8 @@ mat-form-field {
   width: 60px;
 }
 mat-spinner {
-  margin: auto;
+  margin: 20%;
+  margin-left: 45%;
 }
 mat-card {
 top:8%;

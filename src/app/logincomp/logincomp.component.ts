@@ -27,6 +27,14 @@ return ;
       this.isLoading = false;
     });
   }
+  forgot() {
+this.isLoading = true;
+this.loginService.resetPass()
+.subscribe(postData => {
+  this.isLoading = false;
+  alert(postData.message);
+    });
+  }
 
 ngOnDestroy() {
 this.loginsub.unsubscribe();
