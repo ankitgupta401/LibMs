@@ -4,6 +4,8 @@ import { AdminModel } from './admin.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { error } from 'util';
+import { environment } from '../../environments/environment';
+const URL = environment.BACKEND_URL;
 @Injectable({ providedIn: 'root' })
 export class LoginService {
   constructor(private http: HttpClient , private router: Router) {}
@@ -26,14 +28,14 @@ getIsAuth() {
 createUser(ema: string, pass: string) {
     const adminlogin: AdminModel = {email: ema , password: pass};
     console.log(adminlogin);
-    this.http.post('http://localhost:3000/api/admin/create' , adminlogin)
+    this.http.post(URL + 'admin/create' , adminlogin)
     .subscribe(response => {
       console.log(response);
     });
   }
 login(ema: string , pass: string) {
     const admin: AdminModel = {email: ema , password: pass};
-    this.http.post<{message: string, token: string, expiresIn: number }>('http://localhost:3000/api/admin/login' , admin)
+    this.http.post<{message: string, token: string, expiresIn: number }>(URL + 'admin/login' , admin)
     .subscribe(response => {
       const token = response.token;
       if ( token !== null ) {
@@ -57,7 +59,7 @@ login(ema: string , pass: string) {
     });
   }
 resetPass() {
- return  this.http.get<{message: string}>('http://localhost:3000/api/admin/reset');
+ return  this.http.get<{message: string}>(URL + 'admin/reset');
 
 }
 

@@ -155,8 +155,6 @@ this.donesave = true;
 
 
 
-  print_Data() {
-    }
 
   printPreview() {
     window.print();

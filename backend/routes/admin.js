@@ -105,7 +105,7 @@ Admin.findOne({email: req.body.email }).then(user => {
       message: "Auth Failed"
     });
   }
-  const token = jwt.sign({email: fetchedAdmin.email, userId: fetchedAdmin._id}, 'secret_this_should_be_longer', {expiresIn: "4h"});
+  const token = jwt.sign({email: fetchedAdmin.email, userId: fetchedAdmin._id}, process.env.TOKEN, {expiresIn: "4h"});
   res.status(200).json({
     token: token,
     expiresIn: 14400

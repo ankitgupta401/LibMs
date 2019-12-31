@@ -340,7 +340,7 @@
 
 
 
-              <button onclick="document.getElementById('id03').style.display='block'" class="btn btn2" (click)="getCard(card , card.cardNo)"><img src="assets/icons/delete.png"></button>
+              <button onclick="document.getElementById('id03').style.display='block'" class="btn btn2" (click)="getCardedit(card._id)"><img src="assets/icons/delete.png"></button>
 
                     <div id="id03" class="modals">
 
@@ -357,7 +357,7 @@
                                             <div class="holder_sub_book_lst">
                                            <h4>   <b>Once Deleted The Changes Cannot Be Undone!</b></h4>
                                           <p>Are You Sure?</p>
-                                                      <button class="btn btn-danger fix_radius" (click)="onDelete(carddel, cardNo )" onclick="document.getElementById('id03').style.display='none'">Yes &nbsp;
+                                                      <button class="btn btn-danger fix_radius" (click)="onDelete(gotcard )" onclick="document.getElementById('id03').style.display='none'">Yes &nbsp;
                                                       </button>&nbsp;
                                                       <button class="btn btn-warning fix_radius" onclick="document.getElementById('id03').style.display='none'">No
                                               </button>

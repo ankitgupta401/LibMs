@@ -12,7 +12,7 @@ const path = require("path");
 
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb+srv://ankit:kp4alWdX6DrSYmK2@libms-mq4nn.mongodb.net/Libms-users?retryWrites=true&w=majority', { useNewUrlParser: true , useCreateIndex: true , useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://ankit:'+ process.env.MONGO_ATLAS_PW +'@libms-mq4nn.mongodb.net/Libms-users?retryWrites=true&w=majority', { useNewUrlParser: true , useCreateIndex: true , useUnifiedTopology: true })
 .then(() => {
 console.log('Connected to Database');
 })
@@ -20,7 +20,8 @@ console.log('Connected to Database');
   console.log('Connection Failed');
 });
 
-app.use("/images", express.static(path.join("backend/images")));
+app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/", express.static(path.join(__dirname, "Libms")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -40,4 +41,7 @@ app.use("/api/admin",  adminRoutes);
 app.use("/api/receive",  receiveRoutes);
 app.use("/api/barcode",  barcodeRoutes);
 app.use("/api/email",  emailRoutes);
+app.use( (req,res,next) => {
+res.sendFile(path.join(__dirname, "Libms", "index.html"));
+});
 module.exports = app;

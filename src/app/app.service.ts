@@ -5,7 +5,8 @@ import { Subject } from 'rxjs';
 import { ReceiveReg } from './receiveReg.model';
 import { Email } from './email.model';
 import { AdminModel } from './logincomp/admin.model';
-
+import { environment } from '../environments/environment';
+const URL = environment.BACKEND_URL;
 
 export class All {
  book: Books[] = [];
@@ -36,7 +37,7 @@ addLibCard(LibCard: Libcard , image: File) {
   UserData.append('state', LibCard.state);
   UserData.append('zip', LibCard.zip.toString());
   UserData.append('image', image , LibCard.fname);
-  this.http.post<{message: string}>('http://localhost:3000/api/users', UserData)
+  this.http.post<{message: string}>(URL + 'users', UserData)
   .subscribe((responseData => {
 
     console.log(responseData.message);
@@ -46,7 +47,7 @@ addLibCard(LibCard: Libcard , image: File) {
 }
 getUsers(pagesize: number , page: number , dept: string ) {
 const queryParams = `?pagesize=${pagesize}&page=${page}&dept=${dept}`;
-this.http.get<{ message: string, users: Libcard[], count: number}>('http://localhost:3000/api/users' + queryParams)
+this.http.get<{ message: string, users: Libcard[], count: number}>(URL + 'users' + queryParams)
  .subscribe((postData) => {
 this.libCard = postData.users;
 this.count = postData.count;
@@ -63,13 +64,13 @@ const emailContent: Email = {
   content: contents
 };
 
-return this.http.post<{ message: string}>('http://localhost:3000/api/email' , emailContent);
+return this.http.post<{ message: string}>(URL + 'email' , emailContent);
 }
 
 
 addBooks(book: Books) {
   console.log(book);
-  this.http.post<{ message: string}>('http://localhost:3000/api/books', book)
+  this.http.post<{ message: string}>(URL + 'books', book)
   .subscribe(( responseData) => {
     console.log(responseData.message);
     this.book.push(book);
@@ -82,7 +83,7 @@ addBooks(book: Books) {
 
 getBooks(pagesize: number , page: number) {
   const queryParams = `?pagesize=${pagesize}&page=${page}`;
-  this.http.get<{ message: string, books: Books[] , count: number}>('http://localhost:3000/api/books' + queryParams)
+  this.http.get<{ message: string, books: Books[] , count: number}>(URL + 'books' + queryParams)
   .subscribe((postData) => {
 
     this.book = postData.books;
@@ -98,27 +99,27 @@ getToIssueBooksUpdateListener() {
   return this.toIssuebooksUpdated.asObservable();
 }
 DeleteUser(card: Libcard) {
-  return this.http.put('http://localhost:3000/api/users/deleteOne/' + card._id , card);
+  return this.http.put( URL + 'users/deleteOne/' + card._id , card);
 
 }
 onDeleteBook(book: Books) {
-  return this.http.put('http://localhost:3000/api/books/deleteOne/' + book._id , book);
+  return this.http.put(URL + 'books/deleteOne/' + book._id , book);
 }
 getCard(id: string) {
   return {...this.libCard.find(c => c._id === id)};
 }
 updateUser(card: Libcard) {
 
-  this.http.put('http://localhost:3000/api/users/' + card._id , card)
+  this.http.put(URL + 'users/' + card._id , card)
 .subscribe((response) => {
-  this.http.get<{message: string , book: Books[]}>('http://localhost:3000/api/books/getByCardNo/' + card.cardNo)
+  this.http.get<{message: string , book: Books[]}>(URL + 'books/getByCardNo/' + card.cardNo)
   .subscribe(postData => {
     console.log(postData);
     if (postData.book.length > 0) {
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < postData.book.length; i++ ) {
       postData.book[i].borrower_email = card.email;
-      this.http.post<{message: string}>('http://localhost:3000/api/books/updateEmail/' , postData.book[i])
+      this.http.post<{message: string}>(URL + 'books/updateEmail/' , postData.book[i])
       .subscribe((postData2) => {
       });
       }
@@ -140,14 +141,14 @@ updateUser(card: Libcard) {
 }
 
 getLastUser() {
-  this.http.get<{ message: string, users: Libcard[]}>('http://localhost:3000/api/users/last')
+  this.http.get<{ message: string, users: Libcard[]}>(URL + 'users/last')
  .subscribe((postData) => {
 this.libCard = postData.users;
 this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
  });
 }
 getUser(cardNo: string) {
-  this.http.get<{ message: string , user: Libcard[] , books: Books[]}>('http://localhost:3000/api/users/issue/' + cardNo )
+  this.http.get<{ message: string , user: Libcard[] , books: Books[]}>(URL + 'users/issue/' + cardNo )
   .subscribe((response) => {
     this.libCard = response.user;
     this.book = response.books;
@@ -157,11 +158,11 @@ getUser(cardNo: string) {
 }
 
 getBook(accessionNo: number) {
-return this.http.get<{message: string , book: Books[]}>('http://localhost:3000/api/books/' + accessionNo);
+return this.http.get<{message: string , book: Books[]}>(URL + 'books/' + accessionNo);
 }
 
 issueBook(book: Books) {
- return this.http.put<{message: string}>('http://localhost:3000/api/books/issueOne/' + book._id , book);
+ return this.http.put<{message: string}>(URL + 'books/issueOne/' + book._id , book);
 }
 resetbooks() {
   this.book = [];
@@ -174,14 +175,14 @@ resetuser() {
 
 
 getBooksForDelete(cardNo: string) {
-  return this.http.get<{ message: string , books: Books[]}>('http://localhost:3000/api/books/records/' + cardNo );
+  return this.http.get<{ message: string , books: Books[]}>(URL + 'books/records/' + cardNo );
 }
 
 
 getAllIssuedBooks(pagesize: number , page: number , dept: string) {
 
 const queryParams = `?pagesize=${pagesize}&page=${page}&dept=${dept}`;
-this.http.get<{ message: string, books: Books[] , count: number}>('http://localhost:3000/api/books/issuedbooks' + queryParams)
+this.http.get<{ message: string, books: Books[] , count: number}>(URL + 'books/issuedbooks' + queryParams)
   .subscribe((postData) => {
     this.book = postData.books;
     this.bookcount = postData.count;
@@ -192,20 +193,20 @@ this.http.get<{ message: string, books: Books[] , count: number}>('http://localh
 
 
 receiveOne(book: Books) {
-  return this.http.put<{message: string}>('http://localhost:3000/api/books/receiveOne/' + book._id , book);
+  return this.http.put<{message: string}>(URL + 'books/receiveOne/' + book._id , book);
 }
 
 UpdateRecReg(toRecBook: ReceiveReg) {
- return this.http.post<{ message: string}>('http://localhost:3000/api/receive' , toRecBook);
+ return this.http.post<{ message: string}>(URL + 'receive' , toRecBook);
 }
 
 getAllRecRegBooks(pagesize: number , page: number, dept: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&dept=${dept}`;
-  return this.http.get<{ message: string, books: ReceiveReg[] , count: number}>('http://localhost:3000/api/receive' + queryParams);
+  return this.http.get<{ message: string, books: ReceiveReg[] , count: number}>(URL + 'receive' + queryParams);
 }
 
 findbookAcc( accessionNo: number) {
-this.http.get<{message: string , book: Books[]}>('http://localhost:3000/api/books/' + accessionNo)
+this.http.get<{message: string , book: Books[]}>(URL + 'books/' + accessionNo)
 .subscribe((result) => {
 if (result.book[0].borrowed) {
   this.book = result.book;
@@ -214,7 +215,7 @@ if (result.book[0].borrowed) {
 });
 }
 findallbookAcc( accessionNo: number) {
-  this.http.get<{message: string , books: Books[]}>('http://localhost:3000/api/books/all/' + accessionNo)
+  this.http.get<{message: string , books: Books[]}>(URL + 'books/all/' + accessionNo)
   .subscribe((result) => {
     this.book = result.books;
     this.booksUpdated.next({BOOKS: [...this.book], count: result.books.length});
@@ -223,7 +224,7 @@ findallbookAcc( accessionNo: number) {
 
 findbookCard(pagesize: number , page: number , cardNo: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&cardNo=${cardNo}`;
-  this.http.get<{message: string , books: Books[], count: number}>('http://localhost:3000/api/books/getbycard' + queryParams)
+  this.http.get<{message: string , books: Books[], count: number}>(URL + 'books/getbycard' + queryParams)
   .subscribe((result) => {
     this.book = result.books;
     this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
@@ -233,7 +234,7 @@ findbookCard(pagesize: number , page: number , cardNo: string) {
 
 findbookTitle(pagesize: number , page: number , title: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&title=${title}`;
-  this.http.get<{message: string , books: Books[], count: number}>('http://localhost:3000/api/books/getbytitle' + queryParams)
+  this.http.get<{message: string , books: Books[], count: number}>(URL + 'books/getbytitle' + queryParams)
   .subscribe((result) => {
     this.book = result.books;
     this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
@@ -242,7 +243,7 @@ findbookTitle(pagesize: number , page: number , title: string) {
 }
 findbookAuthor(pagesize: number , page: number , author: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&author=${author}`;
-  this.http.get<{message: string , books: Books[], count: number}>('http://localhost:3000/api/books/getbyauthor' + queryParams)
+  this.http.get<{message: string , books: Books[], count: number}>(URL + 'books/getbyauthor' + queryParams)
   .subscribe((result) => {
     this.book = result.books;
     this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
@@ -252,17 +253,17 @@ findbookAuthor(pagesize: number , page: number , author: string) {
 
 findallrecregAcc(pagesize: number , page: number , accessionNo: number) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&accessionNo=${accessionNo}`;
-  return this.http.get<{message: string , books: ReceiveReg[]}>('http://localhost:3000/api/receive/all/' + queryParams);
+  return this.http.get<{message: string , books: ReceiveReg[]}>(URL + 'receive/all/' + queryParams);
   }
 
   findallrecregCard(pagesize: number , page: number , cardNo: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&cardNo=${cardNo}`;
-  return this.http.get<{message: string , books: ReceiveReg[], count: number}>('http://localhost:3000/api/receive/getbycard' + queryParams);
+  return this.http.get<{message: string , books: ReceiveReg[], count: number}>(URL + 'receive/getbycard' + queryParams);
 }
 
 findUserEmail(pagesize: number , page: number , email: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&email=${email}`;
-  this.http.get<{message: string , users: Libcard[], count: number}>('http://localhost:3000/api/users/email' + queryParams)
+  this.http.get<{message: string , users: Libcard[], count: number}>(URL + 'users/email' + queryParams)
   .subscribe((result) => {
     this.libCard = result.users;
     this.usersUpdated.next({LibCard: [...this.libCard ], count: result.count});
@@ -271,7 +272,7 @@ findUserEmail(pagesize: number , page: number , email: string) {
 }
 
 findUserPhone(phoneNo: any) {
-  this.http.get<{ message: string , user: Libcard[] }>('http://localhost:3000/api/users/get/' + phoneNo )
+  this.http.get<{ message: string , user: Libcard[] }>(URL + 'users/get/' + phoneNo )
   .subscribe((response) => {
     this.libCard = response.user;
     this.usersUpdated.next({LibCard: [...this.libCard ], count: 1 });
@@ -279,61 +280,61 @@ findUserPhone(phoneNo: any) {
 }
 
 searchByIsbn(isbn: string) {
-  return this.http.get<{ message: string , books: Books[] }>('http://localhost:3000/api/books/get/' + isbn );
+  return this.http.get<{ message: string , books: Books[] }>(URL + 'books/get/' + isbn );
 }
 
 findallbookAcc2( accessionNo: number) {
- return this.http.get<{message: string , books: Books[]}>('http://localhost:3000/api/books/all/' + accessionNo);
+ return this.http.get<{message: string , books: Books[]}>(URL + 'books/all/' + accessionNo);
   }
 
 getlastTeacher() {
-return this.http.get<{message: string , count: number}>('http://localhost:3000/api/users/getTeacher');
+return this.http.get<{message: string , count: number}>(URL + 'users/getTeacher');
 }
 
 
 findUserPhoneNo(phoneNo: any) {
-  return this.http.get<{ message: string , user: Libcard[] }>('http://localhost:3000/api/users/get/' + phoneNo );
+  return this.http.get<{ message: string , user: Libcard[] }>(URL + 'users/get/' + phoneNo );
 
 }
 
 findUserEmails(email: string) {
-  return this.http.get<{message: string , user: Libcard[], count: number}>('http://localhost:3000/api/users/Email/' + email);
+  return this.http.get<{message: string , user: Libcard[], count: number}>(URL + 'users/Email/' + email);
 }
 findUserCard(cardNo: string) {
-  return this.http.get<{message: string, user: Libcard[] }>('http://localhost:3000/api/users/Card/' + cardNo);
+  return this.http.get<{message: string, user: Libcard[] }>(URL + 'users/Card/' + cardNo);
 }
 verifyAdminPass(pass: string) {
-return this.http.get<{message: string, valid: boolean}>('http://localhost:3000/api/admin/get/' + pass);
+return this.http.get<{message: string, valid: boolean}>(URL + 'admin/get/' + pass);
 }
 
 changePass(pass: string) {
-return this.http.get<{message: string}>('http://localhost:3000/api/admin/change/' + pass);
+return this.http.get<{message: string}>(URL + 'admin/change/' + pass);
 }
 changeEmail(changes: any) {
-return this.http.post<{message: string}>('http://localhost:3000/api/admin/emailChange', changes);
+return this.http.post<{message: string}>(URL + 'admin/emailChange', changes);
 }
 getIssueData() {
- return this.http.get<{message: string, issueData: number , receiveData: number}>('http://localhost:3000/api/receive/IssueData');
+ return this.http.get<{message: string, issueData: number , receiveData: number}>(URL + 'receive/IssueData');
 
 }
 
 getTodayReport() {
-  return this.http.get<{message: string, issueData: number , receiveData: number}>('http://localhost:3000/api/receive/IssueDataToday');
+  return this.http.get<{message: string, issueData: number , receiveData: number}>(URL + 'receive/IssueDataToday');
 }
 getLastWeek() {
-  return this.http.get<{message: string, issueData: number, receiveData: number}>('http://localhost:3000/api/receive/lastWeek');
+  return this.http.get<{message: string, issueData: number, receiveData: number}>(URL + 'receive/lastWeek');
 }
 getThisMonth() {
-  return this.http.get<{message: string, issueData: number, receiveData: number}>('http://localhost:3000/api/receive/thisMonth');
+  return this.http.get<{message: string, issueData: number, receiveData: number}>(URL + 'receive/thisMonth');
 }
 getLastMonth() {
-  return this.http.get<{message: string, issueData: number, receiveData: number}>('http://localhost:3000/api/receive/lastMonth');
+  return this.http.get<{message: string, issueData: number, receiveData: number}>(URL + 'receive/lastMonth');
 }
 getThisYear() {
-  return this.http.get<{message: string, issueData: number, receiveData: number}>('http://localhost:3000/api/receive/thisYear');
+  return this.http.get<{message: string, issueData: number, receiveData: number}>(URL + 'receive/thisYear');
 }
 getLifetime() {
-  return this.http.get<{message: string, issueData: number, receiveData: number}>('http://localhost:3000/api/receive/lifetime');
+  return this.http.get<{message: string, issueData: number, receiveData: number}>(URL + 'receive/lifetime');
 }
 }
 
