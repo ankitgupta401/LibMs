@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  BACKEND_URL: 'http://localhost:3000/api/'
+  BACKEND_URL: 'https://sgp-libraryadmin.herokuapp.com/api/'
 };
 
 /*

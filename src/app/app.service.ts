@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Books } from './books.model';
 import { Libcard } from './Libcard.model';
 import { Subject } from 'rxjs';
@@ -7,7 +8,7 @@ import { Email } from './email.model';
 import { AdminModel } from './logincomp/admin.model';
 import { environment } from '../environments/environment';
 const URL = environment.BACKEND_URL;
-
+@Injectable()
 export class All {
  book: Books[] = [];
   libCard: Libcard[] = [];

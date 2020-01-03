@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Bars } from './barcode.model';
-
 import { environment } from '../environments/environment';
+
 const URL = environment.BACKEND_URL;
+@Injectable()
 export class Barcode {
   private usersUpdated = new Subject<{ List: number[]}>();
 constructor(private http: HttpClient) {}
