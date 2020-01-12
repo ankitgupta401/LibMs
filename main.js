@@ -5,7 +5,7 @@ let win;
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 600,
+    width: 1000,
     height: 670,
     icon: `file://${__dirname}/src/assets/icons/logo.ico`
   })

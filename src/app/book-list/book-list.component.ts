@@ -56,7 +56,7 @@ this.isLoading = false;
     this.isLoading = true;
     if ( book.borrowed ) {
       this.isLoading = false;
-      return;
+      return alert('Can\'t Delete This Book. It Is Already Issued TO A User');
     }
     this.app.onDeleteBook(book).subscribe(() => {
     this.app.getBooks(this.postsPerPage , this.currentPage);
@@ -83,7 +83,6 @@ addBarCode(accNo: number) {
   this.isLoading = true;
   this.bar.findAll(accNo)
   .subscribe(result => {
-    console.log(result);
     if (result.codes.length > 0) {
     alert('Already exists in the New Book Entry Page/ Print ');
     } else {

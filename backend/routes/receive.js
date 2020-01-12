@@ -130,11 +130,14 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
           });
           router.get('/lifetime', checkAuth,(req,res,next) => {
             let IssueData = 0;
+            date = new Date();
 
-              Book.countDocuments().
+            today = date.getFullYear() - 1 + '-' +  1 + '-' + 1;
+            today2= date.getFullYear()  + '-' +  1 + '-' + 1;
+              Book.countDocuments({"borrow_date": {$gte: today , $lte: today2}}).
               then(result => {
                 Book2.countDocuments(
-                  {   "borrowed": true }
+                  { "borrow_date": {$gte: today , $lte: today2} }
                   ).then( result2 => {
                     IssueData = result2 + result;
 

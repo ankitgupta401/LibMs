@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
     responsive: true
   };
 
-  public barChartLabels = ['Today', 'This Week', ' Last Week', 'This Month', 'Last Month', 'This Year', 'Lifetime'];
+  public barChartLabels = ['Today', 'This Week', ' Last Week', 'This Month', 'Last Month', 'This Year', 'Last Year'];
   public barChartType = 'bar';
   public barChartLegend = true;
 

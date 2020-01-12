@@ -10,6 +10,10 @@ button {
   cursor: pointer;
 
 }
+ngx-barcode {
+padding-bottom: 0%;
+margin-bottom: 0%;
+}
 
 button:hover {
   opacity: 0.8;

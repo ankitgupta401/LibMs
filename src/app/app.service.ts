@@ -289,7 +289,7 @@ findallbookAcc2( accessionNo: number) {
   }
 
 getlastTeacher() {
-return this.http.get<{message: string , count: number}>(URL + 'users/getTeacher');
+return this.http.get<{message: string , libcard: Libcard[]}>(URL + 'users/getTeacher');
 }
 
 

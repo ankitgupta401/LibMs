@@ -2,9 +2,11 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <div *ngIf="!isLoading">
 
-<td  *ngFor="let policy of Barcodes; let i = index">
-    <ngx-barcode [bc-value]="Barcodes[i].accession_no" [bc-display-value]="true" ></ngx-barcode> &nbsp;
-  </td>
+<div *ngFor="let policy of Barcodes; let i = index"  style="display:inline-block;">
+
+    <ngx-barcode [bc-value]="Barcodes[i].accession_no" [bc-display-value]="true" ></ngx-barcode>
+  </div>
+
 <div>
   <button class="btn btn-primary" (click)="print()">Print</button> &nbsp;&nbsp;
   <button onclick="document.getElementById('id03').style.display='block'" class="btn btn-danger" > Clear</button>

@@ -41,8 +41,8 @@ handleFileInput(file: FileList) {
 
  // tslint:disable-next-line: max-line-length
   if ( this.fileToUpload.type === 'image/jpeg' || this.fileToUpload.type === 'image/JPG' || this.fileToUpload.type === 'image/png' || this.fileToUpload.type === 'image/PNG' || this.fileToUpload.type === 'image/JPEG' || this.fileToUpload.type === 'image/JPG') {
-  if ( this.fileToUpload.size > 500000) {
-alert('File size Exceeds limit');
+  if ( this.fileToUpload.size > 100000) {
+alert('File size Exceeds limit. Max-Size 100kB');
 return ;
 }
   this.formvalid = true;
@@ -127,8 +127,8 @@ if (postData2.user.length > 0) {
 
   this.app.getlastTeacher().subscribe(result => {
 console.log(result);
-if (result.count > 0) {
-  this.details.Roll = result.count + 1;
+if (result.libcard) {
+  this.details.Roll = result.libcard[0].Roll + 1;
   this.details.cardNo = form.value.dept + this.date + 'T' + this.details.Roll;
   this.details.year = 'teacher';
 

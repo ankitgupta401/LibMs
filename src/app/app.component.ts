@@ -15,7 +15,7 @@ providers: [Barcode, All]
 export class AppComponent implements OnInit , OnDestroy {
   title = 'Libms';
   isAuthenticated = false;
-  isLoading: false;
+  isLoading = true;
   private isAuthSub: Subscription;
   onOpen = 0;
   open = true;
@@ -37,6 +37,7 @@ this.isAuthenticated = this.isAuth.getIsAuth();
 this.isAuthSub = this.isAuth.getisAuthListner()
 .subscribe(result => {
   this.isAuthenticated = result;
+  this.isLoading = false;
 });
 }
 

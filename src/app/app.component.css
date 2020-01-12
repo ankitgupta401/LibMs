@@ -15,6 +15,10 @@ padding: 0;
 border: none;
 background: none;
 }
+mat-spinner {
+  margin: 20%;
+  margin-left: 45%;
+}
 /* .form1{
   position: absolute;
   top:15%;

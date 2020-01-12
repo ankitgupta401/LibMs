@@ -36,15 +36,26 @@ const storage = multer.diskStorage({
   }
 });
 
-router.get("/getTeacher", checkAuth,(req,res,next) => {
+router.get("/getTeacher",checkAuth,(req,res,next) => {
 
-User.countDocuments({category: 'teacher' , deleted: false}).then(count => {
-res.status(200).json({
-message: "teacher fetched successful",
-count: count
-});
-});
-});
+  User.countDocuments({category: 'teacher' , deleted: false}).then(count => {
+    if( count > 0) {
+      User.find({category: 'teacher' , deleted: false}).skip( count - 1).then(result => {
+        res.status(200).json({
+          message: "got teacher",
+          libcard: result
+        });
+        });
+    } else {
+      res.status(200).json({
+        message: "no Teacher",
+        libcard: null
+      });
+    }
+
+
+  });
+  });
 
 router.get("/email", checkAuth,(req, res, next) => {
   const pageSize = +req.query.pagesize;

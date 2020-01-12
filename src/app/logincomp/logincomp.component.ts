@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class LogincompComponent implements OnInit , OnDestroy {
 
   constructor(public loginService: LoginService ) { }
-isLoading = false;
+isLoading = true;
 private loginsub: Subscription;
 onLogin(loginForm: NgForm) {
 if (loginForm.invalid) {
@@ -22,6 +22,7 @@ return ;
 }
 }
   ngOnInit() {
+    this.isLoading = false;
     this.loginsub = this.loginService.getisAuthListner()
     .subscribe(() => {
       this.isLoading = false;
