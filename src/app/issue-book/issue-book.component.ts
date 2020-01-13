@@ -94,7 +94,7 @@ onIssue(form: NgForm) {
             this.Books2[i].borrower_dept = this.Libcard.dept;
             this.app.issueBook(this.Books2[i])
             .subscribe(() => {
-              alert('Book Issued');
+
               this.app.resetuser();
               this.app.resetbooks();
               this.Books2 = [];
@@ -103,7 +103,8 @@ onIssue(form: NgForm) {
               form.reset();
             });
             }
-            }
+          }
+    alert('Book Issued');
   }
 }
 

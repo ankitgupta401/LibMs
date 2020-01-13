@@ -30,36 +30,33 @@ export class DashboardComponent implements OnInit {
     this.app.getTodayReport().subscribe(result => {
       this.IssueData.push(result.issueData);
       this.ReceiveData.push(result.receiveData);
-      this.app.getIssueData()
-      .subscribe(postData => {
-        this.IssueData.push(postData.issueData);
-        this.ReceiveData.push(postData.receiveData);
-        this.app.getLastWeek()
-        .subscribe(data => {
-          this.IssueData.push(data.issueData);
-          this.ReceiveData.push(data.receiveData);
-          this.app.getThisMonth()
-          .subscribe(data2 => {
-            this.IssueData.push(data2.issueData);
-            this.ReceiveData.push(data2.receiveData);
-            this.app.getLastMonth()
-          .subscribe(data3 => {
-            this.IssueData.push(data3.issueData);
-            this.ReceiveData.push(data3.receiveData);
-            this.app.getThisYear()
-          .subscribe(data4 => {
-            this.IssueData.push(data4.issueData);
-            this.ReceiveData.push(data4.receiveData);
-            this.app.getLifetime()
-            .subscribe(data5 => {
-              this.IssueData.push(data5.issueData);
-              this.ReceiveData.push(data5.receiveData);
-            });
-          });
-          });
+      this.app.getThisWeek().subscribe(result2 => {
+  this.IssueData.push(result2.issueData);
+  this.ReceiveData.push(result2.receiveData);
+  this.app.getLastWeek().subscribe(result3 => {
+    this.IssueData.push(result3.issueData);
+    this.ReceiveData.push(result3.receiveData);
+    this.app.getThisMonth().subscribe(result4 => {
+      this.IssueData.push(result4.issueData);
+      this.ReceiveData.push(result4.receiveData);
+      this.app.getLastMonth().subscribe(result5 => {
+        this.IssueData.push(result5.issueData);
+        this.ReceiveData.push(result5.receiveData);
+        this.app.getThisYear().subscribe(result6 => {
+          this.IssueData.push(result6.issueData);
+          this.ReceiveData.push(result6.receiveData);
+
+          this.app.getLifetime().subscribe(result7 => {
+            this.IssueData.push(result7.issueData);
+            this.ReceiveData.push(result7.receiveData);
+
+
           });
         });
-          });
+      });
+    });
+  });
+});
     });
 
 }

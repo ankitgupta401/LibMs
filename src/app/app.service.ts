@@ -314,14 +314,14 @@ return this.http.get<{message: string}>(URL + 'admin/change/' + pass);
 changeEmail(changes: any) {
 return this.http.post<{message: string}>(URL + 'admin/emailChange', changes);
 }
-getIssueData() {
- return this.http.get<{message: string, issueData: number , receiveData: number}>(URL + 'receive/IssueData');
-
-}
 
 getTodayReport() {
   return this.http.get<{message: string, issueData: number , receiveData: number}>(URL + 'receive/IssueDataToday');
 }
+getThisWeek() {
+  return this.http.get<{message: string, issueData: number , receiveData: number}>(URL + 'receive/ThisWeek');
+ }
+
 getLastWeek() {
   return this.http.get<{message: string, issueData: number, receiveData: number}>(URL + 'receive/lastWeek');
 }
