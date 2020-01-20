@@ -110,7 +110,7 @@ onIssue(form: NgForm) {
 
   ngOnInit() {
      this.today = new Date();
-     this.date = this.today.getFullYear() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate();
+     this.date = this.today.getFullYear() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate() ;
      this.userSub = this.app.getUsersUpdateListener().
     subscribe((UserData) => {
       this.Libcard = UserData.LibCard[0];
