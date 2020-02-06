@@ -151,6 +151,14 @@ this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
 getUser(cardNo: string) {
   this.http.get<{ message: string , user: Libcard[] , books: Books[]}>(URL + 'users/issue/' + cardNo )
   .subscribe((response) => {
+    if (response.user.length === 0) {
+      this.libCard = response.user;
+      this.book = response.books;
+      this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
+      this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
+      return alert('Invalid User');
+    }
+    console.log(response);
     this.libCard = response.user;
     this.book = response.books;
     this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });

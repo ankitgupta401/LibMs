@@ -66,7 +66,7 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
       date = new Date();
 
       today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + 1 ;
-      today2 = date.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date.getDate() ;
+      today2 = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() ;
 
       Book2.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
         issueData = result;

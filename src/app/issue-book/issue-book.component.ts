@@ -23,6 +23,10 @@ private bookSub: Subscription;
 private userSub: Subscription;
   constructor(private app: All) { }
 onSubmit(form: NgForm) {
+  this.Books = [];
+  this.Books2 = [];
+  this.app.resetuser();
+  this.app.resetbooks();
   if (form.valid === true ) {
     this.isLoading = true;
     this.app.getUser(form.value.cardNo);
@@ -36,7 +40,8 @@ onSubmits(form: NgForm) {
     this.app.getBook(form.value.accession_no)
     .subscribe(result => {
       if ( result.book.length > 0) {
-      if ( !this.Books.find(m => m.accession_no === result.book[0].accession_no)) {
+      if ( !this.Books.find(m => m.accession_no === result.book[0].accession_no)
+       && !this.Books2.find(m => m.accession_no === result.book[0].accession_no)) {
   this.Books2.push(result.book[0]);
   this.isLoading = false;
   } else {
@@ -58,9 +63,12 @@ onSubmits(form: NgForm) {
 resetform2(form: NgForm) {
   form.reset();
   this.Books2 = [];
+
 }
 resetform(form: NgForm) {
   form.reset();
+  this.Books = [];
+  this.Books2 = [];
   this.app.resetuser();
   this.app.resetbooks();
 
@@ -71,8 +79,6 @@ onIssue(form: NgForm) {
     this.isLoading = true;
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.Books2.length; i++ ) {
-      console.log(this.Libcard.cardNo);
-      console.log(this.Books2[i].cardNo);
       if (this.Books2[i].borrowed === true) {
         this.isLoading = false;
         alert('Some Books Are Already Issued To Others');
@@ -105,6 +111,8 @@ onIssue(form: NgForm) {
             }
           }
     alert('Book Issued');
+  } else {
+    return alert('Please Enter A Valid Card No Or Please Make Sure You Have Added Some Books!');
   }
 }
 
