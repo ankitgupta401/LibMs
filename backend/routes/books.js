@@ -6,7 +6,7 @@ const checkAuth = require("../middleware/check-auth");
 
 router.get("/get/:isbn", checkAuth, (req,res,next) => {
 const isbn= req.params.isbn;
-Book.find({isbn: isbn , deleted: false})
+Book.find({isbn: isbn , deleted: false}).sort({_id:-1})
 .then(documents => {
 res.status(200).json({
 books: documents,
@@ -21,27 +21,48 @@ router.get("/getbytitle", checkAuth, (req, res, next) => {
   const currentPage = +req.query.page;
   const title = req.query.title;
   const regex = new RegExp(escapeRegex(title), 'gi');
-  let bookQuery = Book.find();
-  if(title != '') {
-   bookQuery = Book.find({ title: regex , deleted: false});
-  }
-  let fetchedBooks ;
-  if(pageSize && currentPage){
-     bookQuery.skip(pageSize * (currentPage -1))
-      .limit(pageSize);
-  }
+  let fetchedBooks;
+  const toskip = pageSize * (currentPage -1);
+  const bookQuery = Book.aggregate(
+      [   { $match : { deleted : false , title: regex} },
+          { $sort: { _id: -1 } },
+          { $skip : toskip },
+          {
+            $group:
+              {
+               _id: "$isbn",
+
+                isbn: { $first: "$isbn" },
+                title: { $first: "$title" },
+                author: { $first: "$author" },
+                source: { $first: "$source" },
+                subject: { $first: "$subject" },
+                accession_no: { $first: "$accession_no" },
+                available: { $first: null },
+                total: { $sum: 1 }
+              }
+
+          }
+        ]
+      );
+
+  const bookQuery2 = Book.aggregate(
+    [   { $match : { deleted : false , title: regex} },
+      { $skip : toskip },
+        { $sort: { _id: -1 } },
+        {$group:{ _id: "$isbn"}}, {$count: "count"}
+      ]
+    );
    bookQuery.then(documents =>{
-     fetchedBooks = documents;
-     if(title != '') {
-      return Book.countDocuments({title: regex , deleted: false});
-     }
-      return Book.countDocuments();
-   }).then (count => {
-      res.status(200).json({
-        message: "Books fetched succesfully!",
-        books: fetchedBooks,
-        count: count
-      });
+     fetchedBooks= documents;
+  bookQuery2.then(result => {
+    res.status(200).json({
+      message: "Books fetched succesfully!",
+      books: fetchedBooks,
+      count: result
+    });
+  });
+
      });
 });
 
@@ -50,27 +71,47 @@ router.get("/getbyauthor", checkAuth, (req, res, next) => {
   const currentPage = +req.query.page;
   const author = req.query.author;
   const regex = new RegExp(escapeRegex(author), 'gi');
-  let bookQuery = Book.find();
-  if(author != '') {
-   bookQuery = Book.find({ author: regex, deleted: false});
-  }
-  let fetchedBooks ;
-  if(pageSize && currentPage){
-     bookQuery.skip(pageSize * (currentPage -1))
-      .limit(pageSize);
-  }
+  const toskip = pageSize * (currentPage -1);
+  const bookQuery = Book.aggregate(
+      [   { $match : { deleted : false , author: regex} },
+          { $sort: { _id: -1 } },
+          { $skip : toskip },
+          {
+            $group:
+              {
+               _id: "$isbn",
+
+                isbn: { $first: "$isbn" },
+                title: { $first: "$title" },
+                author: { $first: "$author" },
+                source: { $first: "$source" },
+                subject: { $first: "$subject" },
+                accession_no: { $first: "$accession_no" },
+                available: { $first: null },
+                total: { $sum: 1 }
+              }
+
+          }
+        ]
+      );
+
+  const bookQuery2 = Book.aggregate(
+    [   { $match : { deleted : false , author: regex} },
+      { $skip : toskip },
+        { $sort: { _id: -1 } },
+        {$group:{ _id: "$isbn"}}, {$count: "count"}
+      ]
+    );
    bookQuery.then(documents =>{
-     fetchedBooks = documents;
-     if(author != '') {
-      return Book.countDocuments({author: regex, deleted: false});
-     }
-      return Book.countDocuments();
-   }).then (count => {
-      res.status(200).json({
-        message: "Books fetched succesfully!",
-        books: fetchedBooks,
-        count: count
-      });
+     fetchedBooks= documents;
+  bookQuery2.then(result => {
+    res.status(200).json({
+      message: "Books fetched succesfully!",
+      books: fetchedBooks,
+      count: result
+    });
+  });
+
      });
 });
 
@@ -79,9 +120,9 @@ router.get("/getbycard", checkAuth, (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const cardNo = req.query.cardNo;
-  let bookQuery = Book.find({ borrowed: true , deleted: false});
+  let bookQuery = Book.find({ borrowed: true , deleted: false}).sort({_id:-1});
   if(cardNo != '') {
-   bookQuery = Book.find({ cardNo: cardNo , deleted: false});
+   bookQuery = Book.find({ cardNo: cardNo , deleted: false}).sort({_id:-1});
   }
   let fetchedBooks ;
   if(pageSize && currentPage){
@@ -91,9 +132,9 @@ router.get("/getbycard", checkAuth, (req, res, next) => {
    bookQuery.then(documents =>{
      fetchedBooks = documents;
      if(cardNo != '') {
-      return Book.countDocuments({cardNo: cardNo , deleted: false});
+      return Book.countDocuments({cardNo: cardNo , deleted: false}).sort({_id:-1});
      }
-      return Book.countDocuments({ borrowed: true , deleted: false});
+      return Book.countDocuments({ borrowed: true , deleted: false}).sort({_id:-1});
    }).then (count => {
       res.status(200).json({
         message: "Books fetched succesfully!",
@@ -107,9 +148,9 @@ router.get("/getbycard", checkAuth, (req, res, next) => {
 router.get("/all/:accessionNo", checkAuth,(req, res, next) => {
 const accessionNo = req.params.accessionNo;
 let fetchedBooks ;
-Book.find({accession_no: accessionNo, deleted: false }).then(documents =>{
+Book.find({accession_no: accessionNo, deleted: false }).sort({_id:-1}).then(documents =>{
    fetchedBooks = documents;
-    return Book.countDocuments({accession_no:accessionNo, deleted: false });
+    return Book.countDocuments({accession_no:accessionNo, deleted: false }).sort({_id:-1});
  }).then (count => {
     res.status(200).json({
       message: "Books fetched succesfully!",
@@ -122,31 +163,99 @@ Book.find({accession_no: accessionNo, deleted: false }).then(documents =>{
 router.get("", checkAuth,(req, res, next) => {
   const pageSize = +req.query.pagesize;
 const currentPage = +req.query.page;
-const bookQuery = Book.find({ deleted: false});
-let fetchedBooks ;
+let fetchedBooks;
+const bookQuery = Book.aggregate(
+[   { $match : { deleted : false } },
+    { $sort: { _id: -1 } },
+    {
+      $group:
+        {
+          _id: "$isbn",
+
+          isbn: { $first: "$isbn" },
+          title: { $first: "$title" },
+          author: { $first: "$author" },
+          source: { $first: "$source" },
+          subject: { $first: "$subject" },
+          accession_no: { $first: "$accession_no" },
+          available: { $first: null },
+          total: { $sum: 1 }
+        }
+
+    }
+  ]
+);
+const bookQuery2 = Book.aggregate(
+  [   { $match : { deleted : false } },
+      { $sort: { _id: -1 } },
+      {$group:{ _id: "$isbn"}}, {$count: "count"}
+    ]
+  );
 if(pageSize && currentPage){
 bookQuery.skip(pageSize * (currentPage -1))
 .limit(pageSize);
 }
  bookQuery.then(documents =>{
-   fetchedBooks = documents;
-    return Book.countDocuments({deleted: false});
- }).then (count => {
-    res.status(200).json({
-      message: "Books fetched succesfully!",
-      books: fetchedBooks,
-      count: count
-    });
+   fetchedBooks= documents;
+bookQuery2.then(result => {
+  res.status(200).json({
+    message: "Books fetched succesfully!",
+    books: fetchedBooks,
+    count: result
+  });
+});
+
    });
   });
 
+
+
+  router.get("/Available", checkAuth,(req, res, next) => {
+  const requiredBook = req.query.isbn;
+  const bookQuery = Book.countDocuments({ isbn: requiredBook,deleted: false, borrowed: false});
+    bookQuery.then(document => {
+res.status(200).json({
+message: "Got available",
+available: document
+});
+    });
+});
+
+
+
+
+  router.get("/BooksAll", checkAuth,(req, res, next) => {
+    const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const requiredBook = +req.query.book;
+
+  let bookQuery = Book.find({ deleted: false});
+  if(requiredBook){
+    bookQuery =  Book.find({ deleted: false, isbn: requiredBook});
+  }
+  let fetchedBooks ;
+  if(pageSize && currentPage){
+  bookQuery.skip(pageSize * (currentPage -1))
+  .limit(pageSize);
+  }
+   bookQuery.then(documents =>{
+     fetchedBooks = documents;
+      return Book.countDocuments({deleted: false, isbn: requiredBook});
+   }).then (count => {
+      res.status(200).json({
+        message: "Books fetched succesfully!",
+        books: fetchedBooks,
+        count: count
+      });
+     });
+    });
   router.get("/issuedbooks", checkAuth, (req, res, next) => {
     const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const dept = req.query.dept;
-  let bookQuery = Book.find({ borrowed: true , deleted: false});
+  let bookQuery = Book.find({ borrowed: true , deleted: false}).sort({_id:-1});
   if(dept != '') {
-   bookQuery = Book.find({ borrower_dept: dept, deleted: false});
+   bookQuery = Book.find({ borrower_dept: dept, deleted: false}).sort({_id:-1});
   }
   let fetchedBooks ;
   if(pageSize && currentPage){
@@ -156,9 +265,9 @@ bookQuery.skip(pageSize * (currentPage -1))
    bookQuery.then(documents =>{
      fetchedBooks = documents;
      if(dept != '') {
-      return Book.countDocuments({borrower_dept: dept, deleted: false});
+      return Book.countDocuments({borrower_dept: dept, deleted: false}).sort({_id:-1});
      }
-      return Book.countDocuments({ borrowed: true, deleted: false});
+      return Book.countDocuments({ borrowed: true, deleted: false}).sort({_id:-1});
    }).then (count => {
       res.status(200).json({
         message: "Books fetched succesfully!",
@@ -168,9 +277,9 @@ bookQuery.skip(pageSize * (currentPage -1))
      });
     });
 router.get("/getByCardNo/:cardNo",checkAuth,(req,res,next) => {
-Book.find({cardNo: req.params.cardNo})
+Book.find({cardNo: req.params.cardNo}).sort({_id:-1})
 .then(result => {
-  res.status(200).json({message: 'got Book', book: result});
+  res.status(200).json({message: 'got Book', book: result}).sort({_id:-1});
 });
 });
 
@@ -284,7 +393,7 @@ router.put("/deleteOne/:id",  checkAuth,(req,res,next) =>{
 
 
 router.get("/:accessionNo", checkAuth,(req,res,next) => {
-  Book.find({ accession_no: req.params.accessionNo, deleted: false})
+  Book.find({ accession_no: req.params.accessionNo, deleted: false}).sort({_id:-1})
   .then(documents => {
 res.status(200).json({
 message: "book found",
@@ -295,7 +404,7 @@ book : documents
 
 
 router.get("/records/:cardNo", checkAuth,(req,res,next) => {
-  Book.find({ cardNo: req.params.cardNo })
+  Book.find({ cardNo: req.params.cardNo }).sort({_id:-1})
   .then(documents => {
 res.status(200).json({
 message: "Books Issued",

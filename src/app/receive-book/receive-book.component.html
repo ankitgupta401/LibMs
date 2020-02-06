@@ -76,11 +76,12 @@
                       </div>
 
                       <div class="container">
-                        <h3>Return Book Management</h3>
-                        <div class="modal-body" style="padding-top:4%; padding-left: 20%;">
+                        <br>
+                        <h3 style="padding-left: 13%; ">Return Book Management</h3>
+                        <div class="modal-body" style="padding-top:4%;padding-bottom: 4%; padding-left: 28%;">
                           <div class="row">
-                            <div class="holder_sub_book_lst">
-                              <table class="table table-bordered tbl_book_lst" >
+                            <div class="holder_sub_book_lst" >
+                              <table class="table table-bordered tbl_book_lst"  >
                                 <tbody>
                                   <tr>
                                     <td>
@@ -97,7 +98,7 @@
                                   <tr>
                                     <td colspan="3">
                                       <textarea rows="2"  ngModel name="Note"
-                                        class="form-control fix_radius" placeholder="Note if any"></textarea>
+                                        class="form-control fix_radius" placeholder="Note if any" ></textarea>
                                     </td>
                                   </tr>
                                   <tr>
@@ -127,14 +128,16 @@
 
                     <form class="modal-content animate" (ngSubmit)="SendEmail(form3)"  #form3="ngForm">
                       <div class="imgcontainer">
-                        <span onclick="document.getElementById('id02').style.display='none'" class="close"
+                        <span onclick="document.getElementById('id02').style.display='none'; document.getElementById('success_msg').style.display = 'none';" class="close"
                           title="Close Modal">&times;</span>
 
                       </div>
 
                       <div class="container">
-                        <h3>Notify The User</h3>
-                        <div class="modal-body" style="padding-top: 4%; padding-left: 20%;">
+                        <br>
+                        <h3 style="padding-left: 3%;">Notify The User</h3>
+                        <div class="modal-body" style="padding-top: 4%; padding-left: 30%; padding-bottom: 4%;">
+                          <br><h3 id="success_msg" style="display: none; color: rgb(25, 247, 62); padding-left: 17%;">Email Sent Successfully</h3><br>
                           <div class="row">
                             <div class="holder_sub_book_lst">
                               <table class="table table-bordered tbl_book_lst" style="width:200%;">

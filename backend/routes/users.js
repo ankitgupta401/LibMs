@@ -119,9 +119,9 @@ router.get("", checkAuth,(req, res, next) => {
 const pageSize = +req.query.pagesize;
 const currentPage = +req.query.page;
 const dept = req.query.dept;
-  let userQuery = User.find({deleted: false});
+  let userQuery = User.find({deleted: false}).sort({_id:-1});
   if(dept != '') {
-   userQuery = User.find({ dept: dept , deleted: false});
+   userQuery = User.find({ dept: dept , deleted: false}).sort({_id:-1});
   }
 let fetchedUsers ;
 if(pageSize && currentPage){
@@ -131,9 +131,9 @@ userQuery.skip(pageSize * (currentPage -1))
 userQuery.then(documents =>{
   fetchedUsers = documents;
   if(dept != '') {
-    return User.countDocuments({ dept: dept , deleted: false});
+    return User.countDocuments({ dept: dept , deleted: false}).sort({_id:-1});
    }
-  return User.countDocuments({ deleted: false});
+  return User.countDocuments({ deleted: false}).sort({_id:-1});
   }).then (count => {res.status(200).json({
     message: "Posts fetched succesfully!",
     users: fetchedUsers,

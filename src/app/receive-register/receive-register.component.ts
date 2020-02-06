@@ -17,6 +17,7 @@ totalPosts = 0;
 postsPerPage = 10;
 currentPage = 1;
 dept = '';
+show = true;
 pageSizeOption = [ 5, 10, 20, 30, 50, 100];
 booksub: Subscription;
 booksubs2: Subscription;
@@ -40,6 +41,13 @@ onSubmit(form: NgForm) {
         this.isLoading = false;
       });
     }
+  }
+}
+toggle() {
+  if (this.show === true) {
+    this.show = false;
+  } else {
+    this.show = true;
   }
 }
   ngOnInit() {

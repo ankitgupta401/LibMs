@@ -15,13 +15,14 @@ import { Bars } from '../barcode.model';
   styleUrls: ['./book-list.component.css']
 })
 export class BookListComponent implements OnInit, OnDestroy {
-  books: Books[] = [];
+
+  books: any[] = [];
   bookdel: string;
   isLoading = false;
   number = 0;
   totalPosts = 0;
   postsPerPage = 10;
-  gotBook: Books;
+  available: number[];
   currentPage = 1;
 pageSizeOption = [ 5, 10, 20, 30, 50, 100];
   private booksub: Subscription;
@@ -42,58 +43,34 @@ onSubmit(form: NgForm) {
   }
 }
   ngOnInit() {
+
     this.app.getBooks(this.postsPerPage, this.currentPage);
     this.isLoading = true;
     this.booksub = this.app.getBooksUpdateListener()
     .subscribe(( bookData: {BOOKS: Books[], count: number }) => {
-this.books = bookData.BOOKS;
-
-this.totalPosts = bookData.count;
-this.isLoading = false;
-    });
-  }
-  onDelete(book: Books ) {
-    this.isLoading = true;
-    if ( book.borrowed ) {
+      this.books = bookData.BOOKS;
+      this.totalPosts = bookData.count;
+      this.getAvailable();
       this.isLoading = false;
-      return alert('Can\'t Delete This Book. It Is Already Issued TO A User');
-    }
-    this.app.onDeleteBook(book).subscribe(() => {
-    this.app.getBooks(this.postsPerPage , this.currentPage);
+
     });
   }
+
+  ngOnDestroy() {
+    this.booksub.unsubscribe();
+  }
+
   onClear(form: NgForm) {
   form.reset();
   this.isLoading = true;
   this.app.getBooks(this.postsPerPage, this.currentPage);
 
   }
-
-
-
-  getDel(book: Books) {
-this.gotBook = book;
-    }
-    ngOnDestroy() {
-      this.booksub.unsubscribe();
-    }
-
-
-addBarCode(accNo: number) {
-  this.isLoading = true;
-  this.bar.findAll(accNo)
-  .subscribe(result => {
-    if (result.codes.length > 0) {
-    alert('Already exists in the New Book Entry Page/ Print ');
-    } else {
-      const bars: Bars = {_id: null, accession_no: accNo};
-      this.bar.barcodeGenerate(bars);
-    }
-    this.isLoading = false;
-  });
-
-
+getbyisbn(isbn: string, f: any ) {
+this.app.getRequiredIsbn(isbn);
+f.click();
 }
+
 
 
 onChange(PageData: PageEvent) {
@@ -108,6 +85,15 @@ this.number = this.postsPerPage * PageData.pageIndex;
   }
   }
 
+getAvailable() {
+  // tslint:disable-next-line: prefer-for-of
+  for (let i = 0; i < this.books.length; i++) {
+    this.app.getAvailable(this.books[i].isbn).subscribe(result => {
+      this.books[i].available = result.available;
 
+      });
+  }
+
+}
 
 }

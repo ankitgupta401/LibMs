@@ -16,6 +16,7 @@ export class All {
 private usersUpdated = new Subject<{LibCard: Libcard[], count: number}>();
 private booksUpdated = new Subject<{BOOKS: Books[], count: number}>();
 private toIssuebooksUpdated = new Subject<Books[]>();
+  requiredBook: string;
 
 
 constructor(private http: HttpClient) {}
@@ -41,7 +42,7 @@ addLibCard(LibCard: Libcard , image: File) {
   this.http.post<{message: string}>(URL + 'users', UserData)
   .subscribe((responseData => {
 
-    console.log(responseData.message);
+
     this.libCard.push(LibCard);
     this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
   }));
@@ -70,10 +71,10 @@ return this.http.post<{ message: string}>(URL + 'email' , emailContent);
 
 
 addBooks(book: Books) {
-  console.log(book);
+
   this.http.post<{ message: string}>(URL + 'books', book)
   .subscribe(( responseData) => {
-    console.log(responseData.message);
+
     this.book.push(book);
     this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
   });
@@ -84,12 +85,25 @@ addBooks(book: Books) {
 
 getBooks(pagesize: number , page: number) {
   const queryParams = `?pagesize=${pagesize}&page=${page}`;
-  this.http.get<{ message: string, books: Books[] , count: number}>(URL + 'books' + queryParams)
+  this.http.get<{ message: string, books: Books[] , count: {count: number}[]}>(URL + 'books' + queryParams)
   .subscribe((postData) => {
-
     this.book = postData.books;
-    this.bookcount = postData.count;
+    this.bookcount = postData.count[0].count;
     this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
+
+  });
+}
+getRequiredIsbn(isbn: string) {
+  this.requiredBook = isbn;
+
+}
+getBooksAll(pagesize: number , page: number) {
+  const queryParams = `?pagesize=${pagesize}&page=${page}&book=${this.requiredBook}`;
+  this.http.get<{ message: string, books: Books[] , count: number}>(URL + 'books/BooksAll' + queryParams)
+  .subscribe((postData) => {
+ this.book = postData.books;
+ this.bookcount = postData.count;
+ this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
 
   });
 }
@@ -115,7 +129,6 @@ updateUser(card: Libcard) {
 .subscribe((response) => {
   this.http.get<{message: string , book: Books[]}>(URL + 'books/getByCardNo/' + card.cardNo)
   .subscribe(postData => {
-    console.log(postData);
     if (postData.book.length > 0) {
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < postData.book.length; i++ ) {
@@ -158,7 +171,6 @@ getUser(cardNo: string) {
       this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
       return alert('Invalid User');
     }
-    console.log(response);
     this.libCard = response.user;
     this.book = response.books;
     this.usersUpdated.next({LibCard: [...this.libCard ], count: this.count });
@@ -196,7 +208,7 @@ this.http.get<{ message: string, books: Books[] , count: number}>(URL + 'books/i
     this.book = postData.books;
     this.bookcount = postData.count;
     this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
-    console.log(postData.message);
+
   });
 }
 
@@ -243,10 +255,11 @@ findbookCard(pagesize: number , page: number , cardNo: string) {
 
 findbookTitle(pagesize: number , page: number , title: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&title=${title}`;
-  this.http.get<{message: string , books: Books[], count: number}>(URL + 'books/getbytitle' + queryParams)
+  this.http.get<{message: string , books: Books[], count: { count: number}[]}>(URL + 'books/getbytitle' + queryParams)
   .subscribe((result) => {
+    console.log(result);
     this.book = result.books;
-    this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
+    this.booksUpdated.next({BOOKS: [...this.book], count: result.count[0].count});
 
   });
 }
@@ -345,5 +358,13 @@ getThisYear() {
 getLifetime() {
   return this.http.get<{message: string, issueData: number, receiveData: number}>(URL + 'receive/lifetime');
 }
+
+getAvailable(isbn: string) {
+  const queryParams = `?isbn=${isbn}`;
+
+  return this.http.get<{message: string, available: any}>(URL + 'books/Available' + queryParams);
+
+}
+
 }
 

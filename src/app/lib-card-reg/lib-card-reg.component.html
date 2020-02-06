@@ -62,7 +62,7 @@
           <td>{{ card.fname | uppercase }} &nbsp; {{ card.lname | uppercase }}</td>
           <td>{{ card.email | uppercase }}</td>
           <td>{{ card.phone_no }}</td>
-          <td>{{ card.address | uppercase }}</td>
+          <td [ngClass]="{'ellipsis': show}" (click) = "toggle()">{{ card.address | uppercase }}</td>
           <td>{{ card.dept  }}</td>
           <td>{{ card.year | uppercase }}</td>
 

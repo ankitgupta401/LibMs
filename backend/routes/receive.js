@@ -103,8 +103,8 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
           let issueData = 0;
           date = new Date();
 
-          today = date.getFullYear() + '-' + 1 + '-' + 1;
-          today2 = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() ;
+        today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + 1 ;
+      today2 = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() ;
 
           Book2.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
             issueData = result;
@@ -121,9 +121,8 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
             let issueData = 0;
             date = new Date();
 
-            today = (date.getFullYear() - 1) + '-' + 1 + '-' + 1;
-            today2 = (date.getFullYear() - 1) + '-' + 12 + '-' + 31 ;
-
+            today = (date.getFullYear() - 1)+ '-' + (date.getMonth() + 1) + '-' + 1 ;
+            today2 = (date.getFullYear() - 1)+ '-' + (date.getMonth() + 1) + '-' + 31 ;
             Book2.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
               issueData = result;
               Book.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
@@ -139,9 +138,9 @@ router.get("/all", checkAuth,(req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const accessionNo = req.query.accessionNo;
-  let bookQuery = Book.find();
+  let bookQuery = Book.find().sort({_id:-1});
   if(accessionNo != '') {
-   bookQuery = Book.find({ accession_no: accessionNo});
+   bookQuery = Book.find({ accession_no: accessionNo}).sort({_id:-1});
   }
   let fetchedBooks ;
   if(pageSize && currentPage){
@@ -151,9 +150,9 @@ router.get("/all", checkAuth,(req, res, next) => {
    bookQuery.then(documents =>{
      fetchedBooks = documents;
      if(accessionNo != '') {
-      return Book.countDocuments({ accession_no: accessionNo});
+      return Book.countDocuments({ accession_no: accessionNo}).sort({_id:-1});
      }
-      return Book.countDocuments();
+      return Book.countDocuments().sort({_id:-1});
    }).then (count => {
       res.status(200).json({
         message: "Books fetched succesfully!",
@@ -237,9 +236,9 @@ router.get("", checkAuth, (req, res, next) => {
   const pageSize = +req.query.pagesize;
 const currentPage = +req.query.page;
 const dept = req.query.dept;
-  let bookQuery = Book.find();
+  let bookQuery = Book.find().sort({_id:-1});
   if(dept != '') {
-   bookQuery = Book.find({ borrower_dept: dept});
+   bookQuery = Book.find({ borrower_dept: dept}).sort({_id:-1});
   }
 if(pageSize && currentPage){
 bookQuery.skip(pageSize * (currentPage -1))
@@ -248,9 +247,9 @@ bookQuery.skip(pageSize * (currentPage -1))
  bookQuery.then(documents =>{
    fetchedBooks = documents;
    if(dept != '') {
-    return Book.countDocuments({ borrower_dept: dept});
+    return Book.countDocuments({ borrower_dept: dept}).sort({_id:-1});
    }
-    return Book.countDocuments();
+    return Book.countDocuments().sort({_id:-1});
  }).then (count => {
     res.status(200).json({
       message: "Books fetched succesfully!",

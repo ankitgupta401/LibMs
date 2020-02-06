@@ -86,11 +86,15 @@ this.number = this.postsPerPage * PageData.pageIndex;
   }
 
 SendEmail(form: NgForm) {
-  this.isLoading = true;
+
+  const area = document.getElementById('success_msg');
+  area.innerHTML = '    Sending Email...';
+  area.style.display = 'block';
   this.app.sendEmail(form.value.email, form.value.content)
   .subscribe(postData => {
-this.isLoading = false;
-alert(postData.message);
+    area.innerHTML = '    Email Sent...';
+    document.getElementById('success_msg').style.display = 'block';
+
   });
 }
   ngOnInit() {

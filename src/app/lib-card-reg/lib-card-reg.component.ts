@@ -23,6 +23,7 @@ LibCards: Libcard[] = [];
 Books: Books[] = [];
 gotcard: Libcard = null;
 carddel: string;
+show = true;
 isLoading = false;
 image = 'assets/icons/admin.png';
 year = 2019;
@@ -31,6 +32,13 @@ dept = '';
 private userSub: Subscription;
 private BooksSub: Subscription;
   constructor(private app: All) {
+  }
+  toggle() {
+    if (this.show === true) {
+      this.show = false;
+    } else {
+      this.show = true;
+    }
   }
 onSubmit(form: NgForm ) {
 this.isLoading = true;

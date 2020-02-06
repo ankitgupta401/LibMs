@@ -61,7 +61,7 @@
           <td>{{ book?.borrower }}</td>
           <td>{{ book?.borrow_date }}</td>
           <td>{{ book?.receive_date}}</td>
-          <td>{{ book?.Note }}</td>
+          <td [ngClass]="{'ellipsis': show}" (click) = "toggle()">{{ book?.Note }}</td>
           <td>{{ book?.fine }}</td>
         </tr>
 
@@ -70,3 +70,5 @@
   </div>
   <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChange($event)"></mat-paginator>
 </div>
+
+
