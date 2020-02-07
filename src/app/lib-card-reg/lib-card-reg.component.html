@@ -60,7 +60,7 @@
           <th scope="row">{{ i + 1 + number }}</th>
           <td>{{ card.cardNo }}</td>
           <td>{{ card.fname | uppercase }} &nbsp; {{ card.lname | uppercase }}</td>
-          <td>{{ card.email | uppercase }}</td>
+          <td [ngClass]="{'ellipsis': show2}" (click) = "toggle2()">{{ card.email | uppercase }}</td>
           <td>{{ card.phone_no }}</td>
           <td [ngClass]="{'ellipsis': show}" (click) = "toggle()">{{ card.address | uppercase }}</td>
           <td>{{ card.dept  }}</td>

@@ -5,7 +5,7 @@ import { Libcard } from './Libcard.model';
 import { Subject } from 'rxjs';
 import { ReceiveReg } from './receiveReg.model';
 import { Email } from './email.model';
-import { AdminModel } from './logincomp/admin.model';
+
 import { environment } from '../environments/environment';
 const URL = environment.BACKEND_URL;
 @Injectable()
@@ -89,7 +89,11 @@ getBooks(pagesize: number , page: number) {
   .subscribe((postData) => {
     this.book = postData.books;
     this.bookcount = postData.count[0].count;
-    this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
+    if (this.bookcount === 0) {
+      this.booksUpdated.next({BOOKS: [], count: 0});
+    } else {
+      this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
+    }
 
   });
 }
@@ -255,11 +259,11 @@ findbookCard(pagesize: number , page: number , cardNo: string) {
 
 findbookTitle(pagesize: number , page: number , title: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&title=${title}`;
-  this.http.get<{message: string , books: Books[], count: { count: number}[]}>(URL + 'books/getbytitle' + queryParams)
+  this.http.get<{message: string , books: Books[], count: number}>(URL + 'books/getbytitle' + queryParams)
   .subscribe((result) => {
     console.log(result);
     this.book = result.books;
-    this.booksUpdated.next({BOOKS: [...this.book], count: result.count[0].count});
+    this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
 
   });
 }
@@ -355,8 +359,8 @@ getLastMonth() {
 getThisYear() {
   return this.http.get<{message: string, issueData: number, receiveData: number}>(URL + 'receive/thisYear');
 }
-getLifetime() {
-  return this.http.get<{message: string, issueData: number, receiveData: number}>(URL + 'receive/lifetime');
+getLastYearThisMonth() {
+  return this.http.get<{message: string, issueData: number, receiveData: number}>(URL + 'receive/LastYeatThisMonth');
 }
 
 getAvailable(isbn: string) {

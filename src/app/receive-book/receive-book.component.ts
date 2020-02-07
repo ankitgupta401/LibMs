@@ -30,6 +30,12 @@ private booksub: Subscription;
   constructor(private app: All) { }
 onSubmit2(form2: NgForm) {
   this.isLoading = true;
+  if (form2.value.fine % 1 === 0 && form2.value.fine > '0.00') {
+    form2.value.fine = 'Rs' + ' ' + form2.value.fine + '.00';
+  } else {
+    form2.value.fine = 'Rs ' + ' ' + form2.value.fine;
+  }
+  console.log(form2.value.fine);
   const toRecBook: ReceiveReg = { ...this.gotbook , Note: form2.value.Note , receive_date: this.date, fine: form2.value.fine};
   this.app.UpdateRecReg(toRecBook)
   .subscribe(() => {
@@ -100,7 +106,7 @@ SendEmail(form: NgForm) {
   ngOnInit() {
     this.isLoading = true;
     this.today = new Date();
-    this.date = this.today.getFullYear() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate();
+    this.date =  this.today.getDate() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getFullYear();
     this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
     this.booksub = this.app.getBooksUpdateListener()
     .subscribe(( bookData: {BOOKS: Books[], count: number }) => {

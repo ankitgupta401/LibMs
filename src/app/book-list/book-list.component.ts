@@ -48,10 +48,13 @@ onSubmit(form: NgForm) {
     this.isLoading = true;
     this.booksub = this.app.getBooksUpdateListener()
     .subscribe(( bookData: {BOOKS: Books[], count: number }) => {
+      console.log(bookData);
       this.books = bookData.BOOKS;
       this.totalPosts = bookData.count;
-      this.getAvailable();
       this.isLoading = false;
+      if ( this.totalPosts > 0) {
+        this.getAvailable();
+      }
 
     });
   }
@@ -86,12 +89,14 @@ this.number = this.postsPerPage * PageData.pageIndex;
   }
 
 getAvailable() {
+
   // tslint:disable-next-line: prefer-for-of
   for (let i = 0; i < this.books.length; i++) {
     this.app.getAvailable(this.books[i].isbn).subscribe(result => {
       this.books[i].available = result.available;
 
       });
+    this.isLoading = false;
   }
 
 }

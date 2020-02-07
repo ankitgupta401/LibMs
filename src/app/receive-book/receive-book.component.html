@@ -91,7 +91,7 @@
                                     <td style="padding: 13px;font-size: large;">
                                       Rs. </td>
                                     <td>
-                                      <input type="text"  placeholder="Fine if Any.." ngModel name="fine"
+                                      <input type="number"  placeholder="Fine if Any.."  [ngModel]="'0.00'" name="fine"
                                         class="form-control fix_radius">
                                     </td>
                                   </tr>
@@ -136,11 +136,11 @@
                       <div class="container">
                         <br>
                         <h3 style="padding-left: 3%;">Notify The User</h3>
-                        <div class="modal-body" style="padding-top: 4%; padding-left: 30%; padding-bottom: 4%;">
-                          <br><h3 id="success_msg" style="display: none; color: rgb(25, 247, 62); padding-left: 17%;">Email Sent Successfully</h3><br>
+                        <div class="modal-body" style="padding-top: 4%; padding-left: 20%; padding-bottom: 7%;">
+                          <br><h3 id="success_msg" style="display: none; color: rgb(25, 247, 62); padding-left: 24%;">Email Sent Successfully</h3><br>
                           <div class="row">
                             <div class="holder_sub_book_lst">
-                              <table class="table table-bordered tbl_book_lst" style="width:200%;">
+                              <table class="table table-bordered tbl_book_lst" style="width:40pc;">
                                 <tbody>
                                   <tr>
                                     <td>

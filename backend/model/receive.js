@@ -19,7 +19,7 @@ const recbookSchema = mongoose.Schema({
   cardNo: { type:String },
   borrow_date: { type:String},
   receive_date: { type:String},
-  fine: { type:Number},
+  fine: { type:String},
   Note: { type:String},
   borrower_dept: {type: String}
 });

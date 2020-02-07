@@ -4,7 +4,6 @@ import { All } from '../app.service';
 import { Libcard } from '../Libcard.model';
 import { Books } from '../books.model';
 import { Subscription } from 'rxjs';
-import { style } from '@angular/animations';
 
 
 @Component({
@@ -38,6 +37,7 @@ onSubmit(form: NgForm) {
 }
 
 onSubmits(form: NgForm) {
+  let issuedBookLength;
   document.getElementById('success_msg').style.display = 'none';
   if (form.valid === true) {
     this.isLoading = true;
@@ -48,6 +48,13 @@ onSubmits(form: NgForm) {
        && !this.Books2.find(m => m.accession_no === result.book[0].accession_no)) {
   this.Books2.push(result.book[0]);
   this.isLoading = false;
+  issuedBookLength = this.Books.length + this.Books2.length;
+  if (issuedBookLength >= 4) {
+    this.isLoading = false;
+    document.getElementById('warning_msg').innerHTML = 'Warning!!! This User Has Already Added/Issued '
+    + ' ' + issuedBookLength + ' ' + ' Books';
+    document.getElementById('warning_msg').style.display = 'block';
+  }
   } else {
     this.isLoading = false;
     document.getElementById('success_msg').innerHTML = 'This Book Already Exists In The List';
@@ -57,9 +64,9 @@ onSubmits(form: NgForm) {
       this.isLoading = false;
   } else {
     this.isLoading = false;
-    this.area.innerHTML = 'This Accession No Does Not Match With Any book!';
-    this.area.style.color = 'red';
-    this.area.style.display = 'block';
+    document.getElementById('success_msg').innerHTML = 'This Accession No. Does Not Match With Any book!';
+    document.getElementById('success_msg').style.color = 'red';
+    document.getElementById('success_msg').style.display = 'block';
   }
   });
   }
@@ -70,6 +77,7 @@ resetform2(form: NgForm) {
   form.reset();
   this.Books2 = [];
   document.getElementById('success_msg').style.display = 'none';
+  document.getElementById('warning_msg').style.display = 'none';
 }
 resetform(form: NgForm) {
   form.reset();
@@ -78,6 +86,7 @@ resetform(form: NgForm) {
   this.app.resetuser();
   this.app.resetbooks();
   document.getElementById('success_msg').style.display = 'none';
+  document.getElementById('warning_msg').style.display = 'none';
 }
 onIssue(form: NgForm) {
   document.getElementById('success_msg').style.display = 'none';
@@ -119,11 +128,11 @@ onIssue(form: NgForm) {
             }
           }
     document.getElementById('success_msg').style.color = 'rgb(25, 247, 62)';
-    document.getElementById('success_msg').innerHTML =  'Book Issued';
+    document.getElementById('success_msg').innerHTML =  'The Selected Books Were Successfully Issued';
     document.getElementById('success_msg').style.display = 'block';
   } else {
     document.getElementById('success_msg').style.color = 'red';
-    document.getElementById('success_msg').innerHTML =  'Please Enter A Valid Card No Or Please Make Sure You Have Added Some Books!';
+    document.getElementById('success_msg').innerHTML =  'Please Enter A Valid Card No. Or Please Make Sure You Have Added Some Books!';
     document.getElementById('success_msg').style.display = 'block';
     return ;
   }
@@ -131,7 +140,7 @@ onIssue(form: NgForm) {
 
   ngOnInit() {
      this.today = new Date();
-     this.date = this.today.getFullYear() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate() ;
+     this.date = this.today.getDate() + '-' + (this.today.getMonth() + 1) + '-' +  this.today.getFullYear();
      this.userSub = this.app.getUsersUpdateListener().
     subscribe((UserData) => {
       this.Libcard = UserData.LibCard[0];

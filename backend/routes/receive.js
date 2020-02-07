@@ -10,7 +10,7 @@ const checkAuth = require("../middleware/check-auth");
 router.get('/IssueDataToday', checkAuth,(req,res,next) => {
   let issueData = 0;
     date = new Date();
-    today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() ;
+    today =  date.getDate() + '-' + (date.getMonth() + 1) + '-' +date.getFullYear() ;
     Book2.countDocuments({ "borrow_date":  today}).then(result => {
       issueData = result;
       Book.countDocuments({ "borrow_date": today}).then(result2 => {
@@ -25,7 +25,7 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
     let issueData = 0;
     date = new Date(Date.now() - (7*24*60*60*1000));
 
-    today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() ;
+    today = date.getDate()  + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
 
 
 
@@ -45,8 +45,8 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
     let issueData = 0;
     date = new Date(Date.now() - (14*24*60*60*1000));
     date2= new Date(Date.now() - (7*24*60*60*1000));
-    today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() ;
-    today2 = date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate() ;
+    today = date.getDate()+ '-' + (date.getMonth() + 1) + '-' + date.getFullYear()  ;
+    today2 = date2.getDate() + '-' + (date2.getMonth() + 1) + '-' + date2.getFullYear() ;
 
     Book2.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
       issueData = result;
@@ -65,8 +65,8 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
       let issueData = 0;
       date = new Date();
 
-      today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + 1 ;
-      today2 = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() ;
+      today = 1 + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() ;
+      today2 = date.getDate()+ '-' + (date.getMonth() + 1) + '-' +  date.getFullYear() ;
 
       Book2.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
         issueData = result;
@@ -85,8 +85,8 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
         let issueData = 0;
         date = new Date(Date.now() - (60*24*60*60*1000));
         date2 = new Date(Date.now() - (30*24*60*60*1000));
-        today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-        today2 = date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate() ;
+        today = date.getDate() + '-' + (date.getMonth() + 1) + '-' +date.getFullYear() ;
+        today2 =  date2.getDate()+ '-' + (date2.getMonth() + 1) + '-' + date2.getFullYear() ;
 
         Book2.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
           issueData = result;
@@ -103,8 +103,8 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
           let issueData = 0;
           date = new Date();
 
-        today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + 1 ;
-      today2 = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() ;
+        today = 1 + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+      today2 = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() ;
 
           Book2.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
             issueData = result;
@@ -117,12 +117,12 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
           });
 
           });
-          router.get('/lifetime', checkAuth,(req,res,next) => {
+          router.get('/LastYeatThisMonth', checkAuth,(req,res,next) => {
             let issueData = 0;
             date = new Date();
 
-            today = (date.getFullYear() - 1)+ '-' + (date.getMonth() + 1) + '-' + 1 ;
-            today2 = (date.getFullYear() - 1)+ '-' + (date.getMonth() + 1) + '-' + 31 ;
+            today = 1 + '-' + (date.getMonth() + 1) + '-' +  (date.getFullYear() - 1);
+            today2 = 31 + '-' + (date.getMonth() + 1) + '-' + (date.getFullYear() - 1) ;
             Book2.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
               issueData = result;
               Book.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {

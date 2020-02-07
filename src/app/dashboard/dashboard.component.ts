@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
       this.app.getLastMonth().subscribe(result5 => {
         this.IssueData.push(result5.issueData);
         this.ReceiveData.push(result5.receiveData);
-        this.app.getLifetime().subscribe(result7 => {
+        this.app.getLastYearThisMonth().subscribe(result7 => {
             this.IssueData.push(result7.issueData);
             this.ReceiveData.push(result7.receiveData);
         });
