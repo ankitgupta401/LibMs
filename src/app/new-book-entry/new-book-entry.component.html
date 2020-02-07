@@ -1,5 +1,6 @@
 <h3 id="success_msg" style="display: none; color: rgb(25, 247, 62); padding-left: 35%; padding-bottom: 1%; position:absolute; top: -2.6pc;">Book Saved!</h3>
 <div>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
 <form (ngSubmit)="onSubmit(form)" #form="ngForm" *ngIf="!isLoading" >
 
   <div class="form">

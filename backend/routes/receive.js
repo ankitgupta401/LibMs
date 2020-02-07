@@ -81,24 +81,6 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
       });
 
 
-      router.get('/lastMonth', checkAuth,(req,res,next) => {
-        let issueData = 0;
-        date = new Date(Date.now() - (60*24*60*60*1000));
-        date2 = new Date(Date.now() - (30*24*60*60*1000));
-        today = date.getDate() + '-' + (date.getMonth() + 1) + '-' +date.getFullYear() ;
-        today2 =  date2.getDate()+ '-' + (date2.getMonth() + 1) + '-' + date2.getFullYear() ;
-
-        Book2.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
-          issueData = result;
-          Book.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
-          issueData = issueData + result;
-          Book.countDocuments({ $and: [ { "receive_date": { $gte: today } }, { "receive_date": { $lte: today2 } } ] }).then(results => {
-            res.status(200).json({message: "Found", issueData: issueData, receiveData: results});
-          });
-          });
-        });
-
-        });
         router.get('/thisYear', checkAuth,(req,res,next) => {
           let issueData = 0;
           date = new Date();

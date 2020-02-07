@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
     responsive: true
   };
 
-  public barChartLabels = ['Today', 'This Week', ' Last Week', 'This Month', 'Last Month', 'Last Year(This Month)'];
+  public barChartLabels = ['Today', 'This Week', ' Last Week', 'This Month',  'Last Year(This Month)'];
   public barChartType = 'bar';
   public barChartLegend = true;
 
@@ -39,10 +39,8 @@ export class DashboardComponent implements OnInit {
     this.app.getThisMonth().subscribe(result4 => {
       this.IssueData.push(result4.issueData);
       this.ReceiveData.push(result4.receiveData);
-      this.app.getLastMonth().subscribe(result5 => {
-        this.IssueData.push(result5.issueData);
-        this.ReceiveData.push(result5.receiveData);
-        this.app.getLastYearThisMonth().subscribe(result7 => {
+
+      this.app.getLastYearThisMonth().subscribe(result7 => {
             this.IssueData.push(result7.issueData);
             this.ReceiveData.push(result7.receiveData);
         });
@@ -50,7 +48,7 @@ export class DashboardComponent implements OnInit {
     });
   });
 });
-    });
+
 
 }
 }

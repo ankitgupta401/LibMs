@@ -64,7 +64,7 @@ onSubmit(form: NgForm) {
   }
 
   onClear(form: NgForm) {
-  form.reset();
+
   this.isLoading = true;
   this.app.getBooks(this.postsPerPage, this.currentPage);
 

@@ -37,19 +37,33 @@ onSubmit(form: NgForm) {
 }
 
 onSubmits(form: NgForm) {
-  let issuedBookLength;
-  document.getElementById('success_msg').style.display = 'none';
-  if (form.valid === true) {
+if (!this.Libcard) {
+  document.getElementById('success_msg').style.color = 'red';
+  document.getElementById('success_msg').innerHTML = 'Please Enter Card No. To Add Books';
+  document.getElementById('success_msg').style.display = 'block';
+  return;
+}
+let issuedBookLength;
+document.getElementById('success_msg').style.display = 'none';
+if (form.valid === true) {
     this.isLoading = true;
     this.app.getBook(form.value.accession_no)
     .subscribe(result => {
       if ( result.book.length > 0) {
       if ( !this.Books.find(m => m.accession_no === result.book[0].accession_no)
        && !this.Books2.find(m => m.accession_no === result.book[0].accession_no)) {
-  this.Books2.push(result.book[0]);
-  this.isLoading = false;
-  issuedBookLength = this.Books.length + this.Books2.length;
-  if (issuedBookLength >= 4) {
+         if (result.book[0].borrowed) {
+          document.getElementById('success_msg').innerHTML = 'This Book Already Issued To Someone Else';
+          document.getElementById('success_msg').style.color = 'red';
+          document.getElementById('success_msg').style.display = 'block';
+          this.isLoading = false;
+          return;
+
+         }
+         this.Books2.push(result.book[0]);
+         this.isLoading = false;
+         issuedBookLength = this.Books.length + this.Books2.length;
+         if (issuedBookLength >= 3) {
     this.isLoading = false;
     document.getElementById('warning_msg').innerHTML = 'Warning!!! This User Has Already Added/Issued '
     + ' ' + issuedBookLength + ' ' + ' Books';
@@ -74,6 +88,7 @@ onSubmits(form: NgForm) {
 }
 
 resetform2(form: NgForm) {
+
   form.reset();
   this.Books2 = [];
   document.getElementById('success_msg').style.display = 'none';
@@ -83,6 +98,7 @@ resetform(form: NgForm) {
   form.reset();
   this.Books = [];
   this.Books2 = [];
+  this.Libcard = undefined;
   this.app.resetuser();
   this.app.resetbooks();
   document.getElementById('success_msg').style.display = 'none';
@@ -132,7 +148,7 @@ onIssue(form: NgForm) {
     document.getElementById('success_msg').style.display = 'block';
   } else {
     document.getElementById('success_msg').style.color = 'red';
-    document.getElementById('success_msg').innerHTML =  'Please Enter A Valid Card No. Or Please Make Sure You Have Added Some Books!';
+    document.getElementById('success_msg').innerHTML =  'Please Make Sure You Have Added Some Books!';
     document.getElementById('success_msg').style.display = 'block';
     return ;
   }
