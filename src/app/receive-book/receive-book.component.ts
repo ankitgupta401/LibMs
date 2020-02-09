@@ -104,14 +104,18 @@ this.number = this.postsPerPage * PageData.pageIndex;
 
   SendEmail(form: NgForm) {
 
-  const area = document.getElementById('success_msg');
+  const area = document.getElementById('success_msg2');
   area.innerHTML = '    Sending Email...';
   area.style.display = 'block';
   this.app.sendEmail(form.value.email, form.value.content)
   .subscribe(postData => {
-    area.innerHTML = '    Email Sent...';
-    document.getElementById('success_msg').style.display = 'block';
+    area.innerHTML = postData.message;
+    area.style.display = 'block';
 
+  }, err => {
+    area.innerHTML = err.message;
+    area.style.color = 'red';
+    area.style.display = 'block';
   });
 }
   ngOnInit() {

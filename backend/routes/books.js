@@ -14,7 +14,7 @@ res.status(200).json({
   });
 
   router.post("/updateAccession",checkAuth,(req,res,next) => {
-    console.log(req.body);
+
     const acc = new accession({
      _id: req.body._id,
      accession_no: req.body.accession_no
@@ -110,12 +110,100 @@ router.get("/getbytitle", checkAuth, (req, res, next) => {
      });
 });
 
+router.get("/getbytitle2", checkAuth, (req, res, next) => {
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const title = req.query.title;
+  let toskip = 0;
+  const regex = new RegExp(escapeRegex(title), 'gi');
+  let fetchedBooks;
+  if(pageSize && currentPage){
+    toskip = pageSize * (currentPage -1);
+ }
+
+  const bookQuery = Book.aggregate(
+      [   { $match : { deleted : false , title: regex} },
+          { $sort: { _id: -1 } },
+          { $skip : toskip }
+                  ]
+      );
+
+  const bookQuery2 = Book.aggregate(
+    [   { $match : { deleted : false , title: regex} },
+      { $skip : toskip },
+        { $sort: { _id: -1 } },
+         {$count: "count"}
+      ]
+    );
+   bookQuery.then(documents =>{
+     fetchedBooks= documents;
+  bookQuery2.then(result => {
+    res.status(200).json({
+      message: "Books fetched succesfully!",
+      books: fetchedBooks,
+      count: result
+    });
+  });
+
+     });
+});
+
+router.get("/getbyauthor2", checkAuth, (req, res, next) => {
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const author = req.query.author;
+  let toskip = 0;
+  let fetchedBooks;
+
+  const regex = new RegExp(escapeRegex(author), 'gi');
+  if(pageSize && currentPage){
+     toskip = pageSize * (currentPage -1);
+  }
+
+  const bookQuery = Book.aggregate(
+      [   { $match : { deleted : false , author: regex} },
+          { $sort: { _id: -1 } },
+          { $skip : toskip }
+
+
+
+        ]
+      );
+
+  const bookQuery2 = Book.aggregate(
+    [   { $match : { deleted : false , author: regex} },
+      { $skip : toskip },
+        { $sort: { _id: -1 } },
+         {$count: "count"}
+      ]
+    );
+   bookQuery.then(documents =>{
+     fetchedBooks= documents;
+  bookQuery2.then(result => {
+
+    res.status(200).json({
+      message: "Books fetched succesfully!",
+      books: fetchedBooks,
+      count: result
+    });
+  });
+
+     });
+});
+
+
 router.get("/getbyauthor", checkAuth, (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const author = req.query.author;
+  let toskip = 0;
+  let fetchedBooks;
+
   const regex = new RegExp(escapeRegex(author), 'gi');
-  const toskip = pageSize * (currentPage -1);
+  if(pageSize && currentPage){
+     toskip = pageSize * (currentPage -1);
+  }
+
   const bookQuery = Book.aggregate(
       [   { $match : { deleted : false , author: regex} },
           { $sort: { _id: -1 } },
@@ -149,6 +237,7 @@ router.get("/getbyauthor", checkAuth, (req, res, next) => {
    bookQuery.then(documents =>{
      fetchedBooks= documents;
   bookQuery2.then(result => {
+
     res.status(200).json({
       message: "Books fetched succesfully!",
       books: fetchedBooks,
@@ -282,8 +371,10 @@ available: document
   const requiredBook = +req.query.book;
 
   let bookQuery = Book.find({ deleted: false});
+  let bookQuery2 = Book.countDocuments({ deleted: false});
   if(requiredBook){
     bookQuery =  Book.find({ deleted: false, isbn: requiredBook});
+    bookQuery2 =  Book.countDocuments({ deleted: false, isbn: requiredBook});
   }
   let fetchedBooks ;
   if(pageSize && currentPage){
@@ -292,15 +383,18 @@ available: document
   }
    bookQuery.then(documents =>{
      fetchedBooks = documents;
-      return Book.countDocuments({deleted: false, isbn: requiredBook});
+      return bookQuery2;
    }).then (count => {
+
       res.status(200).json({
+
         message: "Books fetched succesfully!",
         books: fetchedBooks,
         count: count
       });
      });
     });
+
   router.get("/issuedbooks", checkAuth, (req, res, next) => {
     const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;

@@ -29,18 +29,19 @@ onSubmit(form: NgForm) {
   this.isLoading = true;
   const isAcc = form.value.accession_no;
   if (isAcc) {
-  this.app.findallbookAcc(form.value.accession_no);
+  this.app.findbookAcc(form.value.accession_no);
   } else {
     if ( form.value.title !== '' ) {
-      this.app.findbookTitle(this.postsPerPage , this.currentPage, form.value.title);
+      this.app.findbookTitle2(this.postsPerPage , this.currentPage, form.value.title);
+    } else if (form.value.author !== '' ) {
+      this.app.findbookAuthor2(this.postsPerPage , this.currentPage, form.value.author);
     } else {
-      this.app.findbookAuthor(this.postsPerPage , this.currentPage, form.value.author);
+      this.isLoading = false;
     }
-
   }
 }
   ngOnInit() {
-    this.app.getBooksAll(this.postsPerPage, this.currentPage);
+    this.app.getBooksAll(this.postsPerPage, this.currentPage , 'yes');
     this.isLoading = true;
     this.booksub = this.app.getBooksUpdateListener()
     .subscribe(( bookData: {BOOKS: Books[], count: number }) => {
@@ -64,19 +65,20 @@ this.isLoading = false;
 
   } else {
     if ( form.value.title !== '') {
-      return this.app.findbookTitle(this.postsPerPage , this.currentPage, form.value.title);
+      return this.app.findbookTitle2(this.postsPerPage , this.currentPage, form.value.title);
     } else if ( form.value.author !== '' ) {
-      return this.app.findbookAuthor(this.postsPerPage , this.currentPage, form.value.author);
+      return this.app.findbookAuthor2(this.postsPerPage , this.currentPage, form.value.author);
     }
   }
-      this.app.getBooks(this.postsPerPage , this.currentPage);
+      this.app.getBooksAll(this.postsPerPage , this.currentPage , form.value.isbn);
     });
   }
   onClear(form: NgForm) {
-  form.reset();
-  this.isLoading = true;
-  this.app.getBooksAll(this.postsPerPage, this.currentPage);
 
+  this.isLoading = true;
+  this.app.resetRequired();
+  this.app.getBooksAll(this.postsPerPage, this.currentPage, undefined);
+  form.reset();
   }
 
 
@@ -114,13 +116,15 @@ onChange(PageData: PageEvent, form: NgForm) {
   if (isAcc) {
 return  this.app.findallbookAcc(form.value.accession_no);
 } else {
-if ( form.value.title ) {
-  return this.app.findbookTitle(this.postsPerPage , this.currentPage, form.value.title);
-} else if ( form.value.author ) {
-  return this.app.findbookAuthor(this.postsPerPage , this.currentPage, form.value.author);
+if ( form.value.title !== '' ) {
+  return this.app.findbookTitle2(this.postsPerPage , this.currentPage, form.value.title);
+} else if ( form.value.author !== '' ) {
+  return this.app.findbookAuthor2(this.postsPerPage , this.currentPage, form.value.author);
+} else {
+  this.app.getBooksAll(this.postsPerPage , this.currentPage, undefined );
 }
 }
-  this.app.getBooksAll(this.postsPerPage , this.currentPage);
+
   if (this.currentPage > 1 ) {
 this.number = this.postsPerPage * PageData.pageIndex;
   } else {

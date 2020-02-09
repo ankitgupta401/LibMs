@@ -34,15 +34,21 @@ onSubmit(form: NgForm) {
   if (isAcc) {
   this.app.findallbookAcc3(form.value.accession_no).subscribe(result => {
     this.books = result.books;
-    this.books[0].total = result.count;
-    this.getAvailable();
+    if ( this.books.length > 0) {
+      this.books[0].total = result.count;
+      this.totalPosts = result.count;
+      this.getAvailable();
+    }
+    this.totalPosts = 0;
     this.isLoading = false;
   });
   } else {
-    if ( form.value.title ) {
+    if ( form.value.title !== '') {
       this.app.findbookTitle(this.postsPerPage , this.currentPage, form.value.title);
-    } else {
+    } else if (form.value.author !== '') {
       this.app.findbookAuthor(this.postsPerPage , this.currentPage, form.value.author);
+    } else {
+      this.isLoading = false;
     }
 
   }

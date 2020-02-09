@@ -18,7 +18,7 @@ function makeid(length) {
 
 router.get("/reset", (req,res,next) => {
 const passkey = makeid(8);
-console.log(passkey);
+
 Admin.findOne()
 .then(user => {
   bcrypt.hash(passkey, 10).then(hash => {
@@ -148,7 +148,7 @@ router.get('/get/:pass',checkAuth,(req,res,next)=> {
 
 router.get('/change/:pass',checkAuth,(req,res,next) => {
 pass= req.params.pass;
-console.log(pass);
+
 bcrypt.hash(pass, 10).then(hash => {
 Admin.findOne()
 .then(user => {
@@ -157,7 +157,7 @@ const admin = new Admin({
 email: user.email,
 password: hash
 });
-console.log(admin)
+
 Admin.updateOne({email: user.email } , admin)
 .then(result => {
 res.status(200).json({message: "Password Changed"});
