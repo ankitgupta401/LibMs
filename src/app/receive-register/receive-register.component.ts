@@ -29,7 +29,7 @@ onSubmit(form: NgForm) {
     this.booksubs2 = this.app.findallrecregAcc(this.postsPerPage , this.currentPage, form.value.accession_no)
   .subscribe(response => {
     this.recReg = response.books;
-    this.totalPosts = response.books.length;
+    this.totalPosts = response.count;
     this.isLoading = false;
   });
   } else {
@@ -72,10 +72,30 @@ this.booksub = this.app.getAllRecRegBooks(this.postsPerPage , this.currentPage, 
 }
 
 
-  onChange(PageData: PageEvent) {
+  onChange(PageData: PageEvent, form: NgForm) {
     this.isLoading = true;
     this.currentPage = PageData.pageIndex + 1;
     this.postsPerPage = PageData.pageSize;
+    const isAcc = form.value.accession_no;
+    if (isAcc) {
+      this.booksubs2 = this.app.findallrecregAcc(this.postsPerPage , this.currentPage, form.value.accession_no)
+    .subscribe(response => {
+      this.recReg = response.books;
+      this.totalPosts = response.count;
+      this.isLoading = false;
+    });
+      return;
+    } else {
+      if (form.value.cardNo) {
+        this.booksubs2  = this.app.findallrecregCard(this.postsPerPage , this.currentPage, form.value.cardNo)
+        .subscribe(response => {
+          this.recReg = response.books;
+          this.totalPosts = response.count;
+          this.isLoading = false;
+        });
+        return;
+      }
+    }
     this.app.getAllRecRegBooks(this.postsPerPage , this.currentPage, this.dept)
     .subscribe(response => {
       this.recReg = response.books;

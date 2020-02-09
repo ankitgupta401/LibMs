@@ -29,7 +29,7 @@
 
 
         &nbsp; <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button><a>&nbsp;  &nbsp;</a>
-        <button type="clear" class="btn btn-danger" (click)="onClear(form)">Clear</button>
+        <button type="reset" class="btn btn-danger" (click)="onClear(form)">Clear</button>
       </div>
     </form>
   </div>
@@ -68,7 +68,7 @@
       </tbody>
     </table>
   </div>
-  <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChange($event)"></mat-paginator>
+  <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChange($event, form)"></mat-paginator>
 </div>
 
 

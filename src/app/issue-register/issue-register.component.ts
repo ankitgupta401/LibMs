@@ -27,12 +27,14 @@ onSubmit(form: NgForm) {
   if (isAcc) {
   this.app.findbookAcc(form.value.accession_no);
   } else {
-    if ( form.value.cardNo ) {
-      this.app.findbookCard(this.postsPerPage , this.currentPage, form.value.cardNo);
+  if (form.value.card_no !== '') {
+      this.app.findbookCard(this.postsPerPage , this.currentPage, form.value.card_no);
+    }
+
     }
   }
-}
-  ngOnInit() {
+
+ngOnInit() {
     this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage , this.dept);
     this.isLoading = true;
     this.booksub = this.app.getBooksUpdateListener()
@@ -51,17 +53,27 @@ onClear(form: NgForm) {
 
 
 
-  deptSort(form: NgForm) {
+deptSort(form: NgForm) {
   this.isLoading = true;
   this.dept = form.value.dept;
   this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
 
   }
 
-  onChange(PageData: PageEvent) {
+onChange(PageData: PageEvent, form: NgForm) {
     this.isLoading = true;
     this.currentPage = PageData.pageIndex + 1;
     this.postsPerPage = PageData.pageSize;
+    const isAcc = form.value.accession_no;
+    if (isAcc) {
+    this.app.findbookAcc(form.value.accession_no);
+    return ;
+    } else {
+      if ( form.value.card_no ) {
+        this.app.findbookCard(this.postsPerPage , this.currentPage, form.value.card_no);
+        return ;
+      }
+    }
     this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
     if (this.currentPage > 1 ) {
   this.number = this.postsPerPage * PageData.pageIndex;

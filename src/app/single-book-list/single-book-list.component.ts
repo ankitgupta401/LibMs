@@ -31,7 +31,7 @@ onSubmit(form: NgForm) {
   if (isAcc) {
   this.app.findallbookAcc(form.value.accession_no);
   } else {
-    if ( form.value.title ) {
+    if ( form.value.title !== '' ) {
       this.app.findbookTitle(this.postsPerPage , this.currentPage, form.value.title);
     } else {
       this.app.findbookAuthor(this.postsPerPage , this.currentPage, form.value.author);
@@ -50,14 +50,26 @@ this.totalPosts = bookData.count;
 this.isLoading = false;
     });
   }
-  onDelete(book: Books ) {
+  onDelete(book: Books , form: NgForm ) {
     this.isLoading = true;
     if ( book.borrowed ) {
       this.isLoading = false;
       return alert('Can\'t Delete This Book. It Is Already Issued TO A User');
     }
     this.app.onDeleteBook(book).subscribe(() => {
-    this.app.getBooks(this.postsPerPage , this.currentPage);
+      const isAcc = form.value.accession_no;
+      if (isAcc) {
+        this.totalPosts = 1;
+        return  this.app.findallbookAcc(form.value.accession_no);
+
+  } else {
+    if ( form.value.title !== '') {
+      return this.app.findbookTitle(this.postsPerPage , this.currentPage, form.value.title);
+    } else if ( form.value.author !== '' ) {
+      return this.app.findbookAuthor(this.postsPerPage , this.currentPage, form.value.author);
+    }
+  }
+      this.app.getBooks(this.postsPerPage , this.currentPage);
     });
   }
   onClear(form: NgForm) {
@@ -94,10 +106,20 @@ addBarCode(accNo: number) {
 }
 
 
-onChange(PageData: PageEvent) {
+onChange(PageData: PageEvent, form: NgForm) {
   this.isLoading = true;
   this.currentPage = PageData.pageIndex + 1;
   this.postsPerPage = PageData.pageSize;
+  const isAcc = form.value.accession_no;
+  if (isAcc) {
+return  this.app.findallbookAcc(form.value.accession_no);
+} else {
+if ( form.value.title ) {
+  return this.app.findbookTitle(this.postsPerPage , this.currentPage, form.value.title);
+} else if ( form.value.author ) {
+  return this.app.findbookAuthor(this.postsPerPage , this.currentPage, form.value.author);
+}
+}
   this.app.getBooksAll(this.postsPerPage , this.currentPage);
   if (this.currentPage > 1 ) {
 this.number = this.postsPerPage * PageData.pageIndex;

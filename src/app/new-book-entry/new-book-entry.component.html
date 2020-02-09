@@ -1,3 +1,4 @@
+<h5 id="error_msg" style="display: none; color: red; padding-left: 25%; padding-bottom: 1%; position:absolute; top: -2.6pc;">A book with the same "Accession No" already exists!!</h5>
 <h3 id="success_msg" style="display: none; color: rgb(25, 247, 62); padding-left: 35%; padding-bottom: 1%; position:absolute; top: -2.6pc;">Book Saved!</h3>
 <div>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
@@ -38,7 +39,7 @@
       </div>
       <div class="col-6">
         <label for="text"><b class="redMark">*</b> Accession No:</label>
-        <input type="number" class="form-control" ngModel name="accession_no" required>
+        <input type="number" class="form-control" [ngModel]= "currentAccession_no[0]?.accession_no" name="accession_no" required>
       </div>
     </div>
 
@@ -97,10 +98,10 @@
     <div class="row">
       <div class="button col-6 offset-4">
 
-        <button type="submit" class=" btn btn-success cen2 " [disabled]="!form.valid" (click)="barcode(form)">SAVE</button>
+        <button type="submit" class=" btn btn-success cen2 " [disabled]="!form.valid" >SAVE</button>
         &nbsp;
         <button type="button" class="btn btn-primary" routerLink="/barcodes" > Print</button>
-        <button type="button" class="btn btn-warning cen" (click)="onClear(form)">CLEAR</button>
+        <button type="reset" class="btn btn-warning cen" (click)="onClear(form)">CLEAR</button>
       </div>
     </div>
   </div>

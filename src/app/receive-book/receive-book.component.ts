@@ -35,7 +35,7 @@ onSubmit2(form2: NgForm) {
   } else {
     form2.value.fine = 'Rs ' + ' ' + form2.value.fine;
   }
-  console.log(form2.value.fine);
+
   const toRecBook: ReceiveReg = { ...this.gotbook , Note: form2.value.Note , receive_date: this.date, fine: form2.value.fine};
   this.app.UpdateRecReg(toRecBook)
   .subscribe(() => {
@@ -47,6 +47,7 @@ onSubmit2(form2: NgForm) {
     this.app.receiveOne(this.gotbook)
     .subscribe(() => {
       this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
+      document.getElementById('success_msg').style.display = 'block';
     });
   });
 }
@@ -78,10 +79,20 @@ this.gotbook = this.books.find(b => b._id === id);
 this.email = this.gotbook.borrower_email;
 }
 
-onChange(PageData: PageEvent) {
+onChange(PageData: PageEvent , form: NgForm) {
   this.isLoading = true;
+  const isAcc = form.value.accession_no;
   this.currentPage = PageData.pageIndex + 1;
   this.postsPerPage = PageData.pageSize;
+  if (isAcc) {
+    this.app.findbookAcc(form.value.accession_no);
+    return;
+    } else {
+      if (form.value.cardNo) {
+        this.app.findbookCard(this.postsPerPage , this.currentPage, form.value.cardNo);
+        return;
+      }
+    }
   this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
   if (this.currentPage > 1 ) {
 this.number = this.postsPerPage * PageData.pageIndex;
@@ -91,7 +102,7 @@ this.number = this.postsPerPage * PageData.pageIndex;
 
   }
 
-SendEmail(form: NgForm) {
+  SendEmail(form: NgForm) {
 
   const area = document.getElementById('success_msg');
   area.innerHTML = '    Sending Email...';
@@ -123,7 +134,7 @@ this.isLoading = false;
   }
 
 
-ngOnDestroy() {
+  ngOnDestroy() {
   this.booksub.unsubscribe();
 }
 

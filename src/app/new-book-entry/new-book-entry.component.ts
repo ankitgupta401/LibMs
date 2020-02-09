@@ -18,29 +18,38 @@ gotAcc: Books[] = [];
 bookSubs: Subscription;
 isbn: string;
 num = 0;
-  constructor(private bar: Barcode, private app: All) { }
+  // tslint:disable-next-line: variable-name
+currentAccession_no: {_id: string, accession_no}[] = [];
+constructor(private bar: Barcode, private app: All) { }
 onSubmit(form: NgForm) {
+  document.getElementById('error_msg').style.display = 'none';
+  document.getElementById('success_msg').style.display = 'none';
   this.isLoading = true;
   const book: Books = form.value;
   this.app.findallbookAcc2(form.value.accession_no)
     .subscribe(result => {
       this.gotAcc = result.books;
       if ( this.gotAcc.length > 0 ) {
-        alert('A book with the same "Accession No" already exists');
+
+        document.getElementById('error_msg').style.display = 'block';
         this.isLoading = false;
       } else {
-        this.app.addBooks(book);
+        this.app.addBooks(book, this.currentAccession_no);
 
       }
     });
 
 }
-barcode( form: NgForm) {
-const bars: Bars = {_id: null, accession_no: form.value.accession_no};
-this.bar.barcodeGenerate(bars);
+barcode(accessionNo: number) {
+
+  const bars: Bars = {_id: null, accession_no: accessionNo};
+
+  this.bar.barcodeGenerate(bars);
 }
 
 searchbook(form: NgForm) {
+  document.getElementById('success_msg').style.display = 'none';
+  document.getElementById('error_msg').style.display = 'none';
   if ( this.isbn === form.value.isbn ) {
     return;
   }
@@ -51,12 +60,14 @@ this.app.searchByIsbn(form.value.isbn)
 .subscribe(result => {
  if (result.books.length > 0) {
   this.book = result.books[0];
-  console.log(this.book);
   this.isLoading = false;
  } else {
   this.book = null;
   this.isLoading = false;
  }
+ this.app.getAcccession().subscribe( result2 => {
+  this.currentAccession_no = result2.accession;
+    });
 });
 } else {
   this.isLoading = false;
@@ -69,9 +80,11 @@ onClear(form: NgForm) {
   document.getElementById('success_msg').style.display = 'none';
 }
 ngOnInit() {
+
   this.bookSubs = this.app.getBooksUpdateListener()
   .subscribe((result) => {
     this.isLoading = false;
+
     document.getElementById('success_msg').style.display = 'block';
   });
 }

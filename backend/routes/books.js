@@ -2,6 +2,50 @@ const express =require('express');
 const router = express.Router();
 const Book = require("../model/book");
 const checkAuth = require("../middleware/check-auth");
+const accession = require("../model/accession");
+
+router.get("/getAccession", checkAuth, (req,res,next) => {
+ accession.find({}).then(result =>{
+res.status(200).json({
+  message:"Got Accession",
+  accession: result
+});
+ });
+  });
+
+  router.post("/updateAccession",checkAuth,(req,res,next) => {
+    console.log(req.body);
+    const acc = new accession({
+     _id: req.body._id,
+     accession_no: req.body.accession_no
+    });
+
+    accession.updateOne({_id: req.body._id}, acc).then(() =>{
+      res.status(200).json({
+        message: 'Accession Updated'
+      });
+    });
+
+  });
+
+
+  router.get("/SaveAccession/:accession", checkAuth, (req, res, next) => {
+    const acc = new accession({
+    accession_no: req.params.accession,
+
+    });
+    acc.save()
+    .then(() => {
+      res.status(201).json({
+        message: "Accession saved Successfully!"
+      });
+    }).catch(err => {
+          res.status(500).json({
+      error: err
+      });
+    });
+
+  });
 
 
 router.get("/get/:isbn", checkAuth, (req,res,next) => {
@@ -120,28 +164,30 @@ router.get("/getbycard", checkAuth, (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const cardNo = req.query.cardNo;
+  let bookQuery2 = Book.countDocuments({ borrowed: true , deleted: false}).sort({_id:-1});
   let bookQuery = Book.find({ borrowed: true , deleted: false}).sort({_id:-1});
   if(cardNo != '') {
    bookQuery = Book.find({ cardNo: cardNo , deleted: false}).sort({_id:-1});
+   bookQuery2 =  Book.countDocuments({cardNo: cardNo , deleted: false}).sort({_id:-1});
   }
+
   let fetchedBooks ;
   if(pageSize && currentPage){
      bookQuery.skip(pageSize * (currentPage -1))
       .limit(pageSize);
+
   }
    bookQuery.then(documents =>{
      fetchedBooks = documents;
-     if(cardNo != '') {
-      return Book.countDocuments({cardNo: cardNo , deleted: false}).sort({_id:-1});
-     }
-      return Book.countDocuments({ borrowed: true , deleted: false}).sort({_id:-1});
-   }).then (count => {
-      res.status(200).json({
-        message: "Books fetched succesfully!",
-        books: fetchedBooks,
-        count: count
-      });
-     });
+
+      bookQuery2.then (count => {
+        res.status(200).json({
+          message: "Books fetched succesfully!",
+          books: fetchedBooks,
+          count: count
+        });
+       });
+   });
 });
 
 
@@ -150,8 +196,14 @@ const accessionNo = req.params.accessionNo;
 let fetchedBooks ;
 Book.find({accession_no: accessionNo, deleted: false }).sort({_id:-1}).then(documents =>{
    fetchedBooks = documents;
-    return Book.countDocuments({accession_no:accessionNo, deleted: false }).sort({_id:-1});
+if(fetchedBooks.length > 0){
+  return Book.countDocuments({isbn:fetchedBooks[0].isbn, deleted: false }).sort({_id:-1});
+} else {
+  return Book.countDocuments({isbn:0, deleted: false }).sort({_id:-1});
+}
+
  }).then (count => {
+
     res.status(200).json({
       message: "Books fetched succesfully!",
       books: fetchedBooks,

@@ -1,4 +1,6 @@
     <div class="form">
+
+      <h5 id="success_msg" style="display: none; color: rgb(25, 247, 62); padding-left: 28%; padding-bottom: -4% ; top: -3pc;position: absolute;">Book Received!</h5>
         <div class="searchbox">
             <br>
             <form (ngSubmit)="onSubmit(form)" #form="ngForm">
@@ -24,7 +26,7 @@
 
                         <input type="text" class="form-control col-1 col-md-3" placeholder="Card No" ngModel name="cardNo"><a>&nbsp; &nbsp;</a>
                               &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button> <a>&nbsp; &nbsp;</a>
-                              <button type="clear" class="btn btn-danger" (click)="onClear(form)">Clear</button>
+                              <button type="reset" class="btn btn-danger" (click)="onClear(form)">Clear</button>
                             </div>
 
             </form>
@@ -182,7 +184,7 @@
         </div>
       </div>
     </div>
-    <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChange($event)"></mat-paginator>
+    <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChange($event,form)"></mat-paginator>
     </div>
 
 

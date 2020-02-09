@@ -70,12 +70,14 @@ return this.http.post<{ message: string}>(URL + 'email' , emailContent);
 }
 
 
-addBooks(book: Books) {
+addBooks(book: Books, accession: {_id: string, accession_no: number}[]) {
 
   this.http.post<{ message: string}>(URL + 'books', book)
   .subscribe(( responseData) => {
 
     this.book.push(book);
+    accession[0].accession_no = book.accession_no + 1;
+    this.updateAcccession(accession);
     this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
   });
   return ({
@@ -231,55 +233,62 @@ getAllRecRegBooks(pagesize: number , page: number, dept: string) {
 }
 
 findbookAcc( accessionNo: number) {
-this.http.get<{message: string , book: Books[]}>(URL + 'books/' + accessionNo)
+this.http.get<{message: string , book: Books[], count: number}>(URL + 'books/' + accessionNo)
 .subscribe((result) => {
 if (result.book[0].borrowed) {
   this.book = result.book;
-  this.booksUpdated.next({BOOKS: [...this.book], count: result.book.length});
+  this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
 }
 });
 }
 findallbookAcc( accessionNo: number) {
-  this.http.get<{message: string , books: Books[]}>(URL + 'books/all/' + accessionNo)
+  this.http.get<{message: string , books: Books[], count: number}>(URL + 'books/all/' + accessionNo)
   .subscribe((result) => {
     this.book = result.books;
-    this.booksUpdated.next({BOOKS: [...this.book], count: result.books.length});
+    this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
   });
   }
+
+  findallbookAcc3( accessionNo: number) {
+   return this.http.get<{message: string , books: Books[], count: number}>(URL + 'books/all/' + accessionNo);
+    }
 
 findbookCard(pagesize: number , page: number , cardNo: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&cardNo=${cardNo}`;
   this.http.get<{message: string , books: Books[], count: number}>(URL + 'books/getbycard' + queryParams)
   .subscribe((result) => {
     this.book = result.books;
+    console.log(result);
     this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
 
   });
+
 }
+
 
 findbookTitle(pagesize: number , page: number , title: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&title=${title}`;
-  this.http.get<{message: string , books: Books[], count: number}>(URL + 'books/getbytitle' + queryParams)
+  this.http.get<{message: string , books: Books[], count: {count: number}[]}>(URL + 'books/getbytitle' + queryParams)
   .subscribe((result) => {
     console.log(result);
     this.book = result.books;
-    this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
+    this.booksUpdated.next({BOOKS: [...this.book], count: result.count[0].count});
 
   });
 }
 findbookAuthor(pagesize: number , page: number , author: string) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&author=${author}`;
-  this.http.get<{message: string , books: Books[], count: number}>(URL + 'books/getbyauthor' + queryParams)
+  this.http.get<{message: string , books: Books[], count: {count: number}[]}>(URL + 'books/getbyauthor' + queryParams)
   .subscribe((result) => {
     this.book = result.books;
-    this.booksUpdated.next({BOOKS: [...this.book], count: result.count});
+    this.booksUpdated.next({BOOKS: [...this.book], count: result.count[0].count});
 
   });
 }
 
 findallrecregAcc(pagesize: number , page: number , accessionNo: number) {
   const queryParams = `?pagesize=${pagesize}&page=${page}&accessionNo=${accessionNo}`;
-  return this.http.get<{message: string , books: ReceiveReg[]}>(URL + 'receive/all/' + queryParams);
+  return this.http.get<{message: string , books: ReceiveReg[], count: number}>(URL + 'receive/all/' + queryParams);
   }
 
   findallrecregCard(pagesize: number , page: number , cardNo: string) {
@@ -370,5 +379,22 @@ getAvailable(isbn: string) {
 
 }
 
+saveAcccession() {
+  const accession = 1000;
+  this.http.get<{message: string}>(URL + 'books/SaveAccession/' + accession)
+  .subscribe(result => {
+  });
+}
+getAcccession() {
+
+ return this.http.get<{message: string, accession: any[]}>(URL + 'books/getAccession/' );
+
+}
+updateAcccession(accession: {_id: string, accession_no: number}[]) {
+  this.http.post<{message: string}>(URL + 'books/UpdateAccession' , accession[0])
+  .subscribe(result => {
+console.log(result);
+  });
+}
 }
 

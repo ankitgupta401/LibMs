@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit {
   constructor(private app: All) { }
 
   ngOnInit() {
+
     this.app.getTodayReport().subscribe(result => {
       this.IssueData.push(result.issueData);
       this.ReceiveData.push(result.receiveData);

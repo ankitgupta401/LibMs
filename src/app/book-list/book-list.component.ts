@@ -32,7 +32,12 @@ onSubmit(form: NgForm) {
   this.isLoading = true;
   const isAcc = form.value.accession_no;
   if (isAcc) {
-  this.app.findallbookAcc(form.value.accession_no);
+  this.app.findallbookAcc3(form.value.accession_no).subscribe(result => {
+    this.books = result.books;
+    this.books[0].total = result.count;
+    this.getAvailable();
+    this.isLoading = false;
+  });
   } else {
     if ( form.value.title ) {
       this.app.findbookTitle(this.postsPerPage , this.currentPage, form.value.title);
@@ -48,11 +53,11 @@ onSubmit(form: NgForm) {
     this.isLoading = true;
     this.booksub = this.app.getBooksUpdateListener()
     .subscribe(( bookData: {BOOKS: Books[], count: number }) => {
-      console.log(bookData);
+
       this.books = bookData.BOOKS;
       this.totalPosts = bookData.count;
       this.isLoading = false;
-      if ( this.totalPosts > 0) {
+      if ( this.books.length > 0) {
         this.getAvailable();
       }
 
