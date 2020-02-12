@@ -113,9 +113,7 @@ this.number = this.postsPerPage * PageData.pageIndex;
     area.style.display = 'block';
 
   }, err => {
-    area.innerHTML = err.message;
-    area.style.color = 'red';
-    area.style.display = 'block';
+    alert(err.message);
   });
 }
   ngOnInit() {

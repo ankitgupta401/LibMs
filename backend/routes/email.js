@@ -12,8 +12,8 @@ router.post("", checkAuth, (req, res, next) => {
 let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-      user:'sgplib123@gmail.com', // TODO: your gmail account
-      pass: 'sgplib@2k19' // TODO: your gmail password
+      user:'siligurigovtpolytechnic@gmail.com', // TODO: your gmail account
+      pass: 'sgp@2k19' // TODO: your gmail password
   }
 });
 
