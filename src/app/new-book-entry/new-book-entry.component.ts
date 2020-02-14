@@ -25,9 +25,15 @@ currentAccession_no: {_id: string, accession_no}[] = [];
 constructor(private bar: Barcode, private app: All) { }
 setQty(s) {
   this.qty = s.value;
+  if (this.qty <= 0) {
+  return  alert('Please Enter Valid Quantity');
+  }
 
 }
 repeatAdd(form: NgForm) {
+  if (this.qty <= 0) {
+    return alert('Please Enter Valid Quantity');
+  }
   // tslint:disable-next-line: prefer-const
   let form2: Books = form.value;
   let book: Books;
@@ -132,7 +138,7 @@ ngOnInit() {
 
   this.bookSubs = this.app.getBooksUpdateListener()
   .subscribe((result) => {
-    console.log(this.qty, this.num);
+
     if (this.qty <= this.num) {
       this.isLoading = false;
 

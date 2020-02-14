@@ -47,11 +47,11 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
     today = date.getDate()+ '-' + (date.getMonth() + 1) + '-' + date.getFullYear()  ;
     today2 = date2.getDate() + '-' + (date2.getMonth() + 1) + '-' + date2.getFullYear() ;
 
-    Book2.countDocuments({ $and: [ { "borrow_date": { $lte: today2 } }, { "borrow_date": { $gte: today } } ] }).then(result => {
+    Book2.countDocuments({ $and: [ { "borrow_date": { $lte: today } }, { "borrow_date": { $gte: today2 } } ] }).then(result => {
       issueData = result;
-      Book.countDocuments({ $and: [ { "borrow_date": { $lte: today2 } }, { "borrow_date": { $gte: today } } ] }).then(result => {
+      Book.countDocuments({ $and: [ { "borrow_date": { $lte: today } }, { "borrow_date": { $gte: today2 } } ] }).then(result => {
       issueData = issueData + result;
-      Book.countDocuments({ $and: [ { "receive_date": { $lte: today2 } }, { "receive_date": { $gte: today } } ] }).then(results => {
+      Book.countDocuments({ $and: [ { "receive_date": { $lte: today } }, { "receive_date": { $gte: today2 } } ] }).then(results => {
         res.status(200).json({message: "Found", issueData: issueData, receiveData: results});
       });
       });
@@ -106,11 +106,11 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
 
             today = 1 + '-' + (date.getMonth() + 1) + '-' +  (date.getFullYear() - 1);
             today2 = date.getDate() + '-' + (date.getMonth() + 1) + '-' + (date.getFullYear() - 1) ;
-            Book2.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
+            Book2.countDocuments({ $and: [ { "borrow_date": { $lte: today2 } }, { "borrow_date": { $gte: today } } ] }).then(result => {
               issueData = result;
-              Book.countDocuments({ $and: [ { "borrow_date": { $gte: today } }, { "borrow_date": { $lte: today2 } } ] }).then(result => {
+              Book.countDocuments({ $and: [ { "borrow_date": { $lte: today2 } }, { "borrow_date": { $gte: today } } ] }).then(result => {
               issueData = issueData + result;
-              Book.countDocuments({ $and: [ { "receive_date": { $gte: today } }, { "receive_date": { $lte: today2 } } ] }).then(results => {
+              Book.countDocuments({ $and: [ { "receive_date": { $lte: today2 } }, { "receive_date": { $gte: today } } ] }).then(results => {
                 res.status(200).json({message: "Found", issueData: issueData, receiveData: results});
               });
             });

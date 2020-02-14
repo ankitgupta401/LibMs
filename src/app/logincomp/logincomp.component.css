@@ -32,15 +32,3 @@ mat-spinner {
   margin-left: 45%;
 }
 
-.bg-text {
-
-  color: white;
-  font-weight: bold;
-  border: 3px solid #f1f1f1;
-  position: fixed;
-  top: 15%;
-  left: 20%;
-  height: 70%;
-  width: 60%;
-}
-
