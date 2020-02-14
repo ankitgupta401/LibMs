@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Books } from '../books.model';
 import { Subscription } from 'rxjs';
 import { All } from '../app.service';
 import { Barcode } from '../barcode.service';
 import { NgForm } from '@angular/forms';
 import { Bars } from '../barcode.model';
-import { PageEvent } from '@angular/material';
+import { PageEvent, MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'app-single-book-list',
@@ -13,6 +13,7 @@ import { PageEvent } from '@angular/material';
   styleUrls: ['./single-book-list.component.css']
 })
 export class SingleBookListComponent implements OnInit, OnDestroy {
+  @ViewChild(MatPaginator, undefined) paginator: MatPaginator;
   books: Books[] = [];
   bookdel: string;
   isLoading = false;
@@ -31,9 +32,9 @@ onSubmit(form: NgForm) {
   if (isAcc) {
   this.app.findbookAcc(form.value.accession_no);
   } else {
-    if ( form.value.title !== '' ) {
+    if ( form.value.title ) {
       this.app.findbookTitle2(this.postsPerPage , this.currentPage, form.value.title);
-    } else if (form.value.author !== '' ) {
+    } else if (form.value.author) {
       this.app.findbookAuthor2(this.postsPerPage , this.currentPage, form.value.author);
     } else {
       this.isLoading = false;
@@ -76,9 +77,15 @@ this.isLoading = false;
   onClear(form: NgForm) {
 
   this.isLoading = true;
+
   this.app.resetRequired();
-  this.app.getBooksAll(this.postsPerPage, this.currentPage, undefined);
   form.reset();
+  this.paginator.pageIndex = 0;
+  this.isLoading = true;
+  this.currentPage = 1;
+  this.number = 0;
+  this.app.getBooksAll(this.postsPerPage, this.currentPage, 'yes' );
+
   }
 
 
@@ -116,12 +123,12 @@ onChange(PageData: PageEvent, form: NgForm) {
   if (isAcc) {
 return  this.app.findallbookAcc(form.value.accession_no);
 } else {
-if ( form.value.title !== '' ) {
+if ( form.value.title) {
   return this.app.findbookTitle2(this.postsPerPage , this.currentPage, form.value.title);
-} else if ( form.value.author !== '' ) {
+} else if ( form.value.author) {
   return this.app.findbookAuthor2(this.postsPerPage , this.currentPage, form.value.author);
 } else {
-  this.app.getBooksAll(this.postsPerPage , this.currentPage, undefined );
+  this.app.getBooksAll(this.postsPerPage , this.currentPage, 'yes' );
 }
 }
 

@@ -18,24 +18,73 @@ gotAcc: Books[] = [];
 bookSubs: Subscription;
 isbn: string;
 num = 0;
+qty = 1;
+BookForm: NgForm;
   // tslint:disable-next-line: variable-name
 currentAccession_no: {_id: string, accession_no}[] = [];
 constructor(private bar: Barcode, private app: All) { }
-onSubmit(form: NgForm) {
+setQty(s) {
+  this.qty = s.value;
+
+}
+repeatAdd(form: NgForm) {
+  // tslint:disable-next-line: prefer-const
+  let form2: Books = form.value;
+  let book: Books;
+  for (let i = 0; i < this.qty; i++) {
+    this.app.getAcccession().subscribe( result2 => {
+      this.currentAccession_no = result2.accession;
+
+      book = {
+        _id: undefined,
+        accession_no: this.currentAccession_no[0].accession_no + i,
+        author: form2.author,
+        cost: form2.cost,
+        edition: form2.edition,
+        isbn: form2.isbn,
+        pages: form2.pages,
+        publisher: form2.publisher,
+        remark: form2.remark,
+        source: form2.source,
+        subject: form2.subject,
+        title: form2.title,
+        topics: form2.topics,
+        volume: form2.volume,
+        year: form2.year,
+        borrowed: false,
+        borrower: '',
+        cardNo: '',
+        borrow_date: '',
+        borrower_email: '',
+        borrower_phone: undefined,
+        borrower_dept: '',
+      };
+
+
+      this.onSubmit(book);
+      this.num++;
+    });
+  }
+
+
+}
+
+onSubmit(form: Books) {
+
   document.getElementById('error_msg').style.display = 'none';
   document.getElementById('success_msg').style.display = 'none';
   this.isLoading = true;
-  const book: Books = form.value;
-  this.app.findallbookAcc2(form.value.accession_no)
+  const book: Books = form;
+  this.app.findallbookAcc2(form.accession_no)
     .subscribe(result => {
       this.gotAcc = result.books;
       if ( this.gotAcc.length > 0 ) {
 
-        document.getElementById('error_msg').style.display = 'block';
-        this.isLoading = false;
+  document.getElementById('error_msg').style.display = 'block';
+  this.isLoading = false;
       } else {
         this.app.addBooks(book, this.currentAccession_no);
-
+        this.barcode(form.accession_no);
       }
     });
 
@@ -83,9 +132,13 @@ ngOnInit() {
 
   this.bookSubs = this.app.getBooksUpdateListener()
   .subscribe((result) => {
-    this.isLoading = false;
+    console.log(this.qty, this.num);
+    if (this.qty <= this.num) {
+      this.isLoading = false;
 
-    document.getElementById('success_msg').style.display = 'block';
+      document.getElementById('success_msg').style.display = 'block';
+    }
+
   });
 }
 

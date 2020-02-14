@@ -1,9 +1,9 @@
-import { Component, OnInit , OnDestroy} from '@angular/core';
+import { Component, OnInit , OnDestroy, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { All } from '../app.service';
 import { Libcard } from '../Libcard.model';
 import { Subscription } from 'rxjs';
-import { PageEvent } from '@angular/material';
+import { PageEvent, MatPaginator } from '@angular/material';
 import { Books } from '../books.model';
 
 
@@ -13,6 +13,7 @@ import { Books } from '../books.model';
   styleUrls: ['./lib-card-reg.component.css']
 })
 export class LibCardRegComponent implements OnInit, OnDestroy {
+  @ViewChild(MatPaginator, undefined) paginator: MatPaginator;
   totalPosts = 0;
   postsPerPage = 10;
   number = 0;
@@ -61,6 +62,8 @@ if (isAcc) {
     } else {
       if ( form.value.phone_no ) {
       this.app.findUserPhone(form.value.phone_no);
+      } else {
+        this.isLoading = true;
       }
     }
   }
@@ -69,6 +72,8 @@ if (isAcc) {
 onClear(form: NgForm) {
 this.isLoading = true;
 form.reset();
+this.paginator.pageIndex = 0;
+this.number = 0;
 this.app.getUsers(this.postsPerPage , this.currentPage, this.dept);
 this.userSub = this.app.getUsersUpdateListener()
       .subscribe((userData: {LibCard: Libcard[], count: number}) => {

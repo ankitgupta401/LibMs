@@ -1,15 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ReceiveReg } from '../receiveReg.model';
 import { All } from '../app.service';
 import { Subscription } from 'rxjs';
-import { PageEvent } from '@angular/material';
+import { PageEvent, MatPaginator } from '@angular/material';
 @Component({
   selector: 'app-receive-register',
   templateUrl: './receive-register.component.html',
   styleUrls: ['./receive-register.component.css']
 })
 export class ReceiveRegisterComponent implements OnInit , OnDestroy {
+  @ViewChild(MatPaginator, undefined) paginator: MatPaginator;
 recReg: ReceiveReg[];
 isLoading = false;
 number = 0;
@@ -40,6 +41,8 @@ onSubmit(form: NgForm) {
         this.totalPosts = response.books.length;
         this.isLoading = false;
       });
+    } else {
+      this.isLoading = false;
     }
   }
 }
@@ -63,6 +66,8 @@ this.isLoading = false;
 
 onClear(form: NgForm) {
 this.isLoading = true;
+this.paginator.pageIndex = 0;
+this.number = 0;
 form.reset();
 this.booksub = this.app.getAllRecRegBooks(this.postsPerPage , this.currentPage, this.dept).subscribe(response => {
   this.recReg = response.books;

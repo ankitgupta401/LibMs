@@ -1,10 +1,10 @@
-import { Component, OnInit , OnDestroy} from '@angular/core';
+import { Component, OnInit , OnDestroy, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { All } from '../app.service';
 import { Books } from '../books.model';
 import { Subscription } from 'rxjs';
 import { Barcode } from '../barcode.service';
-import { PageEvent, throwToolbarMixedModesError, TransitionCheckState } from '@angular/material';
+import { PageEvent, throwToolbarMixedModesError, TransitionCheckState, MatPaginator } from '@angular/material';
 import { Bars } from '../barcode.model';
 
 
@@ -15,7 +15,7 @@ import { Bars } from '../barcode.model';
   styleUrls: ['./book-list.component.css']
 })
 export class BookListComponent implements OnInit, OnDestroy {
-
+  @ViewChild(MatPaginator, undefined) paginator: MatPaginator;
   books: any[] = [];
   bookdel: string;
   isLoading = false;
@@ -34,18 +34,21 @@ onSubmit(form: NgForm) {
   if (isAcc) {
   this.app.findallbookAcc3(form.value.accession_no).subscribe(result => {
     this.books = result.books;
-    if ( this.books.length > 0) {
+    console.log(result);
+    if ( result.count) {
       this.books[0].total = result.count;
-      this.totalPosts = result.count;
+      this.totalPosts = 1;
       this.getAvailable();
+    } else {
+      this.totalPosts = 0;
+      this.isLoading = false;
     }
-    this.totalPosts = 0;
-    this.isLoading = false;
+
   });
   } else {
-    if ( form.value.title !== '') {
+    if ( form.value.title) {
       this.app.findbookTitle(this.postsPerPage , this.currentPage, form.value.title);
-    } else if (form.value.author !== '') {
+    } else if (form.value.author) {
       this.app.findbookAuthor(this.postsPerPage , this.currentPage, form.value.author);
     } else {
       this.isLoading = false;
@@ -75,9 +78,11 @@ onSubmit(form: NgForm) {
   }
 
   onClear(form: NgForm) {
-
-  this.isLoading = true;
-  this.app.getBooks(this.postsPerPage, this.currentPage);
+    this.paginator.pageIndex = 0;
+    this.isLoading = true;
+    this.currentPage = 1;
+    this.number = 0;
+    this.app.getBooks(this.postsPerPage, this.currentPage);
 
   }
 getbyisbn(isbn: string, f: any ) {
@@ -87,16 +92,39 @@ f.click();
 
 
 
-onChange(PageData: PageEvent) {
+onChange(PageData: PageEvent, form: NgForm) {
   this.isLoading = true;
   this.currentPage = PageData.pageIndex + 1;
   this.postsPerPage = PageData.pageSize;
-  this.app.getBooks(this.postsPerPage , this.currentPage);
-  if (this.currentPage > 1 ) {
-this.number = this.postsPerPage * PageData.pageIndex;
+  const isAcc = form.value.accession_no;
+  if (isAcc) {
+  this.app.findallbookAcc3(form.value.accession_no).subscribe(result => {
+    this.books = result.books;
+
+    if ( this.books.length > 0) {
+      this.books[0].total = result.count;
+      this.totalPosts = result.count;
+      this.getAvailable();
+    }
+    this.totalPosts = 0;
+    this.isLoading = false;
+  });
   } else {
-    this.number = 0;
+    if ( form.value.title) {
+      this.app.findbookTitle(this.postsPerPage , this.currentPage, form.value.title);
+    } else if (form.value.author) {
+      this.app.findbookAuthor(this.postsPerPage , this.currentPage, form.value.author);
+    } else {
+
+      this.app.getBooks(this.postsPerPage , this.currentPage);
+      if (this.currentPage > 1 ) {
+    this.number = this.postsPerPage * PageData.pageIndex;
+      } else {
+        this.number = 0;
+      }
+    }
   }
+
   }
 
 getAvailable() {

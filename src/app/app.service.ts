@@ -77,21 +77,25 @@ addBooks(book: Books, accession: {_id: string, accession_no: number}[]) {
 
     this.book.push(book);
     accession[0].accession_no = book.accession_no + 1;
-    this.updateAcccession(accession);
-    this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
+    this.updateAcccession(accession)
+    .subscribe(result => {
+      this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
+    });
   });
-  return ({
-    message: 'done'
-  });
+
 }
 
 getBooks(pagesize: number , page: number) {
   const queryParams = `?pagesize=${pagesize}&page=${page}`;
   this.http.get<{ message: string, books: Books[] , count: {count: number}[]}>(URL + 'books' + queryParams)
   .subscribe((postData) => {
-    this.book = postData.books;
-    this.bookcount = postData.count[0].count;
-    if (this.bookcount === 0) {
+
+if (postData.books.length > 0) {
+  this.book = postData.books;
+  this.bookcount = postData.count[0].count;
+}
+
+if (this.bookcount === 0) {
       this.booksUpdated.next({BOOKS: [], count: 0});
     } else {
       this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
@@ -244,14 +248,13 @@ findbookAcc( accessionNo: number) {
 this.http.get<{message: string , book: Books[], count: number}>(URL + 'books/' + accessionNo)
 .subscribe((result) => {
   this.book = result.book;
-  if ( result.book.length > 0) {
-    if (result.book[0].borrowed) {
 
-      this.booksUpdated.next({BOOKS: [...this.book], count: result.book.length});
-    }
-  } else {
+  if ( result.book.length > 0) {
     this.booksUpdated.next({BOOKS: [...this.book], count: result.book.length});
+  } else {
+    this.booksUpdated.next({BOOKS: [...this.book], count: 1});
   }
+
 
 });
 }
@@ -441,10 +444,7 @@ getAcccession() {
 
 }
 updateAcccession(accession: {_id: string, accession_no: number}[]) {
-  this.http.post<{message: string}>(URL + 'books/UpdateAccession' , accession[0])
-  .subscribe(result => {
-
-  });
+ return  this.http.post<{message: string}>(URL + 'books/UpdateAccession' , accession[0]);
 }
 }
 

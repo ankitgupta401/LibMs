@@ -124,7 +124,8 @@ router.get("/getbytitle2", checkAuth, (req, res, next) => {
   const bookQuery = Book.aggregate(
       [   { $match : { deleted : false , title: regex} },
           { $sort: { _id: -1 } },
-          { $skip : toskip }
+          { $skip : toskip },
+          { $limit: pageSize}
                   ]
       );
 
@@ -163,8 +164,8 @@ router.get("/getbyauthor2", checkAuth, (req, res, next) => {
   const bookQuery = Book.aggregate(
       [   { $match : { deleted : false , author: regex} },
           { $sort: { _id: -1 } },
-          { $skip : toskip }
-
+          { $skip : toskip },
+          { $limit: pageSize}
 
 
         ]
@@ -286,17 +287,18 @@ let fetchedBooks ;
 Book.find({accession_no: accessionNo, deleted: false }).sort({_id:-1}).then(documents =>{
    fetchedBooks = documents;
 if(fetchedBooks.length > 0){
+
   return Book.countDocuments({isbn:fetchedBooks[0].isbn, deleted: false }).sort({_id:-1});
 } else {
   return Book.countDocuments({isbn:0, deleted: false }).sort({_id:-1});
 }
 
- }).then (count => {
+ }).then (result => {
 
     res.status(200).json({
       message: "Books fetched succesfully!",
       books: fetchedBooks,
-      count: count
+      count: result
     });
    });
   });
@@ -618,6 +620,8 @@ router.put("/receiveOne/:id", checkAuth, (req, res, next) => {
     cardNo: req.body.cardNo,
     borrow_date: req.body.borrow_date,
     borrower_dept: req.body.borrower_dept,
+    borrower_email: '',
+    borrower_phone: null,
     deleted: req.body.deleted
   });
   Book.updateOne({_id: req.body._id}, book).then(() =>{

@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { All } from '../app.service';
 import { Subscription } from 'rxjs';
 import { Books } from '../books.model';
-import { PageEvent } from '@angular/material';
+import { PageEvent, MatPaginator } from '@angular/material';
 import { ReceiveReg } from '../receiveReg.model';
 
 @Component({
@@ -12,6 +12,7 @@ import { ReceiveReg } from '../receiveReg.model';
   styleUrls: ['./receive-book.component.css']
 })
 export class ReceiveBookComponent implements OnInit , OnDestroy {
+  @ViewChild(MatPaginator, undefined) paginator: MatPaginator;
   totalPosts = 0;
   postsPerPage = 10;
   number = 0;
@@ -80,6 +81,7 @@ this.email = this.gotbook.borrower_email;
 }
 
 onChange(PageData: PageEvent , form: NgForm) {
+
   this.isLoading = true;
   const isAcc = form.value.accession_no;
   this.currentPage = PageData.pageIndex + 1;
@@ -131,6 +133,8 @@ this.isLoading = false;
 
   onClear(form: NgForm) {
     this.isLoading = true;
+    this.paginator.pageIndex = 0;
+    this.number = 0;
     this.app.getAllIssuedBooks(this.postsPerPage , this.currentPage, this.dept);
     form.reset();
   }
