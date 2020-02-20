@@ -56,7 +56,7 @@ this.isLoading = false;
     this.isLoading = true;
     if ( book.borrowed ) {
       this.isLoading = false;
-      return alert('Can\'t Delete This Book. It Is Already Issued TO A User');
+      return alert('Can\'t Delete This Book. It Is Already Issued To A User');
     }
     this.app.onDeleteBook(book).subscribe(() => {
       const isAcc = form.value.accession_no;
