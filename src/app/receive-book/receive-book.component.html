@@ -154,7 +154,7 @@
                                   </tr>
                                   <tr>
                                     <td colspan="3">
-                                      <textarea rows="2"  ngModel ="'Dear Student, We have come to see that the book with the title {{gotbook?.title}} was issued by you on {{ gotbook?.borrow_date }} . Kindly Return the Book as soon as possible to avoid any fines.'" name="content"
+                                      <textarea rows="2"  ngModel ="'Dear Student, We have come to see that the book with the title {{gotbook?.title}} was issued by you on {{ gotbook?.borrow_date | date:'dd-MM-yyyy '}} . Kindly Return the Book as soon as possible to avoid any fines.'" name="content"
                                         class="form-control fix_radius" placeholder="Notice" ></textarea>
                                     </td>
                                   </tr>
