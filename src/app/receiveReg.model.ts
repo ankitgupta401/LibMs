@@ -16,9 +16,9 @@ export interface ReceiveReg {
   year: number;
   borrower: string;
   cardNo: string;
-  borrow_date: string;
+  borrow_date: Date;
   borrower_dept: string;
-  receive_date: string;
+  receive_date: Date;
   fine: number;
   Note: string;
 

@@ -9,13 +9,14 @@ const checkAuth = require("../middleware/check-auth");
 
 router.get('/IssueDataToday', checkAuth,(req,res,next) => {
   let issueData = 0;
-    date = new Date();
+    date = new Date(Date.now()- (24*60*60*1000));
+
     today =  date.getDate() + '-' + (date.getMonth() + 1) + '-' +date.getFullYear() ;
-    Book2.countDocuments({ "borrow_date":  today}).then(result => {
+    Book2.countDocuments({ "borrow_date": {$gte: date}}).then(result => {
       issueData = result;
-      Book.countDocuments({ "borrow_date": today}).then(result2 => {
+      Book.countDocuments({ "borrow_date": {$gte: date}}).then(result2 => {
       issueData = issueData + result2;
-      Book.countDocuments({ "receive_date": today }).then(results => {
+      Book.countDocuments({ "receive_date": {$gte: date} }).then(results => {
         res.status(200).json({message: "Found", issueData: issueData, receiveData: results});
       });
     });
@@ -28,11 +29,11 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
     today = date.getDate()  + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
     today2 = date2.getDate()  + '-' + (date2.getMonth() + 1) + '-' + date2.getFullYear();
 
-    Book2.countDocuments({ $and: [ { "borrow_date": { $lte: today2 } }, { "borrow_date": { $gte: today } } ] }).then(result => {
+    Book2.countDocuments({ $and: [ { "borrow_date": { $lte: date2 } }, { "borrow_date": { $gte: date } } ] }).then(result => {
       issueData = result;
-      Book.countDocuments({ $and: [ { "borrow_date": { $lte: today2 } }, { "borrow_date": { $gte: today } } ] }).then(result => {
+      Book.countDocuments({ $and: [ { "borrow_date": { $lte: date2 } }, { "borrow_date": { $gte: date } } ] }).then(result => {
       issueData = issueData + result;
-      Book.countDocuments({ $and: [ { "receive_date": { $lte: today2 } }, { "receive_date": { $gte: today } } ] }).then(results => {
+      Book.countDocuments({ $and: [ { "receive_date": { $lte: date2 } }, { "receive_date": { $gte: date } } ] }).then(results => {
         res.status(200).json({message: "Found", issueData: issueData, receiveData: results});
       });
       });
@@ -47,11 +48,11 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
     today = date.getDate()+ '-' + (date.getMonth() + 1) + '-' + date.getFullYear()  ;
     today2 = date2.getDate() + '-' + (date2.getMonth() + 1) + '-' + date2.getFullYear() ;
 
-    Book2.countDocuments({ $and: [ { "borrow_date": { $lte: today2 } }, { "borrow_date": { $gte: today } } ] }).then(result => {
+    Book2.countDocuments({ $and: [ { "borrow_date": { $lte: date2 } }, { "borrow_date": { $gte: date } } ] }).then(result => {
       issueData = result;
-      Book.countDocuments({ $and: [ { "borrow_date": { $lte: today2 } }, { "borrow_date": { $gte: today } } ] }).then(result => {
+      Book.countDocuments({ $and: [ { "borrow_date": { $lte: date2 } }, { "borrow_date": { $gte: date } } ] }).then(result => {
       issueData = issueData + result;
-      Book.countDocuments({ $and: [ { "receive_date": { $lte: today2 } }, { "receive_date": { $gte: today } } ] }).then(results => {
+      Book.countDocuments({ $and: [ { "receive_date": { $lte: date2 } }, { "receive_date": { $gte: date } } ] }).then(results => {
         res.status(200).json({message: "Found", issueData: issueData, receiveData: results});
       });
       });
@@ -62,16 +63,17 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
 
     router.get('/thisMonth', checkAuth,(req,res,next) => {
       let issueData = 0;
-      date = new Date();
+      date = new Date(Date.now());
+if(date.getDate() >1){
+  date = new Date(Date.now() - (date.getDate()*24*60*60*1000));
+}
 
-      today = 1 + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() ;
-      today2 = date.getDate()+ '-' + (date.getMonth() + 1) + '-' +  date.getFullYear() ;
 
-      Book2.countDocuments({   "borrow_date": { $gte: today } } ).then(result => {
+      Book2.countDocuments({ "borrow_date": {  $gte: date } } ).then(result => {
         issueData = result;
-        Book.countDocuments({   "borrow_date": { $gte: today }  }).then(result => {
+        Book.countDocuments( { "borrow_date": {  $gte: date }} ).then(result => {
         issueData = issueData + result;
-        Book.countDocuments({  "receive_date": { $gte: today }  }).then(results => {
+        Book.countDocuments( { "borrow_date": {  $gte: date }  }).then(results => {
 
           res.status(200).json({message: "Found", issueData: issueData, receiveData: results});
         });
@@ -101,17 +103,20 @@ router.get('/IssueDataToday', checkAuth,(req,res,next) => {
           });
           router.get('/LastYeatThisMonth', checkAuth,(req,res,next) => {
             let issueData = 0;
-            date = new Date();
+            date = new Date(Date.now() - (365*24*60*60*1000));
+
+              date2 = new Date(Date.now() - (date.getDate() *365*24*60*60*1000));
 
 
-            today = 1 + '-' + (date.getMonth() + 1) + '-' +  (date.getFullYear() - 1);
+
+
             today2 = date.getDate() + '-' + (date.getMonth() + 1) + '-' + (date.getFullYear() - 1) ;
 
-            Book2.countDocuments({ $and: [ { "borrow_date": { $lte: today } }, { "borrow_date": { $gte: today2 } } ] }).then(result => {
+            Book2.countDocuments({ $and: [ { "borrow_date": { $gte: date2 } }, { "borrow_date": { $lte: date } } ] }).then(result => {
               issueData = result;
-              Book.countDocuments({ $and: [ { "borrow_date": { $lte: today } }, { "borrow_date": { $gte: today2 } } ] }).then(result => {
+              Book.countDocuments({ $and: [ { "borrow_date": { $gte: date2 } }, { "borrow_date": { $lte: date } } ] }).then(result => {
               issueData = issueData + result;
-              Book.countDocuments({ $and: [ { "receive_date": { $lte: today } }, { "receive_date": { $gte: today2 } } ] }).then(results => {
+              Book.countDocuments({ $and: [ { "receive_date": { $gte: date2 } }, { "receive_date": { $lte: date } } ] }).then(results => {
                 res.status(200).json({message: "Found", issueData: issueData, receiveData: results});
               });
             });
@@ -198,7 +203,7 @@ router.post("", checkAuth, (req,res,next) => {
     cardNo: req.body.cardNo,
     borrower: req.body.borrower,
     borrow_date: req.body.borrow_date,
-    receive_date: req.body.receive_date,
+    receive_date: Date(Date.now()),
     fine: req.body.fine,
     Note:req.body.Note,
     borrower_dept: req.body.borrower_dept

@@ -40,7 +40,7 @@ onSubmit2(form2: NgForm) {
   const toRecBook: ReceiveReg = { ...this.gotbook , Note: form2.value.Note , receive_date: this.date, fine: form2.value.fine};
   this.app.UpdateRecReg(toRecBook)
   .subscribe(() => {
-    this.gotbook.borrow_date = '';
+    this.gotbook.borrow_date = undefined;
     this.gotbook.cardNo = '';
     this.gotbook.borrowed = false;
     this.gotbook.borrower = '';

@@ -21,7 +21,7 @@ num = 0;
 qty = 1;
 BookForm: NgForm;
   // tslint:disable-next-line: variable-name
-currentAccession_no: {_id: string, accession_no}[] = [];
+ currentAccession_no: {_id: string, accession_no: number}[] = [];
 constructor(private bar: Barcode, private app: All) { }
 setQty(s) {
   this.qty = s.value;
@@ -37,13 +37,20 @@ repeatAdd(form: NgForm) {
   // tslint:disable-next-line: prefer-const
   let form2: Books = form.value;
   let book: Books;
-  for (let i = 0; i < this.qty; i++) {
-    this.app.getAcccession().subscribe( result2 => {
-      this.currentAccession_no = result2.accession;
+
+  const curr = this.currentAccession_no[0];
+  const update: {_id: string , accession_no: number} = {_id: this.currentAccession_no[0]._id,
+     accession_no: +this.currentAccession_no[0].accession_no + +this.qty};
+
+
+  this.app.updateAcccession(update).subscribe(result => {
+
+
+    for (let i = 0; i < this.qty; i++) {
 
       book = {
         _id: undefined,
-        accession_no: this.currentAccession_no[0].accession_no + i,
+        accession_no: +curr.accession_no + +i,
         author: form2.author,
         cost: form2.cost,
         edition: form2.edition,
@@ -60,7 +67,7 @@ repeatAdd(form: NgForm) {
         borrowed: false,
         borrower: '',
         cardNo: '',
-        borrow_date: '',
+        borrow_date: undefined,
         borrower_email: '',
         borrower_phone: undefined,
         borrower_dept: '',
@@ -69,8 +76,9 @@ repeatAdd(form: NgForm) {
 
       this.onSubmit(book);
       this.num++;
-    });
   }
+
+});
 
 
 }
@@ -89,7 +97,7 @@ onSubmit(form: Books) {
   document.getElementById('error_msg').style.display = 'block';
   this.isLoading = false;
       } else {
-        this.app.addBooks(book, this.currentAccession_no);
+        this.app.addBooks(book);
         this.barcode(form.accession_no);
       }
     });
@@ -140,9 +148,12 @@ ngOnInit() {
   .subscribe((result) => {
 
     if (this.qty <= this.num) {
-      this.isLoading = false;
+      this.app.getAcccession().subscribe( result2 => {
+        this.currentAccession_no = result2.accession;
+        this.isLoading = false;
+        document.getElementById('success_msg').style.display = 'block';
+          });
 
-      document.getElementById('success_msg').style.display = 'block';
     }
 
   });

@@ -17,7 +17,7 @@ const recbookSchema = mongoose.Schema({
   year: { type:Number },
   borrower: { type:String},
   cardNo: { type:String },
-  borrow_date: { type:String},
+  borrow_date: { type:Date},
   receive_date: { type:String},
   fine: { type:String},
   Note: { type:String},

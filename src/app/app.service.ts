@@ -70,17 +70,15 @@ return this.http.post<{ message: string}>(URL + 'email' , emailContent);
 }
 
 
-addBooks(book: Books, accession: {_id: string, accession_no: number}[]) {
+addBooks(book: Books) {
 
   this.http.post<{ message: string}>(URL + 'books', book)
   .subscribe(( responseData) => {
 
     this.book.push(book);
-    accession[0].accession_no = book.accession_no + 1;
-    this.updateAcccession(accession)
-    .subscribe(result => {
-      this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
-    });
+
+    this.booksUpdated.next({BOOKS: [...this.book], count: this.bookcount});
+
   });
 
 }
@@ -443,8 +441,8 @@ getAcccession() {
  return this.http.get<{message: string, accession: any[]}>(URL + 'books/getAccession/' );
 
 }
-updateAcccession(accession: {_id: string, accession_no: number}[]) {
- return  this.http.post<{message: string}>(URL + 'books/UpdateAccession' , accession[0]);
+updateAcccession(accession: {_id: string, accession_no: number}) {
+ return  this.http.post<{message: string}>(URL + 'books/UpdateAccession' , accession);
 }
 }
 

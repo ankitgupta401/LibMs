@@ -18,7 +18,7 @@ const bookSchema = mongoose.Schema({
   borrowed: { type:Boolean, required: true},
   borrower: { type:String},
   cardNo: { type:String},
-  borrow_date: { type:String},
+  borrow_date: { type:Date},
   borrower_email: {type:String},
   borrower_phone: {type: Number},
   borrower_dept: {type: String},

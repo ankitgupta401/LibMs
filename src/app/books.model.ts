@@ -17,7 +17,7 @@ year: number;
 borrowed: boolean;
 borrower: string;
 cardNo: string;
-borrow_date: string;
+borrow_date: Date;
 borrower_email: string;
 borrower_phone: number;
 borrower_dept: string;

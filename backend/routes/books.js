@@ -14,7 +14,7 @@ res.status(200).json({
   });
 
   router.post("/updateAccession",checkAuth,(req,res,next) => {
-
+console.log(req.body);
     const acc = new accession({
      _id: req.body._id,
      accession_no: req.body.accession_no
@@ -486,7 +486,7 @@ router.post("/updateEmail",checkAuth,(req,res,next) => {
   borrowed:false,
   cardNo: null,
   borrower: "",
-  borrow_date:"",
+  borrow_date: null,
   borrower_email: "",
   borrower_phone: null,
   borrower_dept: '',
@@ -581,7 +581,7 @@ const book = new Book({
   borrowed: req.body.borrowed,
   borrower: req.body.borrower,
   cardNo: req.body.cardNo,
-  borrow_date: req.body.borrow_date,
+  borrow_date: Date(Date.now()),
   borrower_email: req.body.borrower_email,
   borrower_phone: req.body.borrower_phone,
   borrower_dept: req.body.borrower_dept,
@@ -618,7 +618,7 @@ router.put("/receiveOne/:id", checkAuth, (req, res, next) => {
     borrowed: req.body.borrowed,
     borrower: req.body.borrower,
     cardNo: req.body.cardNo,
-    borrow_date: req.body.borrow_date,
+    borrow_date: null,
     borrower_dept: req.body.borrower_dept,
     borrower_email: '',
     borrower_phone: null,
