@@ -36,15 +36,15 @@ Admin.findOne()
 let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-      user:'sgplib123@gmail.com', // TODO: your gmail account
-      pass: 'sgplib@2k19' // TODO: your gmail password
+      user:'siligurigovtpolytechnic@gmail.com', // TODO: your gmail account
+      pass: 'sgp@2k19' // TODO: your gmail password
   }
 });
 
 
 // Step 3
 let mailOptions = {
-  from: 'sgplib123@gmail.com', // TODO: email sender
+  from: 'siligurigovtpolytechnic@gmail.com', // TODO: email sender
   to: email, // TODO: email receiver
   subject: 'Password Changed Successfully',
   text: content,
