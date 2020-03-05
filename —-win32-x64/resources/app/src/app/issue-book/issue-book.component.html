@@ -1,0 +1,139 @@
+
+<div class="form">
+  <h4 id="warning_msg" style="display: none; color: rgb(252, 96, 5); padding-left: 23%; padding-bottom: 0%; "></h4>
+  <h5 id="success_msg" style="display: none; color: rgb(25, 247, 62); padding-left: 28%; padding-bottom: -4% ; top: -3pc;position: absolute;"></h5>
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm" *ngIf="!isLoading">
+
+    <!--div class="heading"><span>NEW BOOK ENTRY</span></div-->
+    <!-- First input area -->
+    <div class="row">
+      <div class="offset-1 col-2">
+
+      </div>
+      <div class="col-5">
+      <div class="input">
+
+        <input type="text" class="form-control" placeholder="Card no" ngModel name="cardNo" required (blur)="onSubmit(form)">
+      </div>
+      </div>
+      <div class="col-4">
+
+      <div class="buttons">
+        <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button> &nbsp;
+        <button type="reset" class="btn btn-danger" (click)="resetform(form)">Clear</button>
+      </div>
+    </div>
+    </div>
+    <br>
+
+      <!-- info area -->
+      <div class="row" *ngIf="!isLoading">
+        <div class="col">
+          <div class="input1">
+            <label class="text2">Name: &nbsp; {{ Libcard?.fname | uppercase}} &nbsp; {{ Libcard?.lname | uppercase}}</label>
+          </div>
+        </div>
+
+
+
+        <div class="col">
+          <div class="input2">
+            <label class="text2">Dept: &nbsp; {{ Libcard?.dept | uppercase}}</label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row" *ngIf="!isLoading">
+        <div class="col">
+          <div class="input3">
+            <label class="text2">Card no:&nbsp;{{ Libcard?.cardNo }}</label>
+          </div>
+        </div>
+
+
+
+
+        <div class="col">
+          <div class="input4">
+            <label class="text2">Year: &nbsp; {{ Libcard?.year}}</label>
+          </div>
+        </div>
+      </div>
+  </form>
+
+  <!-- Second Form Area -->
+  <form (ngSubmit)="onSubmits(forms)" #forms="ngForm" *ngIf="!isLoading">
+
+    <div class="row">
+
+          <div class="offset-3 col-5">
+        <input type="number" class="form-control" placeholder="Accession no" ngModel name="accession_no"
+          required (blur)="onSubmits(forms)">
+          </div>
+
+
+      <div class="col-4">
+        <button type="submit" class="btn btn-primary" [disabled]="!forms.valid" >Add</button>&nbsp;
+        <button type="button" class="btn btn-success"  (click)="onIssue(forms)" >Issue</button>&nbsp;
+        <button type="reset" class="btn btn-danger" (click)="resetform2(forms)">Clear</button>
+</div>
+
+    </div>
+
+
+
+  </form>
+
+
+  <br>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <!-- Table Area -->
+  <div class="adjust" *ngIf="!isLoading">
+    <div class="tables" style="height:18pc; overflow-x: visible; overflow-y: scroll;">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col"># </th>
+            <th scope="col"> Accession No</th>
+            <th scope="col">Isbn </th>
+            <th scope="col">Title </th>
+            <th scope="col">Author </th>
+          <!----<th scope="col"> Sub-Title </th>-->
+            <th scope="col">Borrowed By </th>
+            <th scope="col">Issued To </th>
+            <th scope="col">Publisher </th>
+            <th scope="col">Borrowed </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr  *ngFor="let book of Books; let i=index " >
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ book?.accession_no }}</td>
+            <td>{{ book?.isbn }}</td>
+            <td>{{ book?.title }}</td>
+            <td>{{ book?.author }}</td>
+            <td>{{ book?.borrower | uppercase}}</td>
+            <td>{{ book?.cardNo }}</td>
+            <td>{{ book?.publisher }}</td>
+            <td>{{ book?.borrowed }}</td>
+          </tr>
+          <tr  *ngFor="let book2 of Books2; let i=index " >
+            <th scope="row">{{ i + 1 + lengthOfBooks}}</th>
+            <td>{{ book2?.accession_no }}</td>
+            <td>{{ book2?.isbn }}</td>
+            <td>{{ book2?.title }}</td>
+            <td>{{ book2?.author }}</td>
+            <td>{{ book2?.borrower | uppercase}}</td>
+            <td>{{ book2?.cardNo }}</td>
+            <td>{{ book2?.publisher }}</td>
+            <td>{{ book2?.borrowed }}</td>
+          </tr>
+        </tbody>
+
+
+      </table>
+    </div>
+  </div>
+</div>

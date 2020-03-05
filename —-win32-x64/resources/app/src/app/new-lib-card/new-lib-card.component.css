@@ -1,0 +1,71 @@
+mat-spinner {
+  margin: 20%;
+  margin-left: 45%;
+}
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)}
+  to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+  from {transform: scale(0)}
+  to {transform: scale(1)}
+}
+.hide {
+  display: none;
+}
+.show {
+  display: inline-block;
+}
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+.btn{
+  margin-top: 25px;
+  margin-bottom: 0px;
+}
+
+#blah{
+  height: 100px;
+}
+.form-control{
+  padding: 0px 20px;
+  height: 35px;
+}
+input.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+textarea.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+ngx-barcode {
+  width: 5%;
+}

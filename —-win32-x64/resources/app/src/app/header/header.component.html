@@ -1,0 +1,24 @@
+<nav class="navbar navbar-default">
+  <div class="col-md-2 col-lg-1">
+      <!-- <button class="btn btn" onclick="toDo()">Toggle</button> -->
+  </div>
+    <h3 class="col-lg-8 col-md-6 col-sm-7 col-xs-8 ">S.G.P Library Management</h3>
+    <form class="form-inline ">
+      <ul style="list-style-type:none;">
+      <li ngbDropdown class="nav-item dropdown " *ngIf="isAuthenticated">
+        <a ngbDropdownToggle  class="  adjust-m" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+         <img src="assets/icons/admin.png">
+        </a>
+        <div ngbDropdownMenu class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink" style="left: -87%;" >
+
+          <a class="dropdown-item" [routerLink]="['/manage']"> My Account</a>
+
+          <a class="dropdown-item" (click)="onLogout()">Logout</a>
+             </div>
+          </li>
+        </ul>
+
+
+    </form>
+</nav>
+

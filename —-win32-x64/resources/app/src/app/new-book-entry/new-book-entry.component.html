@@ -1,0 +1,113 @@
+<h5 id="error_msg" style="display: none; color: red; padding-left: 25%; padding-bottom: 1%; position:absolute; top: -2.6pc;">A book with the same "Accession No" already exists!!</h5>
+<h3 id="success_msg" style="display: none; color: rgb(25, 247, 62); padding-left: 35%; padding-bottom: 1%; position:absolute; top: -2.6pc;">Book Saved!</h3>
+<div>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+<form (ngSubmit)="repeatAdd(form)" #form="ngForm" *ngIf="!isLoading" >
+
+  <div class="form">
+
+
+    <div class="row">
+        <div class="col-6">
+            <label for="text"><b class="redMark">*</b> Isbn:</label>
+            <input type="text" class="form-control"  [ngModel]= "isbn" name="isbn" required (blur)="searchbook(form)">
+          </div>
+          <div class="col-6">
+              <label for="text" class="title"><b class="redMark">*</b> Title:</label>
+              <input type="text" class="form-control" [ngModel]= "book?.title" name="title" required>
+            </div>
+
+    </div>
+
+
+    <div class="row">
+      <div class="col-6">
+        <label for="text"><b class="redMark">*</b> Pages:</label>
+        <input type="number" class="form-control" [ngModel]= "book?.pages" name="pages" required>
+      </div>
+      <div class="col-6">
+        <label for="pwd">Subject:</label>
+        <input type="text" class="form-control" [ngModel]= "book?.subject" name="subject">
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-6">
+        <label for="text">Topics:</label>
+        <input type="text" class="form-control" [ngModel]= "book?.topics" name="topics">
+      </div>
+      <div class="col-6">
+        <label for="text"><b class="redMark">*</b> Accession No:</label>
+        <input type="number" class="form-control" [ngModel]= "currentAccession_no[0]?.accession_no" name="accession_no" disabled required>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-3">
+        <label for="text"><b class="redMark">*</b> Cost:</label>
+        <input type="number" class="form-control" [ngModel]= "book?.cost" name="cost" required>
+      </div>
+      <div class="col-3">
+        <label for="text"><b class="redMark">*</b> Qty</label>
+        <input type="number" class="form-control" (change)='setQty(s)'value="1" style="width: 57%;;" name="qty" #s required>
+      </div>
+      <div class="col-6">
+        <label for="text"><b class="redMark">*</b> Publisher:</label>
+        <input type="text" class="form-control" [ngModel]= "book?.publisher" name="publisher" required>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-6">
+        <label for="text">Location:</label>
+        <input type="text" class="form-control" [ngModel]= "book?.source" name="source">
+      </div>
+      <div class="col-6 ">
+        <label for="text">Remark:</label>
+        <input type="text" class="form-control" [ngModel]= "book?.remark" name="remark">
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-6">
+        <label for="text">Year:</label>
+        <input type="number" class="form-control" [ngModel]= "book?.year" name="year">
+      </div>
+      <div class="col-6">
+          <label for="text"><b class="redMark">*</b> Author:</label>
+          <input type="text" class="form-control" [ngModel]= "book?.author" name="author" required>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-6">
+        <label for="text">Edition:</label>
+        <input type="text" class="form-control" [ngModel]= "book?.edition" name="edition">
+      </div>
+      <div class="col-6">
+        <label for="text">Vol:</label>
+        <input type="text" class="form-control" [ngModel]= "book?.volume" name="volume">
+      </div>
+    </div>
+
+
+<br>
+    <div class="row">
+      <div class="button col-6 offset-4">
+
+        <button type="submit" class=" btn btn-success cen2 " [disabled]="!form.valid" >SAVE</button>
+        &nbsp;
+        <button type="button" class="btn btn-primary" routerLink="/barcodes" > Print</button>
+        <button type="reset" class="btn btn-warning cen" (click)="onClear(form)">CLEAR</button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>

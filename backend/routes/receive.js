@@ -104,19 +104,21 @@ if(date.getDate() >1){
           router.get('/LastYeatThisMonth', checkAuth,(req,res,next) => {
             let issueData = 0;
             date = new Date(Date.now() - (365*24*60*60*1000));
+if(date.getDate() > 1){
+  const day = 365 + (+date.getDate()-1);
+  console.log(day);
+  date2 = new Date(Date.now() - (day*24*60*60*1000));
+} else{
+  date2 = date;
+}
 
-              date2 = new Date(Date.now() - (date.getDate() *365*24*60*60*1000));
 
-
-
-
-            today2 = date.getDate() + '-' + (date.getMonth() + 1) + '-' + (date.getFullYear() - 1) ;
-
-            Book2.countDocuments({ $and: [ { "borrow_date": { $gte: date2 } }, { "borrow_date": { $lte: date } } ] }).then(result => {
+            Book2.countDocuments({ $and: [ { "borrow_date": { $lte: date } }, { "borrow_date": { $gte: date2 } } ] }).then(result => {
               issueData = result;
-              Book.countDocuments({ $and: [ { "borrow_date": { $gte: date2 } }, { "borrow_date": { $lte: date } } ] }).then(result => {
+              Book.countDocuments({ $and: [ { "borrow_date": { $lte: date } }, { "borrow_date": { $gte: date2 } } ] }).then(result => {
               issueData = issueData + result;
-              Book.countDocuments({ $and: [ { "receive_date": { $gte: date2 } }, { "receive_date": { $lte: date } } ] }).then(results => {
+              Book.countDocuments({ $and: [ { "receive_date": { $lte: date } }, { "receive_date": { $gte: date2 } } ] }).then(results => {
+console.log(results);
                 res.status(200).json({message: "Found", issueData: issueData, receiveData: results});
               });
             });
@@ -203,7 +205,7 @@ router.post("", checkAuth, (req,res,next) => {
     cardNo: req.body.cardNo,
     borrower: req.body.borrower,
     borrow_date: req.body.borrow_date,
-    receive_date: Date(Date.now()),
+    receive_date: Date(),
     fine: req.body.fine,
     Note:req.body.Note,
     borrower_dept: req.body.borrower_dept

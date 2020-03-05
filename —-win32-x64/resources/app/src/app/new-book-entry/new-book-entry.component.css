@@ -1,0 +1,47 @@
+mat-spinner {
+  margin: 20%;
+  margin-left: 45%;
+}
+input.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+input{
+  height:30%;
+  width: 80%;
+}
+/*Code for change input style*/
+
+.form-control{
+  padding: 15px 20px;
+}
+
+/*Code to change the text of the label*/
+label{
+  font-size: 20px;
+}
+.cen{
+  width:100px;
+  margin-left: 3%;
+}
+.cen2{
+    width:100px;
+}
+
+.table2{
+  margin-bottom:0rem;
+}
+
+th{
+  font-size: 93.5%;
+
+}
+td{
+  font-size: 15px;
+}
+.redMark{
+ color: red;
+}
+
+.row{
+  margin-bottom: -24px;
+}

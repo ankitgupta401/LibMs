@@ -1,0 +1,34 @@
+mat-form-field {
+  width: 100%;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+form {
+
+ padding-left: 20%;
+ padding-right: 20%;
+}
+
+.bg-image {
+  /* Add the blur effect */
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+position: fixed;
+  /* Full height */
+left:17%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+a {
+  cursor: pointer;
+}
+mat-spinner {
+  margin: 20%;
+  margin-left: 45%;
+}
+

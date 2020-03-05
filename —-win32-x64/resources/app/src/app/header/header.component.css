@@ -1,0 +1,60 @@
+.adjust{
+  background-color: #5d6d73!important;
+padding:none;
+}
+h3{
+  color:white;
+  padding: 5px;
+
+}
+hr{
+  padding: 0%;
+  margin: 0%;
+}
+div a{
+  padding-top:10% ;
+  color: black;
+  background-color:white;
+}
+a{
+  padding-top:10% ;
+  padding-right: 3rem;
+  color: white;
+
+}
+nav{
+  padding: 0%;
+  background-color: lightgray;
+}
+.navbar{
+  background-color: lightgrey;
+}
+.adjust-m{
+  display: block;
+
+
+}
+.adjusts {
+padding-top: 1% ;
+}
+
+img{
+  width:28px;
+  background: transparent !important;
+}
+#navbarDropdownMenuLink{
+  cursor: pointer;
+}
+.dropdown-menu a{
+  background: white;
+}
+.dropdown-menu a:hover {
+  cursor: pointer;
+  background: #5d6d73;
+
+  }
+  .dropdown-menu {
+padding: 0;
+    background: white;
+  }
+

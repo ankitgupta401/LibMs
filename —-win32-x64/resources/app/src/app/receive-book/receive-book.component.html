@@ -1,0 +1,190 @@
+    <div class="form">
+
+      <h5 id="success_msg" style="display: none; color: rgb(25, 247, 62); padding-left: 28%; padding-bottom: -4% ; top: -3pc;position: absolute;">Book Received!</h5>
+        <div class="searchbox">
+            <br>
+            <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+                <div class="form-row">
+                    &nbsp;
+                    <div  class="dropdown col-1">
+
+                        <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" (change)="deptSort(form)">
+                          <option value="">ALL</option>
+                          <option value="C.S.T">CST</option>
+                          <option value="CIVIL">CIVIL</option>
+                          <option value="E.I.E">EIE</option>
+                          <option value="E.T.C.E">ETCE</option>
+                          <option value="E.E">EE</option>
+                          <option value="ARCH">ARCHITECTURE</option>
+                          <option value="PHARM">PHARMACY</option>
+                        </select>
+
+                          </div>
+                          &nbsp;
+                    <input type="text" class="form-control col-1 col-md-3" placeholder="Type Acession no" ngModel name="accession_no"> <a>&nbsp;  &nbsp;</a>
+
+
+                        <input type="text" class="form-control col-1 col-md-3" placeholder="Card No" ngModel name="cardNo"><a>&nbsp; &nbsp;</a>
+                              &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button> <a>&nbsp; &nbsp;</a>
+                              <button type="reset" class="btn btn-danger" (click)="onClear(form)">Clear</button>
+                            </div>
+
+            </form>
+            <br>
+          </div>
+    <div class="row">
+      <div class="col">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+        <!-- Working Area Of Table -->
+        <div class="table1 " style="height:24pc; overflow-y: scroll; overflow-x: visible;" *ngIf="!isLoading">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Accession No</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Card No</th>
+                <th scope="col">Name</th>
+                <th scope="col"> Dept</th>
+                <th scope="col"> Issued Date</th>
+
+                <th scope="col">Action</th>
+
+              </tr>
+            </thead>
+            <tbody >
+              <tr *ngFor="let book of books; let i=index">
+                <th scope="row">{{ i + 1 + number }}</th>
+                <td>{{ book?.accession_no }}</td>
+                <td>{{ book?.title | uppercase}}</td>
+                <td>{{  book?.cardNo }}</td>
+                <td>{{ book?.borrower | uppercase }}</td>
+                <td>{{  book?.borrower_dept }}</td>
+                <td>{{ book?.borrow_date | date:'dd-MM-yyyy '}}</td>
+
+                <td>
+
+                  <button onclick="document.getElementById('id01').style.display='block'" class="btn " (click)="getbook(book?._id)"><img
+                      src="assets/icons/tick.png"></button>
+
+                  <div id="id01" class="modal">
+
+                    <form class="modal-content animate" (ngSubmit)="onSubmit2(form2)" #form2="ngForm">
+                      <div class="imgcontainer">
+                        <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                          title="Close Modal" style="cursor: pointer;">&times;</span>
+
+                      </div>
+
+                      <div class="container">
+                        <br>
+                        <h3 style="padding-left: 13%; ">Return Book Management</h3>
+                        <div class="modal-body" style="padding-top:4%;padding-bottom: 4%; padding-left: 28%;">
+                          <div class="row">
+                            <div class="holder_sub_book_lst" >
+                              <table class="table table-bordered tbl_book_lst"  >
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <input type="text" placeholder="Select return date"
+                                        [ngModel]="date" name="return_date" class="form-control fix_radius">
+                                    </td>
+                                    <td style="padding: 13px;font-size: large;">
+                                      Rs. </td>
+                                    <td>
+                                      <input type="number"  placeholder="Fine if Any.."  [ngModel]="'0.00'" name="fine"
+                                        class="form-control fix_radius">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="3">
+                                      <textarea rows="2"  ngModel name="Note"
+                                        class="form-control fix_radius" placeholder="Note if any" ></textarea>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="3">
+                                      <div style="float:right;">
+                                        <button class="btn btn-primary fix_radius" type="submit">Return
+                                          Book
+                                        </button>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </form>
+                  </div>
+
+                  <button onclick="document.getElementById('id02').style.display='block'" class="btn  " (click)="getbook(book?._id)"><img
+                      src="assets/icons/mail.png"></button>
+
+                  <div id="id02" class="modal">
+
+                    <form class="modal-content animate" (ngSubmit)="SendEmail(form3)"  #form3="ngForm">
+                      <div class="imgcontainer">
+                        <span onclick="document.getElementById('id02').style.display='none'; document.getElementById('success_msg2').style.display = 'none';" class="close"
+                          title="Close Modal">&times;</span>
+
+                      </div>
+
+                      <div class="container">
+                        <br>
+                        <h3 style="padding-left: 3%;">Notify The User</h3>
+                        <div class="modal-body" style="padding-top: 4%; padding-left: 20%; padding-bottom: 7%;">
+                          <br><h4 id="success_msg2" style="display: none; color: rgb(25, 247, 62); padding-left: 15%;">Email Sent Successfully</h4><br>
+                          <div class="row">
+                            <div class="holder_sub_book_lst">
+                              <table class="table table-bordered tbl_book_lst" style="width:40pc;">
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <input type="text" placeholder="Email Address"
+                                        [ngModel]="email" class="form-control fix_radius" name="email">
+                                    </td>
+
+
+                                  </tr>
+                                  <tr>
+                                    <td colspan="3">
+                                      <textarea rows="2"  ngModel ="'Dear Student, We have come to see that the book with the title {{gotbook?.title}} was issued by you on {{ gotbook?.borrow_date | date:'dd-MM-yyyy '}} . Kindly Return the Book as soon as possible to avoid any fines.'" name="content"
+                                        class="form-control fix_radius" placeholder="Notice" ></textarea>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="3">
+                                      <div style="float:right;">
+                                        <button class="btn btn-primary fix_radius" ng-click="btn_returnBook()">Send
+                                          Email
+                                        </button>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChange($event,form)"></mat-paginator>
+    </div>
+
+

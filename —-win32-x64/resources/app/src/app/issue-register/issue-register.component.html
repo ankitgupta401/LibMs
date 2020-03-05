@@ -1,0 +1,71 @@
+<div class="form">
+    <div class="searchbox">
+        <br>
+        <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+      <div class="form-row">
+          &nbsp;
+          <div  class="dropdown col-1">
+
+            <select class="form-control" id="exampleFormControlSelect1" [ngModel]="''" name="dept" (change)="deptSort(form)">
+              <option value="">ALL</option>
+              <option value="C.S.T">CST</option>
+              <option value="CVIL">CIVIL</option>
+              <option value="E.I.E">EIE</option>
+              <option value="E.T.C.E">ETCE</option>
+              <option value="E.E">EE</option>
+              <option value="ARCH">ARCHITECTURE</option>
+              <option value="PHARM">PHARMACY</option>
+            </select>
+
+
+                </div>
+                &nbsp;
+          <input type="text" class="form-control" placeholder="Type Acession no" ngModel name="accession_no"> <a>&nbsp;  &nbsp;</a>
+
+
+              <input type="text" class="form-control" placeholder="Card No" ngModel name="card_no"><a>&nbsp; &nbsp;</a>
+
+
+                    &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button> <a>&nbsp;  &nbsp;</a>
+                    <button type="reset" class="btn btn-danger" (click)="onClear(form)" >Clear</button>
+
+                  </div>
+                </form>
+      </div>
+<br>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+ <div class="tables" style="height:24pc; overflow-y: scroll; overflow-x:visible ;" *ngIf="!isLoading">
+      <table class="table">
+            <thead class="thead-dark">
+              <tr >
+                <th scope="col">#</th>
+                <th scope="col">Accession no</th>
+                <th scope="col">Title</th>
+                <th scope="col">Card No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Issued date</th>
+
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let book of books; let i= index;">
+                <th scope="row"> {{ i + 1 + number}}</th>
+                <td>{{ book?.accession_no }}</td>
+                <td>{{ book?.title }}</td>
+                <td> {{ book?.cardNo }} </td>
+                <td>{{ book?.borrower }}</td>
+                <td>{{ book?.borrow_date | date:'dd-MM-yyyy '}}</td>
+
+
+
+              </tr>
+
+
+           </tbody>
+          </table>
+    </div>
+    <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChange($event,form)"></mat-paginator>
+</div>
+

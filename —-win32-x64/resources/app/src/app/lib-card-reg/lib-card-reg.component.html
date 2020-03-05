@@ -1,0 +1,397 @@
+
+<div class="form" >
+  <div class="searchbox">
+
+
+        <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+
+
+            &nbsp;&nbsp;
+            <div class="row">
+            <div class="col-1">
+                <select class="form-control"  [ngModel]="''" name="dept" (change)="deptSort(form)">
+                    <option value="">ALL</option>
+                    <option value="C.S.T">CST</option>
+                    <option value="CVIL">CIVIL</option>
+                    <option value="E.I.E">EIE</option>
+                    <option value="E.T.C.E">ETCE</option>
+                    <option value="E.E">EE</option>
+                    <option value="ARCH">ARCHITECTURE</option>
+                    <option value="PHARM">PHARMACY</option>
+                  </select>
+
+            </div>
+              <div class="col">
+                   <input type="text" class="form-control" placeholder="Email" name="email" ngModel email > </div>
+              <div class="col">
+                   <input type="text" class="form-control" placeholder="Card No" name="cardNo" ngModel ></div>
+                <div class="col">
+                      <input type="text" class="form-control" placeholder="Phone No" name="phone_no" ngModel ></div>
+                      <div class="col">
+                       <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button> &nbsp;
+                          <button type="clear" class="btn btn-danger" (click)="onClear(form)" >CLEAR</button></div>
+                      </div>
+<br>
+            </form>
+            </div>
+            <mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="tables"   style="height:24.7pc; overflow-x: visible; overflow-y: scroll; "  *ngIf="!isLoading">
+
+<table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email Id</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Address</th>
+          <th scope="col">Course</th>
+          <th scope="col">Year</th>
+          <th scope="col">Action</th>
+
+
+
+        </tr>
+      </thead>
+      <tbody  *ngFor="let card of LibCards;let i=index">
+
+        <tr >
+          <th scope="row">{{ i + 1 + number }}</th>
+          <td>{{ card.cardNo }}</td>
+          <td>{{ card.fname | uppercase }} &nbsp; {{ card.lname | uppercase }}</td>
+          <td [ngClass]="{'ellipsis': show2}" (click) = "toggle2()">{{ card.email | uppercase }}</td>
+          <td>{{ card.phone_no }}</td>
+          <td [ngClass]="{'ellipsis': show}" (click) = "toggle()">{{ card.address | uppercase }}</td>
+          <td>{{ card.dept  }}</td>
+          <td>{{ card.year | uppercase }}</td>
+
+          <td>
+              <button onclick="document.getElementById('id01').style.display='block'" class="btn btn2" (click)="getCardedit(card._id)"><img src="assets/icons/pen.png"></button>
+
+                    <div id="id01" class="modal">
+
+                      <form class="modal-content animate" action="/action_page.php">
+                        <div class="imgcontainer">
+                          <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+                        </div>
+
+                        <div class="container">
+                    <h3>Edit Details</h3>
+                    <div class="modal-body" style="padding-top: 4%; padding-left: 5%;">
+
+                                            <div>
+<!-- Add the content here   -->
+<form (ngSubmit)="onSubmitForm(form)" #form="ngForm" >
+
+<div class="row">
+    <div class="offset-1 col-5">
+        <label for="exampleInputPassword1">First Name:</label>
+        <input type="text" class="form-control"  placeholder="First Name" [ngModel]="gotcard?.fname" name="fname" required>
+     </div>
+     <div class="col-5">
+        <label for="exampleInputPassword1">Last Name:</label>
+        <input type="text" class="form-control"  placeholder="Last Name" [ngModel]="gotcard?.lname" name="lname" required>
+     </div>
+  </div>
+  <div class="row">
+      <div class="offset-1 col-6">
+       <label for="exampleInputPassword1">Email:</label>
+       <input type="text" class="form-control"  placeholder="Email" [ngModel]="gotcard?.email" name="email" email required >
+    </div>
+      <div class="col-4">
+       <label for="exampleInputPassword1">Roll:</label>
+       <input type="number" class="form-control"  placeholder="roll No"   [ngModel]="gotcard?.Roll" name="Roll" number required >
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="offset-1 col-2">
+        <label for="exampleFormControlSelect1">Course:</label>
+        <select class="form-control"  [ngModel]="gotcard?.dept" name="dept" required>
+          <option value="C.S.T">CST</option>
+          <option value="CVIL">CIVIL</option>
+          <option value="E.I.E">EIE</option>
+          <option value="E.T.C.E">ETCE</option>
+          <option value="E.E">EE</option>
+          <option value="ARCH">ARCHITECTURE</option>
+          <option value="PHARM">PHARMACY</option>
+        </select>
+      </div>
+
+
+
+         <div class="col-2">
+         <label for="exampleFormControlSelect1">Year:</label>
+         <select class="form-control" [ngModel]="gotcard?.year" name="year" >
+         <option value="1st">1st year</option>
+         <option value="2nd">2nd year</option>
+         <option value="3rd">3rd year</option>
+         </select>
+         </div>
+
+         <div class="col-2">
+             <label for="exampleFormControlSelect1">Semester:</label>
+             <select class="form-control"    [ngModel]="gotcard?.sem" name="sem" >
+              <option value="1st">1st sem</option>
+              <option value="2nd">2nd sem</option>
+              <option value="3rd">3rd sem</option>
+              <option value="4th">4th sem</option>
+              <option value="5th">5th sem</option>
+              <option value="6th">6th sem</option>
+             </select>
+         </div>
+
+
+         <div class="col-4">
+         <label for="exampleInputPassword1">Phone:</label>
+         <input type="text" class="form-control"  placeholder="Phone" [ngModel]="gotcard?.phone_no" name="phone_no" maxlength="10" required>
+         </div>
+      </div>
+
+      <div class="row">
+          <div class="offset-1 col-10">
+        <label for="exampleFormControlTextarea1">Address:</label>
+        <textarea class="form-control" rows="3" [ngModel]="gotcard?.address" name="address" required></textarea>
+        </div>
+        </div>
+
+
+      <div class="row">
+        <div class="offset-1 col-4">
+      <label for="exampleInputPassword1">City:</label>
+      <input type="text" class="form-control"  placeholder="City" [ngModel]="gotcard?.city" name="city" required>
+      </div>
+
+      <div class="col-3">
+      <label for="exampleFormControlSelect1">State:</label>
+      <select class="form-control"  [ngModel]="gotcard?.state" name="state" required>
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+        <option value="Assam">Assam</option>
+        <option value=" Bihar"> Bihar</option>
+        <option value="Chhattisgarh">Chhattisgarh</option>
+        <option value="Goa">Goa</option>
+        <option value="Gujarat">Gujarat</option>
+        <option value="Haryana">Haryana</option>
+        <option value="Himachal Pradesh">Himachal Pradesh</option>
+        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+        <option value="Jharkhand"> Jharkhand</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Kerala">Kerala</option>
+        <option value="Madya Pradesh">Madya Pradesh</option>
+        <option value="Maharashtra">Maharashtra</option>
+        <option value="Manipur">Manipur</option>
+        <option value="Meghalaya">Meghalaya</option>
+        <option value="Mizoram">Mizoram</option>
+        <option value="Nagaland">Nagaland</option>
+        <option value="Orissa">Orissa</option>
+        <option value="Punjab">Punjab</option>
+        <option value="Rajasthan">Rajasthan</option>
+        <option value="Sikkim">Sikkim</option>
+        <option value="Tamil Nadu">Tamil Nadu</option>
+        <option value="Telagana">Telagana</option>
+        <option value="Tripura">Tripura</option>
+        <option value="Uttaranchal">Uttaranchal</option>
+        <option value="Uttar Pradesh">Uttar Pradesh</option>
+        <option value="West Bengal">West Bengal</option>
+        </select>
+      </div>
+
+      <div class="col-3">
+      <label for="exampleInputPassword1">Zip:</label>
+      <input type="number" class="form-control"  placeholder="Zip" name="zip" [ngModel]="gotcard?.zip" required>
+      </div>
+      </div>
+      <br>
+      <br>
+      <div class="row">
+          <div class="offset-4 col">
+            <button type="submit" class="btn btn-success" [disabled]="!form.valid"  >SAVE</button>&nbsp;
+            <button type="button" class="btn btn-warning" onclick="document.getElementById('id01').style.display='none'">Cancel</button>
+           </div>
+        </div>
+      </form>
+
+                                                    </div>
+
+                                            </div>
+                                          </div>
+
+
+
+
+                      </form>
+                    </div>
+
+
+              <button onclick="document.getElementById('id02').style.display='block'" class="btn btn2 " (click)="onPrint(card._id)" ><img src="assets/icons/print.png"></button>
+
+                    <div id="id02" class="modal">
+
+                      <form class="modal-content animate" action="/action_page.php">
+                        <div class="imgcontainer">
+                          <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+                        </div>
+
+                        <div class="container">
+                    <h3>Print Library Card</h3>
+                    <div class="modal-body" >
+                        <div class="modal-body" >
+
+                            <div class="row">
+                              <div style="padding-left: 14px;">
+                                <div class="panel panel-default" style="font-size: 12px;" id="print_Container">
+                                  <table id="p_tbl1" class="" style="width: 49%;float: left;table-layout: fixed;border: 1px solid black;height: 330px;border-collapse:initial;">
+                                    <tbody>
+                                    <tr>
+                                      <td id="p_img_td" rowspan="8" style="width: 186px;border-right: 1px solid lightgrey;">
+                                        <img  class="img-rounded" alt="User Pic" style="width: 172px;height: 156px;" [src]="image">
+                                        <ngx-barcode [bc-width]="1" [bc-value]="gotcard?.cardNo" [bc-display-value]="true" ></ngx-barcode> &nbsp;&nbsp;&nbsp;
+                                      </td>
+                                      <td style="background-color: beige;padding-bottom: 0px;height: 42px;">
+                                        <h3 style="text-align:center;font-weight: bold;margin: 2px;margin-bottom: -4px;">
+                                          Library Card</h3>
+
+                                      </td>
+                                    </tr>
+                                    <tr style="padding: 0px;height: 25px;padding-top: 6px;padding-left: 8px;">
+                                      <td style="font-family: -webkit-body;text-align: center;background-color: aliceblue;text-decoration: underline;text-transform: uppercase;font-weight: bold;">WBSCTE</td>
+                                    </tr>
+                                    <tr style="padding: 0px;height: 25px;padding-top: 6px;padding-left: 8px;">
+                                      <td>Siliguri Govt Polytechnic</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Card No :{{ gotcard?.cardNo }} <span style="font-weight: 700;" class="ng-binding"></span>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td class="ng-binding">Name : {{ gotcard?.fname | uppercase }}&nbsp;&nbsp; {{ gotcard?.lname | uppercase }}</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="ng-binding">Phone : {{ gotcard?.phone_no }}</td>
+                                    </tr>
+                                    <tr ng-show="printScope.role=='Student'" class="">
+                                      <td class="ng-binding">Course : {{ gotcard?.dept }} | Year :
+                                        {{ gotcard?.year }}
+                                      </td>
+                                    </tr>
+                                    <tr ng-show="printScope.role=='Teacher'" class="ng-hide">
+                                      <td class="ng-binding">Designation : {{ gotcard?.category | uppercase }}
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>YEAR : {{ year }}</td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+
+                                  <table id="p_tbl2" class="table table-striped" style="width: 50%;float:right;margin-right: 6px;table-layout: fixed;border: 1px solid black;height: 330px;     border-collapse: initial;">
+                                    <tbody>
+                                    <tr>
+                                      <td class="ng-binding">Email : {{ gotcard?.email}}</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="ng-binding">Address : {{ gotcard?.address }}</td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <span style="text-align:left;font-weight: 700;">Instruction</span>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <ul class="list-group" style="margin-bottom: 45px;">
+                                                                                  <li class="list-group-item" style="padding: 2px 15px !important;">1. The holder of this card is register person of Siliguri Govt. Polytechnic.</li>
+                                                                                      <li class="list-group-item" style="padding: 2px 15px !important;">2. By this registeration the holder agreeds to abide by the Rules and Regulation of the Institute.</li>
+                                                                                      <li class="list-group-item" style="padding: 2px 15px !important;">3. The Card is for personal use and it is not transfareble.</li>
+                                                                                      <li class="list-group-item" style="padding: 2px 15px !important;">4.  Finder of the lost card are asked to return them to the Program office at the above address.</li>
+                                                                                      <li class="list-group-item" style="padding: 2px 15px !important;">5. Only 3 books can be borrowed on this card.</li>
+                                                                                      <li class="list-group-item" style="padding: 2px 15px !important;">6. Rs 10 will be be charged if this card is lost.</li>
+                                                                                      <li class="list-group-item" style="padding: 2px 15px !important;">7. Book will be issued only on presense of this card.</li>
+                                                                                </ul>
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-default pmd-ripple-effect" (click)="printPreview()">Print
+                              </button>
+                            </div>
+
+                                          </div>
+                                        </div>
+
+
+
+                      </form>
+                    </div>
+
+
+
+
+
+
+              <button onclick="document.getElementById('id03').style.display='block'" class="btn btn2" (click)="getCardedit(card._id)"><img src="assets/icons/delete.png"></button>
+
+                    <div id="id03" class="modals">
+
+                      <div class="modal-content animate" >
+                        <div class="imgcontainer">
+                          <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal" >&times;</span>
+
+                        </div>
+
+                        <div class="container">
+                    <h3>Delete Library Card</h3>
+                    <div class="modal-body" style="padding-top: 4%; padding-left: 20%;">
+                                          <div class="row">
+                                            <div class="holder_sub_book_lst">
+                                           <h4>   <b>Once Deleted The Changes Cannot Be Undone!</b></h4>
+                                          <p>Are You Sure?</p>
+                                                      <button class="btn btn-danger fix_radius" (click)="onDelete(gotcard )" onclick="document.getElementById('id03').style.display='none'">Yes &nbsp;
+                                                      </button>&nbsp;
+                                                      <button class="btn btn-warning fix_radius" onclick="document.getElementById('id03').style.display='none'">No
+                                              </button>
+                                                    </div>
+
+                                            </div>
+                                          </div>
+                                        </div>
+
+
+
+                                      </div>
+                    </div><br>
+
+
+          </td>
+          </tr>
+
+
+
+
+
+     </tbody>
+    </table>
+
+</div>
+<mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChange($event)"></mat-paginator>
+
+
+
+
+
+  </div>
+
+
+
+

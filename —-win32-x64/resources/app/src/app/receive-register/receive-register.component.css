@@ -1,0 +1,13 @@
+input{
+  width: 20%;
+}
+mat-spinner {
+  margin: 20%;
+  margin-left: 45%;
+}
+.ellipsis {
+  max-width: 40px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

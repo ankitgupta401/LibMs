@@ -1,0 +1,63 @@
+
+<div >
+
+
+    <div class="searchbox">
+        <br><form (ngSubmit)="onSubmit(form)" #form="ngForm">
+          <div class="form-row ">
+
+              &nbsp; &nbsp;
+                     <input type="number" class="form-control" placeholder="Type Acession no" ngModel name="accession_no" > &nbsp;  &nbsp;
+
+                     <input type="text" class="form-control" placeholder="Title" ngModel name="title">&nbsp;  &nbsp;
+
+                        <input type="text" class="form-control" placeholder="Author" ngModel name="author">
+                        &nbsp;  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Search</button>&nbsp;  &nbsp;
+                        <button type="reset" class="btn btn-danger" (click)="onClear(form)" >Clear</button>
+                </div>
+              </form>
+    </div><br>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="tables" style="height:24pc; overflow-x: visible; overflow-y: scroll;" class="form" *ngIf="!isLoading">
+    <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Location</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Available</th>
+              <th scope="col">Total</th>
+              <th scope="col">Details</th>
+
+
+
+            </tr>
+          </thead>
+          <tbody>
+
+              <tr *ngFor="let book of books; let i=index">
+                <th scope="row">{{ i + 1 + number }}</th>
+                <td>{{ book.title | uppercase}}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.source }}</td>
+                <td>{{ book.subject }}</td>
+                <td>{{ book.available }}</td>
+                <td>{{ book.total }}</td>
+                <td>
+                  <button class="btn btn-primary" (click)="getbyisbn(book.isbn , f)">Details</button>
+                  <a  [routerLink]="['/bookDetails']" #f></a>
+                </td>
+                </tr>
+
+
+         </tbody>
+        </table>
+  </div>
+
+  <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChange($event,form)"></mat-paginator>
+</div>
+
+
+

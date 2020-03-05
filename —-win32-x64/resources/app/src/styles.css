@@ -1,0 +1,38 @@
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+/* You can add global styles to this file, and also import other style files */
+.b-header{
+        padding: 30px;
+        font-size: 35px;
+}
+/*Code for change input style*/
+
+.form-control{
+        padding: 20px 20px;
+}
+/*Code for changes input label;*/
+.text{
+        font-size: 15px;
+}
+.text2{
+        font-size: 20px;
+}
+/*Red mark*/
+.redMark{
+        color: red;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+#container{
+        
+        position: absolute;
+    top: 30%;
+    left: 38%;
+    width: 34%;
+    height: 56%;
+    }
+    
