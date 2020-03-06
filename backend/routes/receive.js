@@ -106,7 +106,7 @@ if(date.getDate() >1){
             date = new Date(Date.now() - (365*24*60*60*1000));
 if(date.getDate() > 1){
   const day = 365 + (+date.getDate()-1);
-  console.log(day);
+
   date2 = new Date(Date.now() - (day*24*60*60*1000));
 } else{
   date2 = date;
@@ -118,7 +118,7 @@ if(date.getDate() > 1){
               Book.countDocuments({ $and: [ { "borrow_date": { $lte: date } }, { "borrow_date": { $gte: date2 } } ] }).then(result => {
               issueData = issueData + result;
               Book.countDocuments({ $and: [ { "receive_date": { $lte: date } }, { "receive_date": { $gte: date2 } } ] }).then(results => {
-console.log(results);
+
                 res.status(200).json({message: "Found", issueData: issueData, receiveData: results});
               });
             });
@@ -187,6 +187,8 @@ router.get("/all", checkAuth,(req, res, next) => {
 
 
 router.post("", checkAuth, (req,res,next) => {
+ date = new Date(Date.now());
+
   const book = new Book({
     accession_no: req.body.accession_no,
     author:req.body.author,
@@ -205,7 +207,7 @@ router.post("", checkAuth, (req,res,next) => {
     cardNo: req.body.cardNo,
     borrower: req.body.borrower,
     borrow_date: req.body.borrow_date,
-    receive_date: Date(),
+    receive_date: date,
     fine: req.body.fine,
     Note:req.body.Note,
     borrower_dept: req.body.borrower_dept
