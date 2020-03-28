@@ -44,11 +44,12 @@ this.app.changePass(data.new_pass)
 
   changeEmail(form: NgForm) {
     this.isLoading = true;
+    let current = form.value;
     if (form.valid === true) {
-      this.app.verifyAdminPass(form.value.pass)
+      this.app.verifyAdminPass(current.pass)
   .subscribe(postData => {
 if (postData.valid === true) {
-  this.app.changeEmail(form.value)
+  this.app.changeEmail(current)
   .subscribe(posData => {
     this.isLoading = false;
     return alert(posData.message);
